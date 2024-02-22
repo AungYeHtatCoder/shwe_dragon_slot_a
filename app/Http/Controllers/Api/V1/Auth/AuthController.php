@@ -8,6 +8,7 @@ use App\Http\Requests\Api\LoginRequest;
 use App\Http\Requests\Api\ProfileRequest;
 use App\Http\Resources\PlayerResource;
 use App\Models\Admin\Provider;
+use App\Models\Admin\UserLog;
 use App\Models\User;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
@@ -21,9 +22,15 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $request->validated($request->all());
-        $credentials = $request->only('phone', 'password');
+        $credentials = $request->only('user_name', 'password');
         if (Auth::attempt($credentials)) {
-            $user = User::where('phone', $request->phone)->first();
+            $user = User::where('user_name', $request->user_name)->first();
+
+            UserLog::create([
+                'ip_address' => $request->ip(),
+                'user_id' => $user->id
+            ]);
+            
             return $this->success([
                 'user' => $user,
                 'token' => $user->createToken('Api Token of '. $user->name)->plainTextToken

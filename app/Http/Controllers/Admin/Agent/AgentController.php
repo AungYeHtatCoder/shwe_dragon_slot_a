@@ -31,11 +31,11 @@ class AgentController extends Controller
         );
         //kzt
         $users = DB::table('users')
-        ->join('role_user', 'role_user.user_id', '=', 'users.id')
-        ->where(function ($role) {
-            $role->where('role_user.role_id','=',2);
-        })
-        ->where('users.agent_id',  auth()->id())->latest()->get();
+            ->join('role_user', 'role_user.user_id', '=', 'users.id')
+            ->where(function ($role) {
+                $role->where('role_user.role_id', '=', 2);
+            })
+            ->where('users.agent_id',  auth()->id())->latest()->get();
         //kzt
         return view('admin.agent.index', compact('users'));
     }
@@ -50,8 +50,9 @@ class AgentController extends Controller
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
+        $agent_name = $this->generateRandomString();
 
-        return view('admin.agent.create');
+        return view('admin.agent.create', compact('agent_name'));
     }
 
     /**
@@ -71,12 +72,17 @@ class AgentController extends Controller
             $inputs,
             [
                 'password' => Hash::make($inputs['password']),
-                'agent_id' => Auth()->user()->id
+                'agent_id' => Auth()->user()->id,
+                'status' => 1
             ]
         );
         $user = User::create($userPrepare);
         $user->roles()->sync(self::AGENT_ROLE);
-        return redirect(route('admin.agent.index'))->with('success', 'Agent has been created successfully.');
+
+        return redirect()->back()
+            ->with('success', 'Agent created successfully')
+            ->with('password', $request->password)
+            ->with('username', $user->name);
     }
 
     /**
@@ -93,7 +99,7 @@ class AgentController extends Controller
         $user_detail = User::find($id);
         return view('admin.agent.show', compact('user_detail'));
     }
-   
+
 
     /**
      * Show the form for editing the specified resource.
@@ -106,8 +112,8 @@ class AgentController extends Controller
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
 
-        $user = User::find($id);
-        return view('admin.agent.edit', compact('user'));
+        $agent = User::find($id);
+        return view('admin.agent.edit', compact('agent'));
     }
 
     /**
@@ -123,25 +129,26 @@ class AgentController extends Controller
 
         $request->validate([
             'name' => 'required|min:3|unique:users,name,' . $id,
+            'player_name' => 'required|string',
             'phone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'unique:users,phone,' . $id],
             'password' => 'nullable|min:6|confirmed',
         ]);
 
         $user = User::find($id);
-        $user->name = $request->name;
-        $user->phone = $request->phone;
+        $user->update([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'player_name' => $request->player_name
+        ]);
 
-        if ($request->password) {
-            $user->password = Hash::make($request->password);
-        }
-        
-        return redirect(route('admin.agent.index'))->with('success', 'Agent has been updated successfully.');
+        return redirect()->back()
+            ->with('success', 'Agent Updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-   
+
     public function getCashIn(string $id)
     {
         abort_if(
@@ -163,14 +170,14 @@ class AgentController extends Controller
 
         // Assuming $id is the user ID
         $agent = User::findOrFail($id);
-      
-        
+
+
         return view('admin.agent.cash_out', compact('agent'));
     }
 
-    public function makeCashIn(TransferLogRequest $request,$id)
+    public function makeCashIn(TransferLogRequest $request, $id)
     {
-        
+
         abort_if(
             Gate::denies('agent_transfer'),
             Response::HTTP_FORBIDDEN,
@@ -178,32 +185,32 @@ class AgentController extends Controller
         );
 
         try {
-                $inputs = $request->validated();
-                $agent = User::findOrFail($id);
-                $admin = Auth::user();
-                $cashIn = $inputs['amount'];
-                $inputs['refrence_id'] = $this->getRefrenceId();
+            $inputs = $request->validated();
+            $agent = User::findOrFail($id);
+            $admin = Auth::user();
+            $cashIn = $inputs['amount'];
 
-                if ($cashIn > $admin->balance) {
-                    throw new \Exception('You do not have enough balance to transfer!');
-                }
+            if ($cashIn > $admin->balance) {
+                throw new \Exception('You do not have enough balance to transfer!');
+            }
 
-                // Transfer money
-                $agent->balance += $cashIn;
-                $agent->save();
-                $admin->balance -= $cashIn;
-                $admin->save();
+            // Transfer money
+            $agent->balance += $cashIn;
+            $agent->save();
+            $admin->balance -= $cashIn;
+            $admin->save();
 
-                $inputs['cash_balance'] = $agent->balance;
-                $inputs['cash_in'] = $cashIn;
-                $inputs['to_user_id'] = $id;
-                $inputs['type'] = 0 ; //deposit
-                // Create transfer log
-                TransferLog::create(array_merge($inputs));
-         
+            $inputs['cash_balance'] = $agent->balance;
+            $inputs['phone'] = $agent->phone;
+            $inputs['cash_in'] = $cashIn;
+            $inputs['to_user_id'] = $id;
+            $inputs['type'] = 0; //deposit
+            // Create transfer log
+            TransferLog::create(array_merge($inputs));
+
             return redirect()->back()->with('success', 'Money fill request submitted successfully!');
         } catch (Exception $e) {
-            
+
             session()->flash('error', $e->getMessage());
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -211,20 +218,19 @@ class AgentController extends Controller
 
     public function makeCashOut(TransferLogRequest $request, string $id)
     {
-              
+
         abort_if(
             Gate::denies('agent_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
-        
+
         try {
             $inputs = $request->validated();
-          
+
             $agent = User::findOrFail($id);
             $admin = Auth::user();
             $cashOut = $inputs['amount'];
-            $inputs['refrence_id'] = $this->getRefrenceId();
 
             if ($cashOut > $agent->balance) {
 
@@ -238,10 +244,10 @@ class AgentController extends Controller
             $inputs['cash_balance'] = $agent->balance;
             $inputs['cash_out'] = $cashOut;
             $inputs['to_user_id'] = $admin->id;
-            $inputs['type'] = 1 ; //withdraw
+            $inputs['type'] = 1; //withdraw
 
-         TransferLog::create($inputs);
-         
+            TransferLog::create($inputs);
+
             return redirect()->back()->with('success', 'Money fill request submitted successfully!');
         } catch (Exception $e) {
 
@@ -255,25 +261,24 @@ class AgentController extends Controller
 
     public function getTransferDetail($id)
     {
-          
+
         abort_if(
             Gate::denies('agent_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
         $transfer_detail = TransferLog::where('from_user_id', $id)
-        ->orWhere('to_user_id', $id)
-                ->get();
+            ->orWhere('to_user_id', $id)
+            ->get();
 
         return view('admin.agent.transfer_detail', compact('transfer_detail'));
-            
-
     }
-    
-    private function getRefrenceId($prefix = 'REF')
+    private function generateRandomString()
     {
-        return  uniqid($prefix);
-    }  
+        $randomNumber = mt_rand(10000000, 99999999);
+        return 'MW' . $randomNumber;
+    }
+
 
     public function banAgent($id)
     {
@@ -286,6 +291,35 @@ class AgentController extends Controller
             'success',
             'User ' . ($user->status == 1 ? 'activated' : 'banned') . ' successfully'
         );
+    }
+
+    public function getChangePassword($id)
+    {
+        $agent = User::find($id);
+        return view('admin.agent.change_password',compact('agent'));
+    }
+
+    public function makeChangePassword($id,Request $request)
+    {
+        abort_if(
+            Gate::denies('agent_access'),
+            Response::HTTP_FORBIDDEN,
+            '403 Forbidden |You cannot  Access this page because you do not have permission'
+        );
+
+        $request->validate([
+            'password' => 'required|min:6|confirmed'
+        ]);
+
+        $agent = User::find($id);
+        $agent->update([
+            'password' => Hash::make($request->password)
+        ]);
+        
+        return redirect()->back()
+            ->with('success', 'Agent Change Password successfully')
+            ->with('password', $request->password)
+            ->with('username', $agent->name);
     }
 
 }

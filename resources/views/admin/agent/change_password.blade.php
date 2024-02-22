@@ -66,12 +66,12 @@
         <div class="card-header pb-0">
           <div class="d-lg-flex">
             <div>
-              <h5 class="mb-0">Create New Player</h5>
+              <h5 class="mb-0">Change Password</h5>
 
             </div>
             <div class="ms-auto my-auto mt-lg-0 mt-4">
               <div class="ms-auto my-auto">
-                <a class="btn btn-icon btn-2 btn-primary" href="{{ route('admin.player.index') }}">
+                <a class="btn btn-icon btn-2 btn-primary" href="{{ route('admin.agent.index') }}">
                   <span class="btn-inner--icon mt-1"><i class="material-icons">arrow_back</i>Back</span>
                 </a>
               </div>
@@ -79,50 +79,27 @@
           </div>
         </div>
         <div class="card-body">
-          <form role="form" method="POST" class="text-start" action="{{ route('admin.player.store') }}">
+          <form role="form" method="POST" class="text-start" action="{{ route('admin.agent.makeChangePassword',$agent->id) }}">
             @csrf
             <div class="custom-form-group">
-              <label for="title">PlayerName <span class="text-danger">*</span></label>
-              <input type="text"  name="user_name" class="form-control" value="{{$player_name}}" readonly>
-              @error('name')
-              <span class="text-danger d-block">*{{ $message }}</span>
-              @enderror
-            </div>
-            <div class="custom-form-group">
-              <label for="title">Name <span class="text-danger">*</span></label>
-              <input type="text"  name="name" class="form-control" value="{{old('name')}}">
-              @error('player_name')
-              <span class="text-danger d-block">*{{ $message }}</span>
-              @enderror
-            </div>
-            <div class="custom-form-group">
-              <label for="title">Phone No <span class="text-danger">*</span></label>
-              <input type="text"  name="phone" class="form-control" value="{{old('phone')}}">
-              @error('phone')
-              <span class="text-danger d-block">*{{ $message }}</span>
-              @enderror
-            </div>
-            <div class="custom-form-group">
-              <label for="title">Password <span class="text-danger">*</span></label>
-              <input type="text"  name="password" class="form-control" value="{{old('password')}}">
+              <label for="title">New Password <span class="text-danger">*</span></label>
+              <input type="text"  name="password" class="form-control">
               @error('password')
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
             </div>
+            <div class="custom-form-group">
+              <label for="title">Confirm Password <span class="text-danger">*</span></label>
+              <input type="text"  name="password_confirmation" class="form-control" >
+            </div>
            
             <div class="custom-form-group">
-              <button type="submit" class="btn btn-primary" type="button">Create</button>
+              <button type="submit" class="btn btn-primary" type="button">Confirm</button>
             </div>
           </form>
         </div>
       </div>
     </div>
-  </div>
-</div>
-
-<div class="row mt-4">
-  <div class="col-12">
-
   </div>
 </div>
 @endsection
@@ -136,7 +113,7 @@
 <script>
   var errorMessage = @json(session('error'));
   var successMessage = @json(session('success'));
-  var url = 'https://maxwinmyanmar.com/';
+  var url = 'https://maxwinapi.online/login';
   var name = @json(session('username'));
   var pw = @json(session('password'));
 

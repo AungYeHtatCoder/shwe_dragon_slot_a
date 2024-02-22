@@ -23,7 +23,6 @@ class TransferLogRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3',
-            'phone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/'],
             'amount' => 'required|numeric',
             'from_user_id' => ['required','exists:users,id'],
             'note' => ['nullable','string']

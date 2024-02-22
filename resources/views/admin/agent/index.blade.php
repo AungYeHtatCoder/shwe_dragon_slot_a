@@ -26,7 +26,7 @@
           </div>
           <div class="ms-auto my-auto mt-lg-0 mt-4">
             <div class="ms-auto my-auto">
-              <a href="{{ route('admin.agent.create') }}" class="btn bg-gradient-primary btn-sm mb-0">+&nbsp; Create New
+              <a href="{{ route('admin.agent.create') }}" class="btn bg-gradient-primary btn-sm mb-0">+&nbsp; Create 
                 Agent</a>
               <button class="btn btn-outline-primary btn-sm export mb-0 mt-sm-0 mt-1" data-type="csv" type="button" name="button">Export</button>
             </div>
@@ -37,11 +37,11 @@
         <table class="table table-flush" id="users-search">
           <thead class="thead-light">
             <th>#</th>
-            <th>UserName</th>
+            <th>AgentName</th>
+            <th>Name</th>
             <th>Phone</th>
             <th>Status</th>
             <th>Balance</th>
-            <th>Created_at</th>
             <th>Action</th>
             <th>Transfer</th>
           </thead>
@@ -56,26 +56,25 @@
                 <span class="d-block">{{ $user->name }}</span>
 
               </td>
+              <td>{{$user->user_name}}</td>
               <td>{{ $user->phone }}</td>
               <td>
-                <small class="badge badge-{{ $user->status == 0 ? 'warning' : ($user->status == 1 ? 'success' : 'danger') }}">
-                  {{ $user->status === 0 ? "pending" : ($user->status === 1 ? "active" : "ban") }}
-                </small>
+              <small class="badge bg-gradient-{{ $user->status == 1 ? 'success' : ($user->status == 2 ? 'danger' : 'warning') }}">{{ $user->status == 1 ? "active" : ($user->status == 2 ? "inactive" : "pending") }}</small>
+            
               </td>
               <td>{{ number_format($user->balance,2) }} MMK</td>
 
-              <td>{{ Carbon\Carbon::parse($user->created_at)->format('d/m/Y') }}</td>
               <td>
                 @if ($user->status == 2)
-                <a onclick="event.preventDefault(); document.getElementById('banUser-{{ $user->id }}').submit();" class="me-2" href="#" data-bs-toggle="tooltip" data-bs-original-title="Ban User">
+                <a onclick="event.preventDefault(); document.getElementById('banUser-{{ $user->id }}').submit();" class="me-2" href="#" data-bs-toggle="tooltip" data-bs-original-title="Ban Agent">
                   <i class="fas fa-user-slash text-danger" style="font-size: 20px;"></i>
                 </a>
                 @elseif($user->status == 1)
-                <a onclick="event.preventDefault(); document.getElementById('banUser-{{ $user->id }}').submit();" class="me-2" href="#" data-bs-toggle="tooltip" data-bs-original-title="Active User">
+                <a onclick="event.preventDefault(); document.getElementById('banUser-{{ $user->id }}').submit();" class="me-2" href="#" data-bs-toggle="tooltip" data-bs-original-title="Active Agent">
                   <i class="fas fa-user-check text-success" style="font-size: 20px;"></i>
                 </a>
                 @else
-                <a href="" class="me-2" href="#" data-bs-toggle="tooltip" data-bs-original-title="Active User">
+                <a href="" class="me-2" href="#" data-bs-toggle="tooltip" data-bs-original-title="Active Agent">
                   <i class="fas fa-user-check text-warning" style="font-size: 20px;"></i>
                 </a>
                 @endif
@@ -85,35 +84,24 @@
                 </form>
 
 
-                <a class="me-1" href="{{ route('admin.agent.edit', $user->id) }}" data-bs-toggle="tooltip" data-bs-original-title="Edit User">
+                <a class="me-1" href="{{ route('admin.agent.getChangePassword', $user->id) }}" data-bs-toggle="tooltip" data-bs-original-title="Change Password">
+                  <i class="fas fa-lock text-info" style="font-size: 20px;"></i>
+                </a>
+                <a class="me-1" href="{{ route('admin.agent.edit', $user->id) }}" data-bs-toggle="tooltip" data-bs-original-title="Edit Agent">
                   <i class="fas fa-pen-to-square text-info" style="font-size: 20px;"></i>
                 </a>
-                <a class="me-1" href="{{ route('admin.agent.show', $user->id) }}" data-bs-toggle="tooltip" data-bs-original-title="Preview User Detail">
-                  <i class="fas fa-eye text-warning" style="font-size: 20px;"></i>
-                </a>
-                <form class="d-inline" action="{{ route('admin.agent.destroy', $user->id) }}" method="POST">
-                  @csrf
-                  @method('DELETE')
-                  <button type="submit" class="transparent-btn" data-bs-toggle="tooltip" data-bs-original-title="Delete User">
-                    <i class="fas fa-trash text-danger" style="font-size: 20px;"></i>
-                  </button>
-                </form>
               </td>
               <td>
-                <a href="{{ route('admin.agent.getCashIn', $user->id) }}" data-bs-toggle="tooltip" data-bs-original-title="Cash IN To Agent" class="btn btn-info btn-sm">
-                  <i class="fas fa-right-left text-white me-1"></i>
-                  {{-- <i class="material-icons text-secondary position-relative text-lg" style="font-size: 25px">currency_exchange</i> --}}
-                  ငွေလွဲမည်
+                <a href="{{ route('admin.agent.getCashIn', $user->id) }}" data-bs-toggle="tooltip" data-bs-original-title="Deposit To Agent" class="btn btn-info btn-sm">
+                <i class="fas fa-plus text-white me-1"></i>Dep
                 </a>
-                <a href="{{ route('admin.agent.getCashOut', $user->id) }}" data-bs-toggle="tooltip" data-bs-original-title="Cash Out To Agent" class="btn btn-warning btn-sm">
-                  <i class="fas fa-right-left text-white me-1"></i>
-                  {{-- <i class="material-icons text-secondary position-relative text-lg" style="font-size: 25px">currency_exchange</i> --}}
-                  ငွေထုတ်မည်
+                <a href="{{ route('admin.agent.getCashOut', $user->id) }}" data-bs-toggle="tooltip" data-bs-original-title="WithDraw To Agent" class="btn btn-info btn-sm">
+                <i class="fas fa-minus text-white me-1"></i>
+                  WDL
                 </a>
-                <a href="{{ route('admin.agent.getTransferDetail', $user->id) }}" data-bs-toggle="tooltip" data-bs-original-title="Cash Out To Agent" class="btn btn-warning btn-sm">
+                <a href="{{ route('admin.agent.getTransferDetail', $user->id) }}" data-bs-toggle="tooltip" data-bs-original-title="Cash Out To Agent" class="btn btn-info btn-sm">
                   <i class="fas fa-right-left text-white me-1"></i>
-                  {{-- <i class="material-icons text-secondary position-relative text-lg" style="font-size: 25px">currency_exchange</i> --}}
-                  လွှဲပြောင်းမှတ်တမ်း
+                  Logs
                 </a>
 
               </td>
@@ -127,8 +115,6 @@
             </tr>
             @endif
             @endif
-            {{-- kzt --}}
-
           </tbody>
         </table>
       </div>

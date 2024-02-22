@@ -61,9 +61,9 @@
 @section('content')
 <div class="row justify-content-center">
  <div class="col-lg-12">
-  <div class="container mt-2">
+  <div class=" mt-2">
    <div class="d-flex justify-content-between">
-   {{-- kzt --}}
+
 
     <a class="btn btn-icon btn-2 btn-primary" href="{{ route('admin.agent.index') }}">
      <span class="btn-inner--icon mt-1"><i class="material-icons">arrow_back</i>Back</span>
@@ -87,10 +87,6 @@
         <th>Phone</th>
         <td>{!! $agent->phone !!}</td>
        </tr>
-       <tr>
-        <th>Balance</th>
-        <td>{!! number_format($agent->balance,2) !!} MMK</td>
-       </tr>
       </tbody>
      </table>
     </div>
@@ -107,9 +103,7 @@
     <div class="card-header pb-0">
      <div class="d-lg-flex">
       <div>
-       <h5 class="mb-0">Agent - {!! $agent->id !!} ({!! $agent->name !!}) ထံမှ ငွေထုတ်ယူမည် 
-        </span>
-       </h5>
+       <h5 class="mb-0">Withdraw</h5>
 
       </div>
       <div class="ms-auto my-auto mt-lg-0 mt-4">
@@ -137,8 +131,8 @@
     </div>
     <div class="col-md-6">
       <div class="input-group input-group-outline is-valid my-3">
-        <label class="form-label">Phone</label>
-        <input type="text" class="form-control" name="phone" value="{{ $agent->phone }}" readonly>
+        <label class="form-label">Current Balance</label>
+        <input type="text" class="form-control" name="phone" value="{{ $agent->balance .'.00'}}" readonly>
 
       </div>
       @error('phone')
@@ -151,12 +145,12 @@
   <div class="row">
     <div class="col-md-6">
       <div class="input-group input-group-outline is-valid my-3">
-        <label class="form-label">ငွေနုတ်ယူမည့်ပမာဏ</label>
+        <label class="form-label">Amount</label>
         <input type="text" class="form-control" name="amount" required>
       </div>
       @error('amount')
          <span class="d-block text-danger">*{{ $message }}</span>
-         @enderror
+      @enderror
     </div>
     <div class="col-md-6">
       <div class="input-group input-group-outline is-valid my-3">
@@ -173,7 +167,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="input-group input-group-outline is-valid my-3">
-        <button type="submit" class="btn btn-primary">ငွေထုတ်ယူမည်</button>
+        <button type="submit" class="btn btn-primary">confirm</button>
       </div>
     </div>
   </div>

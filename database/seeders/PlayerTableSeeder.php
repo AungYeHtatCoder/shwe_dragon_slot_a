@@ -16,10 +16,12 @@ class PlayerTableSeeder extends Seeder
     {
         $users = [
                 'name'           => 'mawi',
+                'user_name'      => 'mawi',
                 'phone'          => '09222222222',
                 'password'       => Hash::make('password'),
                 'balance'        => 10000,
                 'agent_id'      => 2,
+                'status'        => 1,
                 'created_at'     => now(),
                 'updated_at'     => now(),
         ];

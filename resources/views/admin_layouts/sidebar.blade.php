@@ -43,7 +43,7 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link text-white " href="{{ route('admin.games.index') }}">
+            <a class="nav-link text-white " href="">
               <span class="sidenav-mini-icon"> <i class="fa-solid fa-gamepad"></i> </span>
               <span class="sidenav-normal  ms-2  ps-1"> Bonus </span>
             </a>

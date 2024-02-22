@@ -22,10 +22,10 @@ class AgentRequest extends FormRequest
     public function rules(): array
     {
         return [
-
-                'name' => 'required|min:3|unique:users,name',
+                'user_name' => 'required','string','unique:users,user_name',
+                'name' => 'required|min:3|string',
                 'phone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'unique:users,phone'],
-                'password' => 'required|min:6|confirmed',   
+                'password' => 'required|min:6',
         ];
     }
 }

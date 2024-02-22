@@ -17,19 +17,24 @@ class UsersTableSeeder extends Seeder
         $users = [
             [
                 'name'           => 'Owner',
+                'user_name'      => 'SDG898787',
                 'phone'          => '09123456789',
                 'password'       => Hash::make('password'),
                 'balance'        => 1000000,
                 'agent_id'      => null,
+                'status'        => 1,
                 'created_at'     => now(),
                 'updated_at'     => now(),
+
             ],
             [
                 'name'           => 'Agent',
+                'user_name'      => 'SDG898737',
                 'phone'          => '09112345678',
                 'password'       => Hash::make('password'),
                 'balance'        => 10000,
                 'agent_id'      => 1,
+                'status'         => 1,
                 'created_at'     => now(),
                 'updated_at'     => now(),
             ]

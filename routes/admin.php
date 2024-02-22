@@ -4,19 +4,16 @@ use App\Http\Controllers\Admin\Agent\AgentController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BannerTextController;
 use App\Http\Controllers\Admin\GameController;
-use App\Http\Controllers\Admin\GameType\GameTypeController;
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\Player\PlayerController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PromotionController;
-use App\Http\Controllers\Admin\Report\ReportController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\TransferLog\TransferLogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\WithDraw\WithDrawRequestController;
 use Illuminate\Support\Facades\Route;
-
 
 
 
@@ -44,7 +41,9 @@ Route::group([
             ->name('player.makeCashOut');
         Route::get('player/transer-detail/{player}', [PlayerController::class, 'getTransferDetail'])
             ->name('player.getTransferDetail');
-    
+        Route::get('player/logs/{id}', [PlayerController::class, 'logs'])
+            ->name('player.logs');
+
     
     Route::get('profile', [ProfileController::class,'index'])->name('profile.index');
     Route::post('profile/change-password/{user}',[ProfileController::class,'updatePassword'])
@@ -59,7 +58,6 @@ Route::group([
     Route::put('/change-kpay-no', [ProfileController::class, 'KpayNoChange'])->name('changeKpayNo');
     Route::put('/change-join-date', [ProfileController::class, 'JoinDate'])->name('addJoinDate');
     Route::resource('banners', BannerController::class);
-    Route::resource('games', GameController::class);
     Route::resource('text', BannerTextController::class);
     Route::resource('/promotions', PromotionController::class);
     Route::resource('/payments', PaymentController::class);
@@ -72,7 +70,9 @@ Route::group([
         ->name('agent.makeCashOut');
     Route::get('agent/transer-detail/{id}', [AgentController::class, 'getTransferDetail'])
         ->name('agent.getTransferDetail');
-        Route::put('agent/{id}/ban', [AgentController::class, 'banAgent'])->name('agent.ban');
+    Route::put('agent/{id}/ban', [AgentController::class, 'banAgent'])->name('agent.ban');
+    Route::get('agent-changepassword/{id}',[AgentController::class,'getChangePassword'])->name('agent.getChangePassword');
+    Route::post('agent-changepassword/{id}',[AgentController::class,'makeChangePassword'])->name('agent.makeChangePassword');
 
     Route::get('withdraw',[WithDrawRequestController::class,'index'])->name('agent.withdraw');
     Route::get('withdraw/{id}',[WithDrawRequestController::class,'show'])->name('agent.withdrawshow');
@@ -80,4 +80,5 @@ Route::group([
     Route::post('withdraw/{withdraw}',[WithDrawRequestController::class,'statusChange'])->name('agent.statusChange');
 
     Route::get('transer-log',[TransferLogController::class,'index'])->name('transferLog');
+    
 });
