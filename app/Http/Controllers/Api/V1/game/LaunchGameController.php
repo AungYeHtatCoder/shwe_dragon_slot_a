@@ -16,8 +16,10 @@ class LaunchGameController extends Controller
         $user = Auth::user();
 
         // Retrieve configuration values
-        $operatorCode = config('game.api.operator_code');
-        $secretKey = config('game.api.secret_key');
+        //$operatorCode = config('game.api.operator_code');
+        $operatorCode = 'E680'; //
+        //$secretKey = config('game.api.secret_key');
+        $secretKey = 'ljfVJA'; // From your provided details
         //$apiUrl = config('game.api.url') . '/Seamless/LaunchGame';
         $apiUrl = 'https://swmd.6633663.com/Seamless/LaunchGame';
 
