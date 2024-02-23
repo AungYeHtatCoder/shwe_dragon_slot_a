@@ -18,7 +18,8 @@ class LaunchGameController extends Controller
         // Retrieve configuration values
         $operatorCode = config('game.api.operator_code');
         $secretKey = config('game.api.secret_key');
-        $apiUrl = config('game.api.url') . '/Seamless/LaunchGame';
+        //$apiUrl = config('game.api.url') . '/Seamless/LaunchGame';
+        $apiUrl = 'https://swmd.6633663.com/Seamless/LaunchGame';
 
         // Get request data with default values where necessary
         $displayName = $user->name ?? 'DefaultDisplayName';
