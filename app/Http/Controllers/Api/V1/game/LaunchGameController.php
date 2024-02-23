@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Config;
 
 class LaunchGameController extends Controller
 {
+    // complete refactored code
     public function launchGame(Request $request)
     {
         $user = Auth::user();
