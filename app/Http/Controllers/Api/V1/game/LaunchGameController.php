@@ -36,7 +36,7 @@ class LaunchGameController extends Controller
         // Prepare the data payload
         $data = [
             'OperatorCode' => $operatorCode,
-            'MemberName' => $user->name, // Changed from username to name
+            'MemberName' => $user->user_name, 
             'DisplayName' => $displayName,
             'Password' => $request->password, // Ensure this is sent securely over HTTPS
             'ProductID' => $productId,

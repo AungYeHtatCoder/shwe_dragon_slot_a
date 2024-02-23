@@ -36,7 +36,7 @@
         <table class="table table-flush" id="users-search">
           <thead class="thead-light">
             <th>#</th>
-            <th>PlayerName</th>
+            <th>PlayerID</th>
             <th>Name</th>
             <th>Phone</th>
             <th>Status</th>
