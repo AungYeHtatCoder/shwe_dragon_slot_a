@@ -12,7 +12,7 @@ class LaunchGameController extends Controller
 {
     public function launchGame(Request $request)
     {
-        Log::info($request->all());
+        //Log::info($request->all());
         // Validate the request data
         $validatedData = $request->validate([
             'productId' => 'required|integer',
@@ -49,7 +49,7 @@ class LaunchGameController extends Controller
         ];
 
         // Log the request details
-        Log::info('Sending launch game request', $data);
+        //Log::info('Sending launch game request', $data);
 
         try {
             // Send the request
@@ -59,33 +59,89 @@ class LaunchGameController extends Controller
             ])->post($apiUrl, $data);
 
             // Log the response from the server
-            Log::info('Received response from launch game request', [
-                'response' => $response->json(),
-                'status' => $response->status()
-            ]);
+            // Log::info('Received response from launch game request', [
+            //     'response' => $response->json(),
+            //     'status' => $response->status()
+            // ]);
 
             if ($response->successful()) {
                 return $response->json();
             }
 
              // Log the full response
-            Log::info('API response', [
-                'status' => $response->status(),
-                'headers' => $response->headers(),
-                'body' => $response->json(),
-            ]);
+            // Log::info('API response', [
+            //     'status' => $response->status(),
+            //     'headers' => $response->headers(),
+            //     'body' => $response->json(),
+            // ]);
 
             return response()->json(['error' => 'API request failed', 'details' => $response->body()], $response->status());
         } catch (\Throwable $e) {
             // Log the exception
-            Log::error('Launch game request failed', [
-                'exception' => $e->getMessage(),
-                'trace' => $e->getTraceAsString() // Optionally log the stack trace
-            ]);
+            // Log::error('Launch game request failed', [
+            //     'exception' => $e->getMessage(),
+            //     'trace' => $e->getTraceAsString() // Optionally log the stack trace
+            // ]);
 
             return response()->json(['error' => 'An unexpected error occurred', 'exception' => $e->getMessage()], 500);
         }
     }
+
+    public function getGameList(Request $request)
+{
+    // Validate the request data
+    $validatedData = $request->validate([
+        'memberName' => 'required|string', // Must be provided by the client
+        'productId' => 'required|integer',
+        'gameType' => 'required|integer',
+        'languageCode' => 'required|integer',
+        'platform' => 'required|integer',
+        // Additional validation rules...
+    ]);
+
+    // Retrieve user and configuration settings
+    $operatorCode = Config::get('game.api.operator_code');
+    $secretKey = Config::get('game.api.secret_key');
+    $apiUrl = Config::get('game.api.url') . '/Seamless/GetGameList';
+
+    // Generate the signature
+    $requestTime = now()->format('YmdHis');
+    $signature = md5($operatorCode . $validatedData['memberName'] . $requestTime . $secretKey);
+
+    // Prepare the payload
+    $data = [
+        'OperatorCode' => $operatorCode,
+        'MemberName' => $validatedData['memberName'],
+        'ProductID' => $validatedData['productId'],
+        'GameType' => $validatedData['gameType'],
+        'LanguageCode' => $validatedData['languageCode'],
+        'Platform' => $validatedData['platform'],
+        'IPAddress' => $request->ip(),
+        'Sign' => $signature,
+        'RequestTime' => $requestTime,
+    ];
+
+    // Send the request
+    try {
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ])->post($apiUrl, $data);
+
+        // Handle the response
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        return response()->json(['error' => 'API request failed', 'details' => $response->body()], $response->status());
+    } catch (\Throwable $e) {
+        // Log and handle any exceptions
+        Log::error('Error making API call: ' . $e->getMessage());
+        return response()->json(['error' => 'An unexpected error occurred', 'exception' => $e->getMessage()], 500);
+    }
+}
+
+
 }
 
     // public function launchGame(Request $request)

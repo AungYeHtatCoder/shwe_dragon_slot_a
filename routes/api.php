@@ -34,5 +34,7 @@ Route::group(["middleware" => ['auth:sanctum']], function () {
     });
     Route::group(['prefix' => 'game'], function () {
         Route::post('/launch-game', [LaunchGameController::class, 'launchGame']);
+        // get game list 
+        Route::post('game-list', [LaunchGameController::class, 'getGameList']);
     });
 });
