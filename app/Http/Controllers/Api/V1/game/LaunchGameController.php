@@ -68,6 +68,13 @@ class LaunchGameController extends Controller
                 return $response->json();
             }
 
+             // Log the full response
+            Log::info('API response', [
+                'status' => $response->status(),
+                'headers' => $response->headers(),
+                'body' => $response->json(),
+            ]);
+
             return response()->json(['error' => 'API request failed', 'details' => $response->body()], $response->status());
         } catch (\Throwable $e) {
             // Log the exception
