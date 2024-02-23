@@ -25,10 +25,10 @@ class LaunchGameController extends Controller
 
         // Get request data with default values where necessary
         $displayName = $user->name ?? 'DefaultDisplayName';
-        $productId = $request->input('productId', config('game.default_product_id', 'default-product-id'));
-        $gameType = $request->input('gameType', 1);
-        $languageCode = $request->input('languageCode', 1);
-        $platform = $request->input('platform', 0);
+        $productId = $request->productId;
+        $gameType = $request->gameType;
+        $languageCode = $request->languageCode;
+        $platform = $request->platform;
         $ipAddress = $request->ip();
 
         // Generate the signature
