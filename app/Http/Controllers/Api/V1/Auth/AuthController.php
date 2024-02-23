@@ -7,14 +7,11 @@ use App\Http\Requests\Api\ChangePasswordRequest;
 use App\Http\Requests\Api\LoginRequest;
 use App\Http\Requests\Api\ProfileRequest;
 use App\Http\Resources\PlayerResource;
-use App\Models\Admin\Provider;
 use App\Models\Admin\UserLog;
 use App\Models\User;
 use App\Traits\HttpResponses;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
