@@ -36,7 +36,7 @@ class LaunchGameController extends Controller
         // Prepare the payload
         $data = [
             'OperatorCode' => $operatorCode,
-            'MemberName' => $user->username, // Assume username is the member identifier
+            'MemberName' => $user->user_name, // Assume username is the member identifier
             'DisplayName' => $validatedData['displayName'] ?? $user->name,
             'Password' => $validatedData['password'],
             'ProductID' => $validatedData['productId'],
