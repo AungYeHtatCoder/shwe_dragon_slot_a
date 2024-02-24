@@ -27,6 +27,7 @@ class GetBalanceController extends Controller
         $data = [
             'MemberName' => $memberName,
             'OperatorCode' => $operatorCode,
+            'ProductID' => $request->productId,
             // Assuming ProductID is not required for GetBalance as per your screenshot
             'MessageID' => uniqid(), // Generate a unique message ID
             'RequestTime' => $requestTime,
