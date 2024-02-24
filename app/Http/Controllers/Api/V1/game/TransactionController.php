@@ -22,7 +22,7 @@ class TransactionController extends Controller
             'GameType' => 'required|numeric',
             'BetAmount' => 'required|numeric',
             'TransactionAmount' => 'required|numeric',
-            // ... include other fields based on the model shown in the image
+            // Add validation for other required fields based on your model
         ]);
 
         // Prepare the data payload
@@ -35,7 +35,7 @@ class TransactionController extends Controller
             'GameType' => $validated['GameType'],
             'BetAmount' => $validated['BetAmount'],
             'TransactionAmount' => $validated['TransactionAmount'],
-            // ... and so on for each required field
+            // Include other fields based on the model shown in the image
             // Assuming GameID, GameRoundID, and other nullable fields are not required
         ];
 
@@ -58,9 +58,9 @@ class TransactionController extends Controller
                 'Accept' => 'application/json',
             ])->post($apiUrl, $data);
 
-            // Log the request and response for debugging
-            Log::info('Transaction request sent:', $data);
-            Log::info('Transaction response received:', $response->json());
+            // Correct logging statements with associative array as context
+            Log::info('Transaction request sent.', ['data' => $data]);
+            Log::info('Transaction response received.', ['response' => $response->json(), 'status' => $response->status()]);
 
             if ($response->successful()) {
                 // Return the successful response
@@ -70,11 +70,12 @@ class TransactionController extends Controller
                 return response()->json(['error' => 'API request failed', 'details' => $response->body()], $response->status());
             }
         } catch (\Throwable $e) {
-            Log::error('An unexpected error occurred', [
-            'error' => $e->getMessage(),
-            'trace' => $e->getTraceAsString() // Consider logging the stack trace only if necessary
-        ]);
-        return response()->json(['error' => 'An unexpected error occurred', 'exception' => $e->getMessage()], 500);
+            // Correct logging for exceptions with associative array as context
+            Log::error('An unexpected error occurred.', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString() // Consider logging the stack trace only if necessary
+            ]);
+            return response()->json(['error' => 'An unexpected error occurred', 'exception' => $e->getMessage()], 500);
         }
     }
 }
