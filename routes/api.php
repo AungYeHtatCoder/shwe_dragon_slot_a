@@ -34,12 +34,9 @@ Route::group(["middleware" => ['auth:sanctum']], function () {
     Route::group(['prefix' => 'bank'], function () {
         Route::get('all', [BankController::class, 'all']);
     });
-    Route::group(['prefix' => 'game'], function () {
-        Route::post('/launch-game', [LaunchGameController::class, 'launchGame']);
-        // get game list 
-        Route::post('game-list', [LaunchGameController::class, 'getGameList']);
+    Route::group(['prefix' => 'Seamless'], function () {
+        Route::post('LaunchGame', [LaunchGameController::class, 'launchGame']);
+        Route::post('GetGameList', [LaunchGameController::class, 'getGameList']);
+        Route::post('GetBalance', [GetBalanceController::class, 'getBalance']);
     });
-    // Route::group(['prefix' => 'balance'], function () {
-        Route::post('Seamless/GetBalance', [GetBalanceController::class, 'getBalance']);
-    // });
 });
