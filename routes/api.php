@@ -39,7 +39,7 @@ Route::group(["middleware" => ['auth:sanctum']], function () {
         // get game list 
         Route::post('game-list', [LaunchGameController::class, 'getGameList']);
     });
-    Route::group(['prefix' => 'balance'], function () {
-        Route::post('get-balance', [GetBalanceController::class, 'getBalance']);
-    });
+    // Route::group(['prefix' => 'balance'], function () {
+        Route::post('Seamless/GetBalance', [GetBalanceController::class, 'getBalance']);
+    // });
 });
