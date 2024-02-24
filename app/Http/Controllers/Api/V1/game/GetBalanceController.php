@@ -19,13 +19,15 @@ class GetBalanceController extends Controller
 
         // Generate the signature
         $requestTime = now()->format('YmdHis');
-        $signature = md5($operatorCode . $memberName . $requestTime . $secretKey);
+        // Make sure to use the method name in lowercase as specified
+        $methodName = 'getbalance'; // The method name must be in lowercase
+        $signature = md5($operatorCode . $requestTime . $methodName . $secretKey);
 
         // Prepare the data payload
         $data = [
             'MemberName' => $memberName,
             'OperatorCode' => $operatorCode,
-            'ProductID' => $request->ProductID, // This could be from the request or a default value
+            // Assuming ProductID is not required for GetBalance as per your screenshot
             'MessageID' => uniqid(), // Generate a unique message ID
             'RequestTime' => $requestTime,
             'Sign' => $signature,
