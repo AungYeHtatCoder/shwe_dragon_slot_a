@@ -38,22 +38,25 @@ class GetBalanceController extends Controller
         // Define the API endpoint
         $apiUrl = Config::get('game.api.url') . '/Seamless/GetBalance';
 
-        // Send the POST request to the API
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
         ])->post($apiUrl, $data);
-
-        // Handle the response
+    
+        // Check for both successful or error responses
         if ($response->successful()) {
-            // Process successful response
             return response()->json($response->json());
+        } else {
+            // Log the error details
+            Log::error("API request failed", [
+                'request' => $data,
+                'response_status' => $response->status(),
+                'response_body' => $response->body()
+            ]);
+            return response()->json([
+                'error' => 'API request failed',
+                'details' => $response->body()
+            ], $response->status());
         }
-        Log::info($data);
-        // Handle the case where the API request was not successful
-        return response()->json([
-            'error' => 'API request failed',
-            'details' => $response->body()
-        ], $response->status());
     }
 }
