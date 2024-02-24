@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\Bank\BankController;
 use App\Http\Controllers\Api\V1\PromotionController;
 use App\Http\Controllers\Api\V1\game\LaunchGameController;
 use App\Http\Controllers\Api\V1\Player\WithDrawController;
+use App\Http\Controllers\Api\V1\game\TransactionController;
 use App\Http\Controllers\Api\V1\Player\PlayerTransactionLogController;
 
 //login route post
@@ -36,5 +37,8 @@ Route::group(["middleware" => ['auth:sanctum']], function () {
         Route::post('/launch-game', [LaunchGameController::class, 'launchGame']);
         // get game list 
         Route::post('game-list', [LaunchGameController::class, 'getGameList']);
+    });
+    Route::group(['prefix' => 'transaction'], function () {
+        Route::post('balance', [TransactionController::class, 'createTransaction']);
     });
 });
