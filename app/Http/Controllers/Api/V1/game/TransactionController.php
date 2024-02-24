@@ -70,8 +70,10 @@ class TransactionController extends Controller
                 return response()->json(['error' => 'API request failed', 'details' => $response->body()], $response->status());
             }
         } catch (\Throwable $e) {
-            // Handle exceptions
-             Log::error('Error making API call: ' . $e->getMessage());
+            Log::error('An unexpected error occurred', [
+            'error' => $e->getMessage(),
+            'trace' => $e->getTraceAsString() // Consider logging the stack trace only if necessary
+        ]);
         return response()->json(['error' => 'An unexpected error occurred', 'exception' => $e->getMessage()], 500);
         }
     }
