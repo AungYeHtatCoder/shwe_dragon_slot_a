@@ -71,11 +71,8 @@ class TransactionController extends Controller
             }
         } catch (\Throwable $e) {
             // Handle exceptions
-            Log::error('Transaction request failed:', [
-                'error' => $e->getMessage(),
-                'data' => $data
-            ]);
-            return response()->json(['error' => 'An unexpected error occurred', 'exception' => $e->getMessage()], 500);
+             Log::error('Error making API call: ' . $e->getMessage());
+        return response()->json(['error' => 'An unexpected error occurred', 'exception' => $e->getMessage()], 500);
         }
     }
 }
