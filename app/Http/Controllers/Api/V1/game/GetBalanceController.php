@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 
 class GetBalanceController extends Controller
 {
@@ -48,7 +49,7 @@ class GetBalanceController extends Controller
             // Process successful response
             return response()->json($response->json());
         }
-
+        Log::info($data);
         // Handle the case where the API request was not successful
         return response()->json([
             'error' => 'API request failed',
