@@ -34,8 +34,8 @@ class GetBalanceController extends Controller
 
         try {
         $response = Http::withHeaders([
-            'Content-Type' => 'application/json',
-            'Accept' => 'application/json',
+            'Content-Type' => 'application/json; charset=utf-8',
+            'Accept' => 'application/json; charset=utf-8',
         ])->post($apiUrl, $data);
 
         // Log the response for debugging
