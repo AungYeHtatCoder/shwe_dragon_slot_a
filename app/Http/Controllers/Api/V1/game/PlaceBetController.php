@@ -50,9 +50,12 @@ class PlaceBetController extends Controller
                 return response()->json($response->json());
             } else {
                 Log::error('PlaceBet API request failed', [
+                    'url' => $apiUrl,
                     'response_status' => $response->status(),
+                    'response_headers' => $response->headers(),
                     'response_body' => $response->body(),
                 ]);
+
                 return response()->json([
                     'error' => 'API request failed',
                     'details' => $response->body()
