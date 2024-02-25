@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\BannerController;
 use App\Http\Controllers\Api\V1\Auth\AuthController;
 use App\Http\Controllers\Api\V1\Bank\BankController;
 use App\Http\Controllers\Api\V1\PromotionController;
+use App\Http\Controllers\Api\V1\game\PlaceBetController;
 use App\Http\Controllers\Api\V1\game\GetBalanceController;
 use App\Http\Controllers\Api\V1\game\LaunchGameController;
 use App\Http\Controllers\Api\V1\Player\WithDrawController;
@@ -38,5 +39,6 @@ Route::group(["middleware" => ['auth:sanctum']], function () {
         Route::post('LaunchGame', [LaunchGameController::class, 'launchGame']);
         Route::post('GetGameList', [LaunchGameController::class, 'getGameList']);
         Route::post('GetBalance', [GetBalanceController::class, 'getBalance']);
+        Route::post('PlaceBet', [PlaceBetController::class, 'placeBet']);
     });
 });

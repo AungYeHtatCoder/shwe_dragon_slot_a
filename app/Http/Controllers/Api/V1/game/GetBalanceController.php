@@ -15,12 +15,10 @@ class GetBalanceController extends Controller
     {
         $operatorCode = Config::get('game.api.operator_code');
         $secretKey = Config::get('game.api.secret_key');
-        $memberName = Auth::user()->user_name; // Adjust this line if your user model uses a different field for username
+        $memberName = Auth::user()->user_name; 
         $requestTime = now()->format('YmdHis');
         $methodName = 'getbalance';
         $signature = md5($operatorCode . $requestTime . $methodName . $secretKey);
-
-        // Include 'ProductID' if it's a required parameter based on your API documentation
         $data = [
             'MemberName' => $memberName,
             'OperatorCode' => $operatorCode,
@@ -37,24 +35,17 @@ class GetBalanceController extends Controller
             'Content-Type' => 'application/json; charset=utf-8',
             'Accept' => 'application/json; charset=utf-8',
         ])->post($apiUrl, $data);
-
-        // Log the response for debugging
         Log::info('GetBalance response', ['body' => $response->body(), 'status' => $response->status()]);
 
-        // Check the content type of the response
         $contentType = $response->header('Content-Type');
 
         if (str_contains($contentType, 'application/json')) {
             // It's JSON
             $responseData = $response->json();
         } elseif (str_contains($contentType, ['text/html', 'application/xml'])) {
-            // It's HTML or XML, handle it accordingly
-            // For example, parse the XML to get the error message
             $responseData = simplexml_load_string($response->body());
-            // Convert SimpleXMLElement object to array for easier handling
             $responseData = json_decode(json_encode($responseData), true);
         } else {
-            // Unknown content type
             throw new \Exception('Unknown response content type: ' . $contentType);
         }
 
