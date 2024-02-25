@@ -26,7 +26,7 @@ class GetBalanceController extends Controller
         $data = [
             'MemberName' => $memberName,
             'OperatorCode' => $operatorCode,
-            'ProductID' => $request->input('productId', ''), // Use a default or required value for ProductID
+            'ProductID' => $request->input('ProductID', ''), // Use a default or required value for ProductID
             'MessageID' => uniqid(),
             'RequestTime' => $requestTime,
             'Sign' => $signature,
