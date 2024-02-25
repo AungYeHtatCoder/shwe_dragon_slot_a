@@ -33,6 +33,8 @@ class GetBalanceController extends Controller
         $apiUrl = Config::get('game.api.url') . '/Seamless/GetBalance';
 
         try {
+            // Log the request data
+               Log::info('GetBalance request sent', $data);
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
