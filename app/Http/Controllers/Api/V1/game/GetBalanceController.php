@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Api\V1\game;
 
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpFoundation\Exception\JsonException;
 
 class GetBalanceController extends Controller
 {
@@ -34,14 +36,30 @@ class GetBalanceController extends Controller
 
         try {
             // Log the request data
-               Log::info('GetBalance request sent', $data);
+            Log::info('GetBalance request sent', $data);
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ])->post($apiUrl, $data);
 
             if ($response->successful()) {
-                return response()->json($response->json());
+                try {
+                    $responseData = $response->json(); // Attempt to parse as JSON first
+                } catch (JsonException $e) {
+                    try {
+                        $responseData = simplexml_load_string($response->body()); // Parse as XML if JSON fails
+                    } catch (Exception $e) {
+                        Log::error('Failed to parse API response as JSON or XML', [
+                            'response_body' => $response->body(),
+                            'exception' => $e->getMessage(),
+                        ]);
+                        return response()->json([
+                            'error' => 'Invalid API response format',
+                        ], 400);
+                    }
+                }
+
+                return response()->json($responseData);
             } else {
                 Log::error('GetBalance API request failed', [
                     'response_status' => $response->status(),
