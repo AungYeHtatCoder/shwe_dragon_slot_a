@@ -28,7 +28,7 @@ class GetBalanceController extends Controller
             'OperatorCode' => $operatorCode,
             'ProductID' => $request->input('ProductID', ''), // Use a default or required value for ProductID
             'MessageID' => uniqid(),
-            'RequestTime' => $requestTime,
+            'RequestTime' => $request->input('RequestTime'),
             'Sign' => $signature,
         ];
 
