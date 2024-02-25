@@ -11,52 +11,55 @@ use Illuminate\Support\Facades\Log;
 
 class GetBalanceController extends Controller
 {
-   public function getBalance(Request $request)
+    public function getBalance(Request $request)
     {
-        // Retrieve request parameters from the config or request
         $operatorCode = Config::get('game.api.operator_code');
         $secretKey = Config::get('game.api.secret_key');
-        $memberName = Auth::user()->user_name; // Assuming you have the user's info
-
-        // Generate the signature
+        $memberName = Auth::user()->user_name; 
         $requestTime = now()->format('YmdHis');
-        // Make sure to use the method name in lowercase as specified
-        $methodName = 'getbalance'; // The method name must be in lowercase
+        $methodName = 'getbalance';
         $signature = md5($operatorCode . $requestTime . $methodName . $secretKey);
-
-        // Prepare the data payload
         $data = [
             'MemberName' => $memberName,
             'OperatorCode' => $operatorCode,
-            'ProductID' => $request->productId,
-            // Assuming ProductID is not required for GetBalance as per your screenshot
-            'MessageID' => uniqid(), // Generate a unique message ID
+            'ProductID' => $request->input('productId', ''), // Use a default or required value for ProductID
+            'MessageID' => uniqid(),
             'RequestTime' => $requestTime,
             'Sign' => $signature,
         ];
 
-        // Define the API endpoint
         $apiUrl = Config::get('game.api.url') . '/Seamless/GetBalance';
 
+        try {
         $response = Http::withHeaders([
-            'Content-Type' => 'application/json',
-            'Accept' => 'application/json',
+            'Content-Type' => 'application/json; charset=utf-8',
+            'Accept' => 'application/json; charset=utf-8',
         ])->post($apiUrl, $data);
-    
-        // Check for both successful or error responses
-        if ($response->successful()) {
-            return response()->json($response->json());
+        Log::info('GetBalance response', ['body' => $response->body(), 'status' => $response->status()]);
+
+        $contentType = $response->header('Content-Type');
+
+        if (str_contains($contentType, 'application/json')) {
+            // It's JSON
+            $responseData = $response->json();
+        } elseif (str_contains($contentType, ['text/html', 'application/xml'])) {
+            $responseData = simplexml_load_string($response->body());
+            $responseData = json_decode(json_encode($responseData), true);
         } else {
-            // Log the error details
-            Log::error("API request failed", [
-                'request' => $data,
-                'response_status' => $response->status(),
-                'response_body' => $response->body()
-            ]);
-            return response()->json([
-                'error' => 'API request failed',
-                'details' => $response->body()
-            ], $response->status());
+            throw new \Exception('Unknown response content type: ' . $contentType);
         }
+
+        if ($response->successful()) {
+            return response()->json($responseData);
+        } else {
+            return response()->json(['error' => 'API request failed', 'details' => $responseData], $response->status());
+        }
+    } catch (\Throwable $e) {
+        Log::error('GetBalance request exception', [
+            'message' => $e->getMessage(),
+            'trace' => $e->getTraceAsString(),
+        ]);
+        return response()->json(['error' => 'An unexpected error occurred', 'exception' => $e->getMessage()], 500);
+    }
     }
 }
