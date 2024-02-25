@@ -15,7 +15,7 @@ class GetBalanceController extends Controller
     {
         $operatorCode = Config::get('game.api.operator_code');
         $secretKey = Config::get('game.api.secret_key');
-        $memberName = Auth::user()->user_name; 
+        $memberName = 'mawite';
         $requestTime = now()->format('YmdHis');
         $methodName = 'getbalance';
         $signature = md5($operatorCode . $requestTime . $methodName . $secretKey);
