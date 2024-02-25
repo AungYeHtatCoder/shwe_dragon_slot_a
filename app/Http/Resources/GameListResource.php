@@ -18,14 +18,9 @@ class GameListResource extends JsonResource
         return [
             'id' => $this->id,
             'code' => $this->code,
-            'description' => $this->description,
-            'status' => $this->status,
-            'icon' => $this->getImgUrlAttribute(),
-            'providers' => $this->providers->map(function ($provider) {
+            'providers' => $this->products->map(function ($product) {
                 return [
-                    'id' => $provider->id,
-                    'description' => $provider->description,
-                    'image' => $provider->getImgUrlAttribute()
+                    'id' => $product->id,
                 ];
             }),
         ];

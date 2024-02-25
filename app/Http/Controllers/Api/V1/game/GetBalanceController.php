@@ -43,20 +43,20 @@ class GetBalanceController extends Controller
             'Accept' => 'application/json',
         ])->post($apiUrl, $data);
     
-        // // Check for both successful or error responses
-        // if ($response->successful()) {
-        //     return response()->json($response->json());
-        // } else {
-        //     // Log the error details
-        //     Log::error("API request failed", [
-        //         'request' => $data,
-        //         'response_status' => $response->status(),
-        //         'response_body' => $response->body()
-        //     ]);
-        //     return response()->json([
-        //         'error' => 'API request failed',
-        //         'details' => $response->body()
-        //     ], $response->status());
-        // }
+        // Check for both successful or error responses
+        if ($response->successful()) {
+            return response()->json($response->json());
+        } else {
+            // Log the error details
+            Log::error("API request failed", [
+                'request' => $data,
+                'response_status' => $response->status(),
+                'response_body' => $response->body()
+            ]);
+            return response()->json([
+                'error' => 'API request failed',
+                'details' => $response->body()
+            ], $response->status());
+        }
     }
 }
