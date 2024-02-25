@@ -36,7 +36,7 @@ Route::group(["middleware" => ['auth:sanctum']], function () {
     });
     Route::group(['prefix' => 'Seamless'], function () {
         Route::post('LaunchGame', [LaunchGameController::class, 'launchGame']);
-        //Route::post('GetGameList', [LaunchGameController::class, 'getGameList']);
-        //Route::post('GetBalance', [GetBalanceController::class, 'getBalance']);
+        Route::post('GetGameList', [LaunchGameController::class, 'getGameList']);
+        Route::post('GetBalance', [GetBalanceController::class, 'getBalance']);
     });
 });
