@@ -34,30 +34,14 @@ class GetBalanceController extends Controller
 
         try {
             // Log the request data
-            Log::info('GetBalance request sent', $data);
+               Log::info('GetBalance request sent', $data);
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ])->post($apiUrl, $data);
 
             if ($response->successful()) {
-                // Remove the XML parsing section
-                // $responseData = simplexml_load_string($response->body());
-
-                // Directly try parsing JSON
-                try {
-                    $responseData = $response->json();
-                } catch (JsonException $e) {
-                    Log::error('Failed to parse API response as JSON', [
-                        'response_body' => $response->body(),
-                        'exception' => $e->getMessage(),
-                    ]);
-                    return response()->json([
-                        'error' => 'Invalid API response format',
-                    ], 400);
-                }
-
-                return response()->json($responseData);
+                return response()->json($response->json());
             } else {
                 Log::error('GetBalance API request failed', [
                     'response_status' => $response->status(),
