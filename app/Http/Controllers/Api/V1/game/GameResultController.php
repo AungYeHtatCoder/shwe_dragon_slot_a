@@ -40,7 +40,8 @@ class GameResultController extends Controller
         ];
 
         //$apiUrl = Config::get('game.api.url') . '/Seamless/GameResult';
-        $apiUrl = 'https://swmd.6633663.com/Seamless/GameResult';
+        //$apiUrl = 'https://swmd.6633663.com/Seamless/GameResult';
+        $apiUrl = 'https://shwedragon.online/api/Seamless/GameResult';
         try {
             Log::info('GameResult request sent', $data);
             $response = Http::withHeaders([
