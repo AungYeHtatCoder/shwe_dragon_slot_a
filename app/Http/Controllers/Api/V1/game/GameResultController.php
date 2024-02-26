@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers\Api\V1\game;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class GameResultController extends Controller
 {
     public function gameResult(Request $request)
     {
-        dd($request->all());
         $operatorCode = Config::get('game.api.operator_code');
-        $secretKey = Config::get('game.api.secret_key');        
+        $secretKey = Config::get('game.api.secret_key');
         $requestTime = now()->format('YmdHis');
         $signature = md5($operatorCode . $requestTime . 'gameresult' . $secretKey);
         
