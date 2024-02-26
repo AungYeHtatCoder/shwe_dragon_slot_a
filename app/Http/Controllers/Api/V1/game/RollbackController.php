@@ -18,7 +18,7 @@ class RollbackController extends Controller
         
         // Generate the signature as per your API documentation
         $methodName = 'rollback'; // Ensure this is the correct method name expected by the API
-        $signature = md5($operatorCode . $requestTime . $methodName . $secretKey);
+        $signature = md5($operatorCode . $requestTime . strtolower($methodName) . $secretKey);
         
         // Construct the request payload as per the API documentation
         $data = [
@@ -31,7 +31,6 @@ class RollbackController extends Controller
             'Transactions' => $request->input('Transactions', [])
         ];
 
-        //$apiUrl = Config::get('game.api.url') . '/Seamless/Rollback';
         $apiUrl = 'https://swmd.6633663.com/Seamless/Rollback';
         try {
             Log::info('Rollback request sent', $data);
