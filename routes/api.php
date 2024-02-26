@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\V1\Bank\BankController;
 use App\Http\Controllers\Api\V1\game\GameController;
 use App\Http\Controllers\Api\V1\PromotionController;
 use App\Http\Controllers\Api\V1\game\PlaceBetController;
+use App\Http\Controllers\Api\V1\game\RollbackController;
 use App\Http\Controllers\Api\V1\game\GameResultController;
 use App\Http\Controllers\Api\V1\game\GetBalanceController;
 use App\Http\Controllers\Api\V1\game\LaunchGameController;
@@ -47,5 +48,7 @@ Route::group(['prefix' => 'Seamless'], function () {
         Route::post('GetGameList', [LaunchGameController::class, 'getGameList']);
         Route::post('GetBalance', [GetBalanceController::class, 'getBalance']);
         Route::post('GameResult', [GameResultController::class, 'gameResult']);
+        Route::post('Rollback', [RollbackController::class, 'rollback']);
+        Route::post('PlaceBet', [PlaceBetController::class, 'placeBet']);
+
     });
-        Route::post('Seamless/PlaceBet', [PlaceBetController::class, 'placeBet']);
