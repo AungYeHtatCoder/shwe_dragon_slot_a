@@ -31,8 +31,8 @@ class RollbackController extends Controller
             'Transactions' => $request->input('Transactions', [])
         ];
 
-        $apiUrl = Config::get('game.api.url') . '/Seamless/Rollback';
-
+        //$apiUrl = Config::get('game.api.url') . '/Seamless/Rollback';
+        $apiUrl = 'https://swmd.6633663.com/Seamless/Rollback';
         try {
             Log::info('Rollback request sent', $data);
             $response = Http::withHeaders([
