@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code');
             $table->string('name');
+            $table->bigInteger('click_count')->default(0);
             $table->unsignedBigInteger('game_type_id');
             $table->unsignedBigInteger('product_id');
             $table->string('image_url');

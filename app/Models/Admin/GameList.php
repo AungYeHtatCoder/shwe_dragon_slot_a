@@ -11,7 +11,7 @@ class GameList extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['game_type_id','product_id','name','code','image_url'];
+    protected $fillable = ['game_type_id','product_id','name','code','image_url','click_count'];
     
     public function product()
     {
