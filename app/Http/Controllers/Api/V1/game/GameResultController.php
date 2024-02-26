@@ -12,6 +12,7 @@ class GameResultController extends Controller
 {
     public function gameResult(Request $request)
     {
+        dd($request->all());
         $operatorCode = Config::get('game.api.operator_code');
         $secretKey = Config::get('game.api.secret_key');        
         $requestTime = now()->format('YmdHis');

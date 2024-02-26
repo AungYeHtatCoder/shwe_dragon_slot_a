@@ -65,4 +65,9 @@ class GetBalanceController extends Controller
             ], 500);
         }
     }
+
+    public function gameResult(Request $request)
+    {
+        return true;
+    }
 }
