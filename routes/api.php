@@ -39,12 +39,14 @@ Route::group(["middleware" => ['auth:sanctum']], function () {
     Route::group(['prefix' => 'game'], function () {
         Route::get('gameType',[GameController::class,'gameType']);
         Route::get('gameTypeProducts/{id}', [GameController::class, 'gameTypeProducts']);
+        Route::post('LaunchGame', [LaunchGameController::class, 'launchGame']);
+
     });
 
     
 });
 Route::group(['prefix' => 'Seamless'], function () {
-        Route::post('LaunchGame', [LaunchGameController::class, 'launchGame']);
+        //Route::post('LaunchGame', [LaunchGameController::class, 'launchGame']);
         Route::post('GetGameList', [LaunchGameController::class, 'getGameList']);
         Route::post('GetBalance', [GetBalanceController::class, 'getBalance']);
         Route::post('GameResult', [GameResultController::class, 'gameResult']);
