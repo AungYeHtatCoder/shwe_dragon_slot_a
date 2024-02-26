@@ -13,6 +13,8 @@ class GetBalanceController extends Controller
 {
     public function getBalance(Request $request)
     {
+        logger($request->all());
+        return true;
         //$operatorCode = Config::get('game.api.operator_code');
         $operatorCode = $request->input('OperatorCode');
         $secretKey = Config::get('game.api.secret_key');
