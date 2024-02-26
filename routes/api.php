@@ -19,7 +19,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('promotion', [PromotionController::class, 'index']);
 Route::get('banner', [BannerController::class, 'index']);
 Route::get('v1/validate',[AuthController::class,'callback']);
-//Route::post('Seamless/GetBalance', [GetBalanceController::class, 'getBalance']);
+Route::post('Seamless/GetBalance', [GetBalanceController::class, 'getBalance']);
+Route::post('Seamless/GameResult', [GameResultController::class, 'gameResult']);
 
 Route::group(["middleware" => ['auth:sanctum']], function () {
     //logout
@@ -42,15 +43,13 @@ Route::group(["middleware" => ['auth:sanctum']], function () {
         Route::post('Seamless/LaunchGame', [LaunchGameController::class, 'launchGame']);
 
     });
-
-    
 });
-Route::group(['prefix' => 'Seamless'], function () {
-        //Route::post('LaunchGame', [LaunchGameController::class, 'launchGame']);
-        Route::post('GetGameList', [LaunchGameController::class, 'getGameList']);
-        Route::post('GetBalance', [GetBalanceController::class, 'getBalance']);
-        Route::post('GameResult', [GameResultController::class, 'gameResult']);
-        Route::post('Rollback', [RollbackController::class, 'rollback']);
-        Route::post('PlaceBet', [PlaceBetController::class, 'placeBet']);
 
-    });
+Route::group(['prefix' => 'Seamless'], function () {
+    Route::post('GetGameList', [LaunchGameController::class, 'getGameList']);
+    // Route::post('GetBalance', [GetBalanceController::class, 'getBalance']);
+    // Route::post('GameResult', [GameResultController::class, 'gameResult']);
+    Route::post('Rollback', [RollbackController::class, 'rollback']);
+    Route::post('PlaceBet', [PlaceBetController::class, 'placeBet']);
+
+});
