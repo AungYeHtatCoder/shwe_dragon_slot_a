@@ -17,13 +17,11 @@ class GameDetailResource extends JsonResource
         return [
             'id' =>  $this->id,
             'game_id' =>  $this->game_id,
-            'name_en'=> $this->name_en,
-            'name_mm'=> $this->name_mm,
-            'image' => $this->getImgUrlAttribute(),
+            'name'=> $this->name_en,
+            'image' => $this->image_url,
             'click_count'=> $this->click_count,
             'game_type_id'=> $this->game_type_id,
-            'provider_id'=> $this->provider_id
-
+            'product_id'=> $this->product_id
         ];
     }
 }
