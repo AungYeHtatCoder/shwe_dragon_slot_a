@@ -38,40 +38,23 @@ class GameResultController extends Controller
             'Sign' => $signature,
             'Transactions' => $transactions
         ];
-
-        //$apiUrl = Config::get('game.api.url') . '/Seamless/GameResult';
-        //$apiUrl = 'https://swmd.6633663.com/Seamless/GameResult';
-        $apiUrl = 'https://shwedragon.online/api/Seamless/GameResult';
-        try {
-            Log::info('GameResult request sent', $data);
-            $response = Http::withHeaders([
-                'Content-Type' => 'application/json',
-                'Accept' => 'application/json',
-            ])->post($apiUrl, $data);
-
-            Log::info('GameResult response received', ['body' => $response->body(), 'status' => $response->status()]);
-
-            if ($response->successful()) {
-                return response()->json($response->json());
-            } else {
-                Log::error('GameResult API request failed', [
-                    'response_status' => $response->status(),
-                    'response_body' => $response->body(),
-                ]);
-                return response()->json([
-                    'error' => 'API request failed',
-                    'details' => $response->body()
-                ], $response->status());
-            }
-        } catch (\Throwable $e) {
-            Log::error('GameResult request exception', [
-                'message' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
-            return response()->json([
-                'error' => 'An unexpected error occurred',
-                'exception' => $e->getMessage()
-            ], 500);
-        }
+            
+        return $data;
+        
+        // $apiUrl = Config::get('game.api.url') . '/Seamless/GameResult';
+        // //$apiUrl = 'https://swmd.6633663.com/Seamless/GameResult';
+        // // $apiUrl = 'https://shwedragon.online/api/Seamless/GameResult';
+        // try {
+            
+        // } catch (\Throwable $e) {
+        //     Log::error('GameResult request exception', [
+        //         'message' => $e->getMessage(),
+        //         'trace' => $e->getTraceAsString(),
+        //     ]);
+        //     return response()->json([
+        //         'error' => 'An unexpected error occurred',
+        //         'exception' => $e->getMessage()
+        //     ], 500);
+        // }
     }
 }
