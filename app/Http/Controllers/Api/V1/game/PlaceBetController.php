@@ -63,7 +63,7 @@ class PlaceBetController extends Controller
         'TransactionAmount' => $transactions[0]['TransactionAmount'],
         'PayoutAmount' => $transactions[0]['PayoutAmount'],
         'PayoutDetail' => $transactions[0]['PayoutDetail'],
-        'CommisionAmount' => $transactions[0]['CommisionAmount'], // Correct the spelling here if it's a typo
+        'CommisionAmount' => $transactions[0]['CommissionAmount'], // Correct the spelling here if it's a typo
         'JackpotAmount' => $transactions[0]['JackpotAmount'],
         'SettlementDate' => $transactions[0]['SettlementDate'], // Make sure the format matches your database column format
         'JPBet' => $transactions[0]['JPBet'],
