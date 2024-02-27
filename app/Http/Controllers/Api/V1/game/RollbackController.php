@@ -30,38 +30,39 @@ class RollbackController extends Controller
             'Sign' => $signature,
             'Transactions' => $request->input('Transactions', [])
         ];
+        return $data;
 
-        $apiUrl = 'https://swmd.6633663.com/Seamless/Rollback';
-        try {
-            Log::info('Rollback request sent', $data);
-            $response = Http::withHeaders([
-                'Content-Type' => 'application/json',
-                'Accept' => 'application/json',
-            ])->post($apiUrl, $data);
+        // $apiUrl = 'https://swmd.6633663.com/Seamless/Rollback';
+        // try {
+        //     Log::info('Rollback request sent', $data);
+        //     $response = Http::withHeaders([
+        //         'Content-Type' => 'application/json',
+        //         'Accept' => 'application/json',
+        //     ])->post($apiUrl, $data);
 
-            Log::info('Rollback response received', ['body' => $response->body(), 'status' => $response->status()]);
+        //     Log::info('Rollback response received', ['body' => $response->body(), 'status' => $response->status()]);
 
-            if ($response->successful()) {
-                return response()->json($response->json());
-            } else {
-                Log::error('Rollback API request failed', [
-                    'response_status' => $response->status(),
-                    'response_body' => $response->body(),
-                ]);
-                return response()->json([
-                    'error' => 'API request failed',
-                    'details' => $response->body()
-                ], $response->status());
-            }
-        } catch (\Throwable $e) {
-            Log::error('Rollback request exception', [
-                'message' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
-            return response()->json([
-                'error' => 'An unexpected error occurred',
-                'exception' => $e->getMessage()
-            ], 500);
-        }
+        //     if ($response->successful()) {
+        //         return response()->json($response->json());
+        //     } else {
+        //         Log::error('Rollback API request failed', [
+        //             'response_status' => $response->status(),
+        //             'response_body' => $response->body(),
+        //         ]);
+        //         return response()->json([
+        //             'error' => 'API request failed',
+        //             'details' => $response->body()
+        //         ], $response->status());
+        //     }
+        // } catch (\Throwable $e) {
+        //     Log::error('Rollback request exception', [
+        //         'message' => $e->getMessage(),
+        //         'trace' => $e->getTraceAsString(),
+        //     ]);
+        //     return response()->json([
+        //         'error' => 'An unexpected error occurred',
+        //         'exception' => $e->getMessage()
+        //     ], 500);
+        // }
     }
 }

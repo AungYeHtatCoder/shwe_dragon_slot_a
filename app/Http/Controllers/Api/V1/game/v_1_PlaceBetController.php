@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Api\V1\game;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Config;
 
-class GameResultController extends Controller
+class PlaceBetController extends Controller
 {
-    public function gameResult(Request $request)
+    public function placeBet(Request $request)
     {
         $operatorCode = $request->get("OperatorCode");
         $memberName = $request->get("MemberName");
@@ -21,7 +21,7 @@ class GameResultController extends Controller
 
         $sign = $request->get("Sign");
 
-        $signature = md5($operatorCode . $requestTime . 'gameresult' . $secretKey);
+        $signature = md5($operatorCode . $requestTime . 'placebet' . $secretKey);
 
         if ($sign !== $signature) {
             return [
@@ -33,22 +33,10 @@ class GameResultController extends Controller
 
         $member = User::where("user_name", $memberName)->first();
 
-        $after_balance = $member->balance - $request->get("Transactions")[0]["TransactionAmount"];
-
-        if ($after_balance < 0) {
-            return [
-                "ErrorCode" => 1001,
-                "ErrorMessage" => "Insufficient Balance",
-                "Balance" => $after_balance,
-                "BeforeBalance" => $member->balance
-            ];
-        }
-
         return [
             "ErrorCode" => 0,
             "ErrorMessage" => "",
-            "Balance" => $after_balance,
-            "BeforeBalance" => $member->balance
+            "Balance" => $member->balance - $request->get("Transactions")["BetAmount"]
         ];
     }
 }
