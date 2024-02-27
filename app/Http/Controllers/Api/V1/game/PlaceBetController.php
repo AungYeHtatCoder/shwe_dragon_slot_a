@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1\game;
 
+use App\Models\User;
+use App\Models\UserWallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Support\Facades\Config;
 
 class PlaceBetController extends Controller
@@ -79,6 +80,24 @@ class PlaceBetController extends Controller
             ];
         }
 
+         $transactionID = $transactions[0]['TransactionID']; // Make sure this matches the actual key in the request
+
+        // Check for duplicate transaction
+        if ($this->isDuplicateTransaction($transactionID)) {
+            return response()->json([
+                "ErrorCode" => 2001, // Use an appropriate error code for duplicates
+                "ErrorMessage" => "Duplicate transaction",
+                "Balance" => $member->balance
+            ]);
+        }
+
+        
+
         return response()->json($response);
+    }
+
+     private function isDuplicateTransaction($transactionID)
+    {
+        return UserWallet::where('TransactionID', $transactionID)->exists();
     }
 }

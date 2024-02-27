@@ -17,22 +17,35 @@ class UserWallet extends Model
     protected $table = 'user_wallets';
 
      protected $fillable = [
+        'id',
         'user_id',
         'wallet',
-        'ag_wallet',
-        'gb_wallet',
-        'g8_wallet',
-        'jk_wallet',
-        'jd_wallet',
-        'l4_wallet',
-        'k9_wallet',
-        'pg_wallet',
-        'pr_wallet',
-        're_wallet',
-        's3_wallet',
-        'status'
+        'MemberID',
+        'OperatorID',
+        'ProductID',
+        'ProviderID',
+        'ProviderLineID',
+        'WagerID',
+        'CurrencyID',
+        'GameType',
+        'GameID',
+        'GameRoundID',
+        'ValidBetAmount',
+        'BetAmount',
+        'TransactionAmount',
+        'TransactionID',
+        'PayoutAmount',
+        'PayoutDetail',
+        'BetDetail',
+        'CommisionAmount',
+        'JackpotAmount',
+        'SettlementDate',
+        'JPBet',
+        'Status',
+        'CreatedOn',
+        'ModifiedOn'
     ];
-    protected $dates = ['created_at', 'updated_at'];
+    protected $dates = ['CreatedOn', 'ModifiedOn'];
 
     public function user()
     {

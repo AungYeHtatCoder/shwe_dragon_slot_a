@@ -14,23 +14,32 @@ return new class extends Migration
         Schema::create('user_wallets', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->decimal('wallet')->default('0.00');
-            $table->decimal('ag_wallet')->default('0.00');
-            $table->decimal('gb_wallet')->default('0.00');
-            $table->decimal('g8_wallet')->default('0.00');
-            $table->decimal('jk_wallet')->default('0.00');
-            $table->decimal('jd_wallet')->default('0.00');
-            $table->decimal('l4_wallet')->default('0.00');
-            $table->decimal('k9_wallet')->default('0.00');
-            $table->decimal('pg_wallet')->default('0.00');
-            $table->decimal('pr_wallet')->default('0.00');
-            $table->decimal('re_wallet')->default('0.00');
-            $table->decimal('s3_wallet')->default('0.00');
-            $table->integer('status')->default(0);
+            $table->decimal('wallet', 10, 2)->default(0.00); 
+            $table->unsignedBigInteger('MemberID')->nullable();
+            $table->unsignedBigInteger('OperatorID')->nullable();
+            $table->unsignedBigInteger('ProductID')->nullable();
+            $table->unsignedBigInteger('ProviderID')->nullable();
+            $table->unsignedBigInteger('ProviderLineID')->nullable();
+            $table->unsignedBigInteger('WagerID')->nullable();
+            $table->unsignedBigInteger('CurrencyID')->nullable();
+            $table->unsignedBigInteger('GameType')->nullable(); 
+            $table->unsignedBigInteger('GameID')->nullable();
+            $table->unsignedBigInteger('GameRoundID')->nullable();
+            $table->decimal('ValidBetAmount', 10, 2)->default(0.00);
+            $table->decimal('BetAmount', 10, 2)->default(0.00);
+            $table->decimal('TransactionAmount', 10, 2)->default(0.00);
+            $table->unsignedBigInteger('TransactionID')->nullable(); 
+            $table->decimal('PayoutAmount', 10, 2)->default(0.00);
+            $table->text('PayoutDetail')->nullable();
+            $table->text('BetDetail')->nullable();
+            $table->decimal('CommisionAmount', 10, 2)->default(0.00);
+            $table->decimal('JackpotAmount', 10, 2)->default(0.00);
+            $table->timestamp('SettlementDate')->nullable();
+            $table->decimal('JPBet', 10, 2)->default(0.00);
+            $table->integer('Status')->default(0);
+            $table->timestamp('CreatedOn')->nullable();
+            $table->timestamp('ModifiedOn')->nullable();
             $table->timestamps();
-            $table->smallInteger('sync')->default(0);
-            $table->integer('sync_time')->default(0);
-            // Add foreign key constraints if needed
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
