@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('ProductID')->default('0');
             $table->text('MessageID')->nullable();
             $table->string('RequestTime')->default('20240227032645');
-            $table->text('Sign')->default('cb06c77e47921f822a11d16eb5afdade');
+            $table->text('Sign')->nullable();
             $table->unsignedBigInteger('TransactionID')->default('0');
             $table->timestamps();
              $table->foreign('TransactionID')->references('id')->on('user_wallets')->onDelete('cascade');
