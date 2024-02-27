@@ -51,7 +51,6 @@ class PlaceBetController extends Controller
         
         // Create UserWallet transaction
         $userWalletTransaction = $user->userWallet();
-        //$userWalletTransaction = $user->userWallet()->create([
         $userWalletTransaction = new UserWallet([
         'user_id' => '3',
         'wallet' => $user->balance - $transactionData['TransactionAmount'], 
@@ -82,6 +81,7 @@ class PlaceBetController extends Controller
         
         
         // Create PlaceBet record
+        $transaction_id = UserWallet::latest()->first();
         $placeBet = new PlaceBet([
             'MemberName' => $request->input("MemberName"),
             'OperatorCode' => $request->input("OperatorCode"),
@@ -89,7 +89,7 @@ class PlaceBetController extends Controller
             'MessageID' => $request->input("MessageID"),
             'RequestTime' => $request->input("RequestTime"), 
             'Sign' => $request->input("Sign"),
-            'TransactionID' => $userWalletTransaction->id
+            'TransactionID' => $transaction_id->id
         ]);
         $placeBet->save();
         
