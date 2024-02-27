@@ -77,11 +77,7 @@ class PlaceBetController extends Controller
         'CreatedOn' => now(),
         'ModifiedOn' => now()
         ]);
-        //$userWalletTransaction->save();
         
-        
-        // Create PlaceBet record
-        $transaction_id = UserWallet::latest()->first();
         $placeBet = new PlaceBet([
             'MemberName' => $request->input("MemberName"),
             'OperatorCode' => $request->input("OperatorCode"),
