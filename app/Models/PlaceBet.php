@@ -15,7 +15,7 @@ class PlaceBet extends Model
         'MessageID',
         'RequestTime',
         'Sign',
-        'Transaction_ID'
+        'user_wallet_id'
     ];
     public function userWallet()
     {
