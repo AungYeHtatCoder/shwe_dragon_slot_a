@@ -41,20 +41,6 @@ class GameResultController extends Controller
             
         return $data;
         
-        // $apiUrl = Config::get('game.api.url') . '/Seamless/GameResult';
-        // //$apiUrl = 'https://swmd.6633663.com/Seamless/GameResult';
-        // // $apiUrl = 'https://shwedragon.online/api/Seamless/GameResult';
-        // try {
-            
-        // } catch (\Throwable $e) {
-        //     Log::error('GameResult request exception', [
-        //         'message' => $e->getMessage(),
-        //         'trace' => $e->getTraceAsString(),
-        //     ]);
-        //     return response()->json([
-        //         'error' => 'An unexpected error occurred',
-        //         'exception' => $e->getMessage()
-        //     ], 500);
-        // }
+        
     }
 }
