@@ -22,7 +22,7 @@ use App\Http\Controllers\Api\V1\Player\PlayerTransactionLogController;
     Route::post('Seamless/GetGameList', [LaunchGameController::class, 'getGameList']);
     Route::post('Seamless/GetBalance', [GetBalanceController::class, 'getBalance']);
     Route::post('Seamless/GameResult', [GameResultController::class, 'gameResult']);
-    // Route::post('Seamless/Rollback', [RollbackController::class, 'rollback']);
+    Route::post('Seamless/Rollback', [RollbackController::class, 'rollback']);
     Route::post('Seamless/PlaceBet', [PlaceBetController::class, 'placeBet']);
     Route::any("Seamless/*", function(){
         abort(500);

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\V1\game;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Config;
 
@@ -12,57 +14,55 @@ class RollbackController extends Controller
 {
     public function rollback(Request $request)
     {
-        $operatorCode = Config::get('game.api.operator_code');
-        $secretKey = Config::get('game.api.secret_key');
-        $requestTime = now()->format('YmdHis');
+        $operatorCode = $request->input("OperatorCode");
+        $memberName = $request->get("MemberName");
+        $requestTime = $request->input("RequestTime");
+        $secretKey = config("game.api.secret_key");
+        $sign = $request->input("Sign");
+        $signature = md5($operatorCode . $requestTime . 'rollback' . $secretKey);
+        if ($sign !== $signature) {
+            return response()->json([
+                "ErrorCode" => 1004,
+                "ErrorMessage" => "Wrong Sign",
+                "Balance" => 0
+            ]);
+        }
+
+        $transaction = $request->get("Transactions")[0];
+
+        $member = User::where("user_name", $memberName)->first();
+        $after_balance = $member->balance + $transaction["TransactionAmount"];
+
+        if ($after_balance < 0) {
+            return [
+                "ErrorCode" => 1001,
+                "ErrorMessage" => "Insufficient Balance",
+                "Balance" => $after_balance,
+                "BeforeBalance" => $member->balance
+            ];
+        }
+
+        if (Transaction::where("external_transaction_id", $transaction["TransactionID"])->exists()) {
+            
+            return [
+                "ErrorCode" => 1003,
+                "ErrorMessage" => "Duplicate Transaction",
+                "Balance" => $after_balance,
+                "BeforeBalance" => $member->balance
+            ];
+        }
         
-        // Generate the signature as per your API documentation
-        $methodName = 'rollback'; // Ensure this is the correct method name expected by the API
-        $signature = md5($operatorCode . $requestTime . strtolower($methodName) . $secretKey);
-        
-        // Construct the request payload as per the API documentation
-        $data = [
-            'MemberName' => $request->input('MemberName'),
-            'OperatorCode' => $operatorCode,
-            'ProductID' => $request->input('ProductID'),
-            'MessageID' => $request->input('MessageID'),
-            'RequestTime' => $requestTime,
-            'Sign' => $signature,
-            'Transactions' => $request->input('Transactions', [])
+        Transaction::create([
+            "user_id" => $member->id,
+            "external_transaction_id" => $transaction["TransactionID"],
+            "wager_id" => $transaction["WagerID"]
+        ]);
+
+        return [
+            "ErrorCode" => 0,
+            "ErrorMessage" => "",
+            "Balance" => $after_balance,
+            "BeforeBalance" => $member->balance
         ];
-        return $data;
-
-        // $apiUrl = 'https://swmd.6633663.com/Seamless/Rollback';
-        // try {
-        //     Log::info('Rollback request sent', $data);
-        //     $response = Http::withHeaders([
-        //         'Content-Type' => 'application/json',
-        //         'Accept' => 'application/json',
-        //     ])->post($apiUrl, $data);
-
-        //     Log::info('Rollback response received', ['body' => $response->body(), 'status' => $response->status()]);
-
-        //     if ($response->successful()) {
-        //         return response()->json($response->json());
-        //     } else {
-        //         Log::error('Rollback API request failed', [
-        //             'response_status' => $response->status(),
-        //             'response_body' => $response->body(),
-        //         ]);
-        //         return response()->json([
-        //             'error' => 'API request failed',
-        //             'details' => $response->body()
-        //         ], $response->status());
-        //     }
-        // } catch (\Throwable $e) {
-        //     Log::error('Rollback request exception', [
-        //         'message' => $e->getMessage(),
-        //         'trace' => $e->getTraceAsString(),
-        //     ]);
-        //     return response()->json([
-        //         'error' => 'An unexpected error occurred',
-        //         'exception' => $e->getMessage()
-        //     ], 500);
-        // }
     }
 }
