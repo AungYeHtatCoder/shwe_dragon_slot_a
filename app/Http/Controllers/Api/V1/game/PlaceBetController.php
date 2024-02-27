@@ -43,29 +43,9 @@ class PlaceBetController extends Controller
             ]);
         }
 
-        // Check if member has enough balance
-        if ($member->balance < $betAmount) {
-            return response()->json([
-                "ErrorCode" => 1001,
-                "ErrorMessage" => "Insufficient balance",
-                "Balance" => $member->balance
-            ]);
-        }
-
-        // Deduct bet amount from member's balance and save
-        $member->balance -= $betAmount;
-        $member->save();
-
-        // Return the successful response
-        return response()->json([
-            "ErrorCode" => 0,
-            "ErrorMessage" => "",
-            "Balance" => $member->balance
-        ]);
-
-        // Assuming $transactions[0] contains the transaction details from your provided JSON
-
-// Create a new transaction in the UserWallet
+        if(isset($member))
+        {
+            // Create a new transaction in the UserWallet
     $transaction = new UserWallet([
         'user_id' => '3', // Assuming you have the user's ID stored in $userId
         'MemberID' => $transactions[0]['MemberID'],
@@ -106,7 +86,29 @@ class PlaceBetController extends Controller
     ]);
 
     $placeBet->save();
+        }
 
+        // Check if member has enough balance
+        if ($member->balance < $betAmount) {
+            return response()->json([
+                "ErrorCode" => 1001,
+                "ErrorMessage" => "Insufficient balance",
+                "Balance" => $member->balance
+            ]);
+        }
+
+        // Deduct bet amount from member's balance and save
+        $member->balance -= $betAmount;
+        $member->save();
+
+        // Return the successful response
+        return response()->json([
+            "ErrorCode" => 0,
+            "ErrorMessage" => "",
+            "Balance" => $member->balance
+        ]);
+
+        // Assuming $transactions[0] contains the transaction details from your provided JSON
 
         
        // Assuming that 'TransactionAmount' is the amount of money deducted from the balance
