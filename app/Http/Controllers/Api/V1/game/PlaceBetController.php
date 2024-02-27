@@ -68,8 +68,10 @@ class PlaceBetController extends Controller
         'SettlementDate' => $transactions[0]['SettlementDate'], // Make sure the format matches your database column format
         'JPBet' => $transactions[0]['JPBet'],
         'Status' => $transactions[0]['Status'],
-        'CreatedOn' => $transactions[0]['CreatedOn'], // Or use now() if you want to set it to the current timestamp
-        'ModifiedOn' => $transactions[0]['ModifiedOn'] // Or use now() if you want to set it to the current timestamp
+        //'CreatedOn' => $transactions[0]['CreatedOn'], // Or use now() if you want to set it to the current timestamp
+        'CreatedOn' => now(),
+
+        'ModifiedOn' => now() // Or use now() if you want to set it to the current timestamp
     ]);
 
     $transaction->save();
