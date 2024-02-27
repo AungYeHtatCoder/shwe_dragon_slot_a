@@ -62,20 +62,23 @@ class PlaceBetController extends Controller
         ]);
 
         
-        // Check if the expected balance matches the calculated balance
-        $expectedBalance = $request->get("Transactions")['TransactionAmount']; // Assuming 'Balance' is sent within the transaction data.
+       // Assuming that 'TransactionAmount' is the amount of money deducted from the balance
+        $transactionAmount = $transactions[0]['TransactionAmount']; // Get the transaction amount from the request
+        
+        // Calculate what the balance should be after the transaction
+        $calculatedBalance = $member->balance - $betAmount;
 
-        // Calculate what the new balance should be
-        //$newBalance = $member->balance - $betAmount;
-
-        if ($expectedBalance > $betAmount) {
-            return response()->json([
+        // Check if the calculated balance matches the balance after the transaction
+        if ($calculatedBalance != $member->balance + $transactionAmount) {
+            $response = [
                 "ErrorCode" => 16,
                 "ErrorMessage" => "Balance is incorrect",
-                //"Balance" => $member->balance
-                "Balance" => $request->get("Transactions")["TransactionAmount"]
-
-            ]);
+                "Balance" => $member->balance,
+                "ExpectedBalance" => $calculatedBalance,
+                "TransactionAmount" => $transactionAmount
+            ];
         }
+
+        return response()->json($response);
     }
 }
