@@ -50,7 +50,7 @@ class PlaceBetController extends Controller
         }
         
         // Create UserWallet transaction
-        $userWalletTransaction = $user->userWallets()->create([
+        $userWalletTransaction = $user->userWallet()->create([
         
         'user_id' => '3',
         'wallet' => $user->balance - $transactionData['TransactionAmount'], 
