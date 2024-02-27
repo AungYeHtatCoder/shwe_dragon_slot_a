@@ -89,7 +89,7 @@ class PlaceBetController extends Controller
             'MessageID' => $request->input("MessageID"),
             'RequestTime' => $request->input("RequestTime"), 
             'Sign' => $request->input("Sign"),
-            'TransactionID' => $userWalletTransaction->id
+            'TransactionID' => $transaction_data->id
         ]);
         $placeBet->save();
         
