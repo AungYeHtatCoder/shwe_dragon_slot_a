@@ -1,0 +1,35 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('place_bets', function (Blueprint $table) {
+            $table->id();
+            $table->string('MemberName')->nullable();
+            $table->string('OperatorCode')->nullable();
+            $table->unsignedBigInteger('ProductID')->default('0');
+            $table->text('MessageID')->nullable();
+            $table->string('RequestTime')->default('20240227032645');
+            $table->text('Sign')->default('cb06c77e47921f822a11d16eb5afdade');
+            $table->unsignedBigInteger('TransactionID')->default('0');
+            $table->timestamps();
+             $table->foreign('TransactionID')->references('id')->on('user_wallets')->onDelete('cascade');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('place_bets');
+    }
+};

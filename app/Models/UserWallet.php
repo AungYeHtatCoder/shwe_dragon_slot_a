@@ -52,5 +52,10 @@ class UserWallet extends Model
         return $this->belongsTo(User::class);
     }
 
+     public function placeBets()
+    {
+        return $this->hasMany(PlaceBet::class, 'TransactionID', 'id');
+    }
+
 
 }
