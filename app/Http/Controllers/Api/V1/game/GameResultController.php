@@ -3,16 +3,19 @@
 namespace App\Http\Controllers\Api\V1\game;
 
 use App\Http\Controllers\Controller;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Route;
 
 class GameResultController extends Controller
 {
     public function gameResult(Request $request)
     {
+        $method =  str(__FUNCTION__)->lower();
         $operatorCode = $request->get("OperatorCode");
         $memberName = $request->get("MemberName");
         $requestTime = $request->get("RequestTime");
@@ -21,7 +24,9 @@ class GameResultController extends Controller
 
         $sign = $request->get("Sign");
 
-        $signature = md5($operatorCode . $requestTime . 'gameresult' . $secretKey);
+        // return $operatorCode . $requestTime . 'gameresult' . $secretKey;
+
+        $signature = md5($operatorCode . $requestTime . $method . $secretKey);
 
         if ($sign !== $signature) {
             return [
@@ -33,7 +38,9 @@ class GameResultController extends Controller
 
         $member = User::where("user_name", $memberName)->first();
 
-        $after_balance = $member->balance - $request->get("Transactions")[0]["TransactionAmount"];
+        $transaction = $request->get("Transactions")[0];
+
+        $after_balance = $member->balance + $transaction["TransactionAmount"];
 
         if ($after_balance < 0) {
             return [
@@ -43,6 +50,21 @@ class GameResultController extends Controller
                 "BeforeBalance" => $member->balance
             ];
         }
+
+        if(Transaction::where("external_transaction_id", $transaction["TransactionID"])->exists()){
+            return [
+                "ErrorCode" => 1003,
+                "ErrorMessage" => "Duplicate Transaction",
+                "Balance" => $after_balance,
+                "BeforeBalance" => $member->balance
+            ];
+        }
+
+        Transaction::create([
+            "user_id" => $member->id,
+            "external_transaction_id" => $transaction["TransactionID"],
+            "wager_id" => $transaction["WagerID"]
+        ]);
 
         return [
             "ErrorCode" => 0,

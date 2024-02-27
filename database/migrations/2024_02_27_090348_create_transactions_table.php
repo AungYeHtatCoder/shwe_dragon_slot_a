@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId("user_id");
             $table->string("external_transaction_id");
+            $table->string("wager_id");
             // amount 
             // game id
             $table->timestamps();

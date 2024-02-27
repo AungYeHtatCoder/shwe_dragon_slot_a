@@ -7,6 +7,7 @@ use App\Models\UserWallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Config;
 
 class PlaceBetController extends Controller
@@ -29,7 +30,9 @@ class PlaceBetController extends Controller
 
         $member = User::where("user_name", $memberName)->first();
 
-        $after_balance = $member->balance - $request->get("Transactions")[0]["BetAmount"];
+        $transaction = $request->get("Transactions")[0];
+
+        $after_balance = $member->balance - $transaction["BetAmount"];
 
         if ($after_balance < 0) {
             return [
@@ -39,6 +42,12 @@ class PlaceBetController extends Controller
                 "BeforeBalance" => $member->balance
             ];
         }
+
+        Transaction::create([
+            "user_id" => $member->id,
+            "external_transaction_id" => $transaction["TransactionID"],
+            "wager_id" => $transaction["WagerID"]
+        ]);
 
         return [
             "ErrorCode" => 0,
