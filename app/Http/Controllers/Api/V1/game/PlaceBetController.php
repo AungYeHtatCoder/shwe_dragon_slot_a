@@ -33,10 +33,22 @@ class PlaceBetController extends Controller
 
         $member = User::where("user_name", $memberName)->first();
 
+        $after_balance = $member->balance - $request->get("Transactions")[0]["BetAmount"];
+
+        if ($after_balance < 0) {
+            return [
+                "ErrorCode" => 1001,
+                "ErrorMessage" => "Insufficient Balance",
+                "Balance" => $after_balance,
+                "BeforeBalance" => $member->balance
+            ];
+        }
+
         return [
             "ErrorCode" => 0,
             "ErrorMessage" => "",
-            "Balance" => $member->balance - $request->get("Transactions")["BetAmount"]
+            "Balance" => $after_balance,
+            "BeforeBalance" => $member->balance
         ];
     }
 }

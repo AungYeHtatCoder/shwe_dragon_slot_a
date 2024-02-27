@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\game;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
@@ -12,49 +13,42 @@ class GameResultController extends Controller
 {
     public function gameResult(Request $request)
     {
-        $operatorCode = Config::get('game.api.operator_code');
-        $secretKey = Config::get('game.api.secret_key');
-        $requestTime = now()->format('YmdHis');
+        $operatorCode = $request->get("OperatorCode");
+        $memberName = $request->get("MemberName");
+        $requestTime = $request->get("RequestTime");
+
+        $secretKey = config("game.api.secret_key");
+
+        $sign = $request->get("Sign");
+
         $signature = md5($operatorCode . $requestTime . 'gameresult' . $secretKey);
-        
-        // Assuming that the 'Transactions' input is an array of transactions
-        $transactions = $request->input('Transactions', []);
-        $currentDateTime = now()->setTimezone('UTC')->format('Y-m-d\TH:i:s.v\Z');
 
-        // Update each transaction's date fields with the current date and time
-        $transactions = array_map(function ($transaction) use ($currentDateTime) {
-            $transaction['SettlementDate'] = $currentDateTime;
-            $transaction['CreatedOn'] = $currentDateTime;
-            $transaction['ModifiedOn'] = $currentDateTime;
-            return $transaction;
-        }, $transactions);
+        if ($sign !== $signature) {
+            return [
+                "ErrorCode" => 1004,
+                "ErrorMessage" => "Wrong Sign",
+                "Balance" => 0
+            ];
+        }
 
-        $data = [
-            'MemberName' => $request->input('MemberName'),
-            'OperatorCode' => $operatorCode,
-            'ProductID' => $request->input('ProductID'),
-            'MessageID' => $request->input('MessageID'),
-            'RequestTime' => $requestTime,
-            'Sign' => $signature,
-            'Transactions' => $transactions
+        $member = User::where("user_name", $memberName)->first();
+
+        $after_balance = $member->balance - $request->get("Transactions")[0]["TransactionAmount"];
+
+        if ($after_balance < 0) {
+            return [
+                "ErrorCode" => 1001,
+                "ErrorMessage" => "Insufficient Balance",
+                "Balance" => $after_balance,
+                "BeforeBalance" => $member->balance
+            ];
+        }
+
+        return [
+            "ErrorCode" => 0,
+            "ErrorMessage" => "",
+            "Balance" => $after_balance,
+            "BeforeBalance" => $member->balance
         ];
-            
-        return $data;
-        
-        // $apiUrl = Config::get('game.api.url') . '/Seamless/GameResult';
-        // //$apiUrl = 'https://swmd.6633663.com/Seamless/GameResult';
-        // // $apiUrl = 'https://shwedragon.online/api/Seamless/GameResult';
-        // try {
-            
-        // } catch (\Throwable $e) {
-        //     Log::error('GameResult request exception', [
-        //         'message' => $e->getMessage(),
-        //         'trace' => $e->getTraceAsString(),
-        //     ]);
-        //     return response()->json([
-        //         'error' => 'An unexpected error occurred',
-        //         'exception' => $e->getMessage()
-        //     ], 500);
-        // }
     }
 }
