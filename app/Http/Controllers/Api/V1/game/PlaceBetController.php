@@ -94,6 +94,6 @@ class PlaceBetController extends Controller
         $user->save();
         
         // Return successful response
-        return response()->json(['ErrorCode' => 0, 'ErrorMessage' => '', 'Balance' => $user->balance]);
+        return response()->json(['ErrorCode' => 0, 'ErrorMessage' => 'what happend', 'Balance' => $user->balance]);
     }
 }
