@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\game\GameController;
 use App\Http\Controllers\Api\V1\PromotionController;
 use App\Http\Controllers\Api\V1\game\PlaceBetController;
 use App\Http\Controllers\Api\V1\game\RollbackController;
+use App\Http\Controllers\Api\V1\game\CancelBetController;
 use App\Http\Controllers\Api\V1\game\GameResultController;
 use App\Http\Controllers\Api\V1\game\GetBalanceController;
 use App\Http\Controllers\Api\V1\game\LaunchGameController;
@@ -24,6 +25,8 @@ use App\Http\Controllers\Api\V1\Player\PlayerTransactionLogController;
     Route::post('Seamless/GameResult', [GameResultController::class, 'gameResult']);
     Route::post('Seamless/Rollback', [RollbackController::class, 'rollback']);
     Route::post('Seamless/PlaceBet', [PlaceBetController::class, 'placeBet']);
+    Route::post('Seamless/CancelBet', [CancelBetController::class, 'CancelBet']);
+
     Route::any("Seamless/*", function(){
         abort(500);
     });
