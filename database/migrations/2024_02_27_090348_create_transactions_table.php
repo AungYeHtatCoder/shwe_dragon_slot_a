@@ -15,11 +15,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId("user_id");
             $table->string("external_transaction_id");
+            $table->string("status");
+            $table->string("game_status")->nullable()->default("ongoing");
             $table->unsignedBigInteger("operator_id")->default(0);
             $table->unsignedBigInteger("product_id")->default;
             $table->unsignedBigInteger("provider_id")->default(0);
             $table->unsignedBigInteger("provider_line_id")->default(0);
-            $table->unsignedBigInteger("wager_id")->default(240228014015736);
+            $table->unsignedBigInteger("wager_id")->nullable();
             $table->unsignedBigInteger("currency_id")->default(22);
             $table->unsignedBigInteger("game_type")->default(1);
             $table->string("game_id")->default("TestGame");
@@ -35,7 +37,6 @@ return new class extends Migration
             $table->decimal("jackpot_amount", 10, 2)->default(0.00);
             $table->timestamp("settlement_date");
             $table->decimal("jp_bet", 10, 2)->default(0.00);
-            $table->integer("status")->default(0);
             $table->timestamp('created_on')->nullable();
             $table->timestamp('modified_on')->nullable();
             $table->timestamps();

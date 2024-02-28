@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\game;
+namespace App\Http\Controllers\Api\V1\Game;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Log;
 
 class CancelBetController extends Controller
@@ -36,17 +37,10 @@ class CancelBetController extends Controller
         }
 
         $transactions = $request->get("Transactions");
-        if (empty($transactions) || !isset($transactions[0])) {
-            return response()->json([
-                "ErrorCode" => 1003,
-                "ErrorMessage" => "No transactions provided",
-                "Balance" => 0
-            ]);
-        }
         $transaction = $transactions[0];
         
         // Make sure BetAmount exists and is a number
-        if (!isset($transaction["BetAmount"]) || !is_numeric($transaction["BetAmount"])) {
+        if (!isset($transaction["TransactionAmount"])) {
             return response()->json([
                 "ErrorCode" => 1005,
                 "ErrorMessage" => "Invalid Bet Amount",
@@ -54,27 +48,41 @@ class CancelBetController extends Controller
             ]);
         }
 
-        $betAmount = floatval($transaction["BetAmount"]);
-        $after_balance = $member->balance - $betAmount;
+        $betAmount = floatval($transaction["TransactionAmount"]);
+        $after_balance = $member->balance + $betAmount;
 
         if ($after_balance < 0) {
             return response()->json([
                 "ErrorCode" => 1001,
                 "ErrorMessage" => "Insufficient Balance",
-                "Balance" => $member->balance,
+                "Balance" => $after_balance,
                 "BeforeBalance" => $member->balance,
-                "AfterBalance" => $after_balance
             ]);
         }
 
         // Perform the balance update and transaction cancellation logic here
         // Begin database transaction
         try {
+            if(Transaction::where("external_transaction_id", $transaction["TransactionID"])->exists()){
+                return [
+                    "ErrorCode" => 1003,
+                    "ErrorMessage" => "Duplicate Transaction",
+                    "Balance" => $after_balance,
+                    "BeforeBalance" => $member->balance
+                ];
+            }
+            
             DB::beginTransaction();
+    
+            Transaction::create([
+                "user_id" => $member->id,
+                "external_transaction_id" => $transaction["TransactionID"],
+                "wager_id" => $transaction["WagerID"]
+            ]);
 
             // Update the user's balance
-            $member->balance = $after_balance;
-            $member->save();
+            // $member->balance = $after_balance;
+            // $member->save();
 
             // Add logic to record the transaction cancellation in your database
 
@@ -84,7 +92,8 @@ class CancelBetController extends Controller
             return response()->json([
                 "ErrorCode" => 0,
                 "ErrorMessage" => "Transaction cancelled successfully",
-                "Balance" => $after_balance
+                "Balance" => $after_balance,
+                "BeforeBalance" => $member->balance,
             ]);
 
         } catch (\Exception $e) {

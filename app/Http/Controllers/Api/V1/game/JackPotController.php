@@ -6,14 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Route;
 
-class GameResultController extends Controller
+class JackPotController extends Controller
 {
-    public function gameResult(Request $request)
+    public function JackPot(Request $request)
     {
         $method =  str(__FUNCTION__)->lower();
         $operatorCode = $request->get("OperatorCode");
@@ -41,24 +37,6 @@ class GameResultController extends Controller
         $transaction = $request->get("Transactions")[0];
 
         $after_balance = $member->balance + $transaction["TransactionAmount"];
-
-        if ($after_balance < 0) {
-            return [
-                "ErrorCode" => 1001,
-                "ErrorMessage" => "Insufficient Balance",
-                "Balance" => $after_balance,
-                "BeforeBalance" => $member->balance
-            ];
-        }
-
-        if(!Transaction::where("wager_id", $transaction["WagerID"])->exists()){
-            return [
-                "ErrorCode" => 1006,
-                "ErrorMessage" => "Wager Not Found",
-                "Balance" => $after_balance,
-                "BeforeBalance" => $member->balance
-            ];
-        }
 
         if(Transaction::where("external_transaction_id", $transaction["TransactionID"])->exists()){
             return [

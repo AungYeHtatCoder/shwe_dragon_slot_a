@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Api\V1\game;
+namespace App\Http\Controllers\Api\V1\Game;
 
 use App\Models\User;
 use App\Models\PlaceBet;

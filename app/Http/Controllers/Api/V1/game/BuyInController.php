@@ -6,16 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Route;
 
-class GameResultController extends Controller
+class BuyInController extends Controller
 {
-    public function gameResult(Request $request)
+    public function buyIn(Request $request)
     {
         $method =  str(__FUNCTION__)->lower();
+
         $operatorCode = $request->get("OperatorCode");
         $memberName = $request->get("MemberName");
         $requestTime = $request->get("RequestTime");
@@ -24,21 +21,25 @@ class GameResultController extends Controller
 
         $sign = $request->get("Sign");
 
-        // return $operatorCode . $requestTime . 'gameresult' . $secretKey;
-
         $signature = md5($operatorCode . $requestTime . $method . $secretKey);
 
         if ($sign !== $signature) {
-            return [
+            return response()->json([
                 "ErrorCode" => 1004,
-                "ErrorMessage" => "Wrong Sign",
-                "Balance" => 0
-            ];
+                "ErrorMessage" => "Wrong Sign"
+            ]);
         }
 
         $member = User::where("user_name", $memberName)->first();
 
-        $transaction = $request->get("Transactions")[0];
+        if (!$member) {
+            return response()->json([
+                "ErrorCode" => 1002,
+                "ErrorMessage" => "Member not found"
+            ]);
+        }
+
+        $transaction = $request->get("Transaction");
 
         $after_balance = $member->balance + $transaction["TransactionAmount"];
 
@@ -51,7 +52,9 @@ class GameResultController extends Controller
             ];
         }
 
-        if(!Transaction::where("wager_id", $transaction["WagerID"])->exists()){
+        $wager_id = $transaction["WagerID"] ?: null;
+
+        if ($wager_id && !Transaction::where("wager_id", $wager_id)->exists()) {
             return [
                 "ErrorCode" => 1006,
                 "ErrorMessage" => "Wager Not Found",
@@ -60,7 +63,7 @@ class GameResultController extends Controller
             ];
         }
 
-        if(Transaction::where("external_transaction_id", $transaction["TransactionID"])->exists()){
+        if (Transaction::where("external_transaction_id", $transaction["TransactionID"])->exists()) {
             return [
                 "ErrorCode" => 1003,
                 "ErrorMessage" => "Duplicate Transaction",
@@ -72,7 +75,7 @@ class GameResultController extends Controller
         Transaction::create([
             "user_id" => $member->id,
             "external_transaction_id" => $transaction["TransactionID"],
-            "wager_id" => $transaction["WagerID"]
+            "wager_id" => $wager_id
         ]);
 
         return [

@@ -2,18 +2,14 @@
 
 namespace App\Http\Controllers\Api\V1\Game;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 
-class GetBalanceController extends Controller
+class MobileLoginController extends Controller
 {
-    public function getBalance(Request $request)
-    {
+    public function MobileLogin(Request $request){
+        $method =  str(__FUNCTION__)->lower();
         $operatorCode = $request->get("OperatorCode");
         $memberName = $request->get("MemberName");
         $requestTime = $request->get("RequestTime");
@@ -22,7 +18,7 @@ class GetBalanceController extends Controller
 
         $sign = $request->get("Sign");
 
-        $signature = md5($operatorCode . $requestTime . 'getbalance' . $secretKey);
+        $signature = md5($operatorCode . $requestTime . $method . $secretKey);
 
         if ($sign !== $signature) {
             return [
@@ -37,7 +33,7 @@ class GetBalanceController extends Controller
         return [
             "ErrorCode" => 0,
             "ErrorMessage" => "",
-            "Balance" => $member->balance
+            "BeforeBalance" => $member->balance
         ];
     }
 }

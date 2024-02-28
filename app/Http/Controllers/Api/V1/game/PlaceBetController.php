@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Api\V1\game;
+namespace App\Http\Controllers\Api\V1\Game;
 
 use App\Models\User;
 use App\Models\PlaceBet;
@@ -32,12 +32,21 @@ class PlaceBetController extends Controller
 
         $transaction = $request->get("Transactions")[0];
 
-        $after_balance = $member->balance - $transaction["BetAmount"];
+        $after_balance = $member->balance + $transaction["TransactionAmount"];
 
         if ($after_balance < 0) {
             return [
                 "ErrorCode" => 1001,
                 "ErrorMessage" => "Insufficient Balance",
+                "Balance" => $after_balance,
+                "BeforeBalance" => $member->balance
+            ];
+        }
+
+        if(Transaction::where("external_transaction_id", $transaction["TransactionID"])->exists()){
+            return [
+                "ErrorCode" => 1003,
+                "ErrorMessage" => "Duplicate Transaction",
                 "Balance" => $after_balance,
                 "BeforeBalance" => $member->balance
             ];

@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Api\V1\game;
+namespace App\Http\Controllers\Api\V1\Game;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
