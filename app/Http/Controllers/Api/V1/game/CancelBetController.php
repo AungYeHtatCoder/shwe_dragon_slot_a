@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Log; // Make sure to import the Log facade
+use Illuminate\Support\Facades\Log;
 
 class CancelBetController extends Controller
 {
@@ -61,7 +61,9 @@ class CancelBetController extends Controller
             return response()->json([
                 "ErrorCode" => 1001,
                 "ErrorMessage" => "Insufficient Balance",
-                "Balance" => $member->balance
+                "Balance" => $member->balance,
+                "BeforeBalance" => $member->balance,
+                "AfterBalance" => $after_balance
             ]);
         }
 

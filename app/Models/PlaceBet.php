@@ -2,23 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PlaceBet extends Model
 {
     use HasFactory;
      protected $fillable = [
-        'MemberName',
-        'OperatorCode',
-        'ProductID',
-        'MessageID',
-        'RequestTime',
-        'Sign',
-        'user_wallet_id'
+        'member_name',
+        'operator_code',
+        'product_id',
+        'message_id',
+        'request_time',
+        'sign',
+        'transaction_id'
     ];
-    public function userWallet()
+    public function transaction()
     {
-        return $this->belongsTo(UserWallet::class, 'TransactionID', 'id');
+        return $this->belongsTo(Transaction::class, 'transaction_id', 'id');
     }
 }
