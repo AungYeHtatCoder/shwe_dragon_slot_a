@@ -3,44 +3,74 @@
 namespace App\Http\Controllers\Api\V1\game;
 
 use App\Http\Controllers\Controller;
+use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Route;
 
 class GameResultController extends Controller
 {
     public function gameResult(Request $request)
     {
-        $operatorCode = Config::get('game.api.operator_code');
-        $secretKey = Config::get('game.api.secret_key');
-        $requestTime = now()->format('YmdHis');
-        $signature = md5($operatorCode . $requestTime . 'gameresult' . $secretKey);
-        
-        // Assuming that the 'Transactions' input is an array of transactions
-        $transactions = $request->input('Transactions', []);
-        $currentDateTime = now()->setTimezone('UTC')->format('Y-m-d\TH:i:s.v\Z');
+        $method =  str(__FUNCTION__)->lower();
+        $operatorCode = $request->get("OperatorCode");
+        $memberName = $request->get("MemberName");
+        $requestTime = $request->get("RequestTime");
 
-        // Update each transaction's date fields with the current date and time
-        $transactions = array_map(function ($transaction) use ($currentDateTime) {
-            $transaction['SettlementDate'] = $currentDateTime;
-            $transaction['CreatedOn'] = $currentDateTime;
-            $transaction['ModifiedOn'] = $currentDateTime;
-            return $transaction;
-        }, $transactions);
+        $secretKey = config("game.api.secret_key");
 
-        $data = [
-            'MemberName' => $request->input('MemberName'),
-            'OperatorCode' => $operatorCode,
-            'ProductID' => $request->input('ProductID'),
-            'MessageID' => $request->input('MessageID'),
-            'RequestTime' => $requestTime,
-            'Sign' => $signature,
-            'Transactions' => $transactions
+        $sign = $request->get("Sign");
+
+        // return $operatorCode . $requestTime . 'gameresult' . $secretKey;
+
+        $signature = md5($operatorCode . $requestTime . $method . $secretKey);
+
+        if ($sign !== $signature) {
+            return [
+                "ErrorCode" => 1004,
+                "ErrorMessage" => "Wrong Sign",
+                "Balance" => 0
+            ];
+        }
+
+        $member = User::where("user_name", $memberName)->first();
+
+        $transaction = $request->get("Transactions")[0];
+
+        $after_balance = $member->balance + $transaction["TransactionAmount"];
+
+        if ($after_balance < 0) {
+            return [
+                "ErrorCode" => 1001,
+                "ErrorMessage" => "Insufficient Balance",
+                "Balance" => $after_balance,
+                "BeforeBalance" => $member->balance
+            ];
+        }
+
+        if(Transaction::where("external_transaction_id", $transaction["TransactionID"])->exists()){
+            return [
+                "ErrorCode" => 1003,
+                "ErrorMessage" => "Duplicate Transaction",
+                "Balance" => $after_balance,
+                "BeforeBalance" => $member->balance
+            ];
+        }
+
+        Transaction::create([
+            "user_id" => $member->id,
+            "external_transaction_id" => $transaction["TransactionID"],
+            "wager_id" => $transaction["WagerID"]
+        ]);
+
+        return [
+            "ErrorCode" => 0,
+            "ErrorMessage" => "",
+            "Balance" => $after_balance,
+            "BeforeBalance" => $member->balance
         ];
-            
-        return $data;
-        
-        
     }
 }

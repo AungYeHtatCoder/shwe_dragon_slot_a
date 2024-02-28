@@ -24,6 +24,9 @@ use App\Http\Controllers\Api\V1\Player\PlayerTransactionLogController;
     Route::post('Seamless/GameResult', [GameResultController::class, 'gameResult']);
     Route::post('Seamless/Rollback', [RollbackController::class, 'rollback']);
     Route::post('Seamless/PlaceBet', [PlaceBetController::class, 'placeBet']);
+    Route::any("Seamless/*", function(){
+        abort(500);
+    });
 
     Route::group(["middleware" => ['auth:sanctum']], function () {
     //logout
