@@ -2,42 +2,26 @@
 
 namespace App\Http\Controllers\Api\V1\Game;
 
-use Illuminate\Http\Request;
+use App\Enums\SlotWebhookResponseCode;
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Log;
+use App\Http\Requests\Slot\SlotWebhookRequest;
+use App\Services\Slot\SlotWebhookService;
+use App\Services\Slot\SlotWebhookValidator;
 
 class GetBalanceController extends Controller
 {
-    public function getBalance(Request $request)
+    public function getBalance(SlotWebhookRequest $request)
     {
-        $operatorCode = $request->get("OperatorCode");
-        $memberName = $request->get("MemberName");
-        $requestTime = $request->get("RequestTime");
+        $validator = SlotWebhookValidator::make($request)->validate();
 
-        $secretKey = config("game.api.secret_key");
-
-        $sign = $request->get("Sign");
-
-        $signature = md5($operatorCode . $requestTime . 'getbalance' . $secretKey);
-
-        if ($sign !== $signature) {
-            return [
-                "ErrorCode" => 1004,
-                "ErrorMessage" => "Wrong Sign",
-                "Balance" => 0
-            ];
+        if ($validator->fails()) {
+            return $validator->getResponse();
         }
 
-        $member = User::where("user_name", $memberName)->first();
-
-        return [
-            "ErrorCode" => 0,
-            "ErrorMessage" => "",
-            "Balance" => $member->balance
-        ];
+        return SlotWebhookService::buildResponse(
+            SlotWebhookResponseCode::Success,
+            $validator->getAfterBalance(),
+            $validator->getBeforeBalance()
+        );
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum SlotWebhookResponseCode: string
+enum SlotWebhookResponseCode: int
 {
     case Success = 0;
     case Failed = 16;

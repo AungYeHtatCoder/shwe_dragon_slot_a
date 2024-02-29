@@ -4,7 +4,7 @@ namespace App\Services\Slot\Dto;
 
 use Spatie\LaravelData\Data;
 
-class SlotTransaction extends Data
+class RequestTransaction extends Data
 {
     public function __construct(
         public int $Status,

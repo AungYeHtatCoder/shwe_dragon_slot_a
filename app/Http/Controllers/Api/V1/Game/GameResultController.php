@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Api\V1\Game;
 
+use App\Enums\SlotWebhookResponseCode;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Slot\SlotWebhookRequest;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Services\Slot\SlotWebhookService;
+use App\Services\Slot\SlotWebhookValidator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
@@ -13,73 +17,26 @@ use Illuminate\Support\Facades\Route;
 
 class GameResultController extends Controller
 {
-    public function gameResult(Request $request)
+    public function gameResult(SlotWebhookRequest $request)
     {
-        $method =  str(__FUNCTION__)->lower();
-        $operatorCode = $request->get("OperatorCode");
-        $memberName = $request->get("MemberName");
-        $requestTime = $request->get("RequestTime");
+        $validator = SlotWebhookValidator::make($request)->validate();
 
-        $secretKey = config("game.api.secret_key");
-
-        $sign = $request->get("Sign");
-
-        // return $operatorCode . $requestTime . 'gameresult' . $secretKey;
-
-        $signature = md5($operatorCode . $requestTime . $method . $secretKey);
-
-        if ($sign !== $signature) {
-            return [
-                "ErrorCode" => 1004,
-                "ErrorMessage" => "Wrong Sign",
-                "Balance" => 0
-            ];
+        if ($validator->fails()) {
+            return $validator->getResponse();
         }
 
-        $member = User::where("user_name", $memberName)->first();
-
-        $transaction = $request->get("Transactions")[0];
-
-        $after_balance = $member->balance + $transaction["TransactionAmount"];
-
-        if ($after_balance < 0) {
-            return [
-                "ErrorCode" => 1001,
-                "ErrorMessage" => "Insufficient Balance",
-                "Balance" => $after_balance,
-                "BeforeBalance" => $member->balance
-            ];
+        foreach($validator->getRequestTransactions() as $requestTransaction){
+            Transaction::create([
+                "user_id" => $validator->getMember()->id,
+                "external_transaction_id" => $requestTransaction->TransactionID,
+                "wager_id" => $requestTransaction->WagerID
+            ]);
         }
 
-        if(!Transaction::where("wager_id", $transaction["WagerID"])->exists()){
-            return [
-                "ErrorCode" => 1006,
-                "ErrorMessage" => "Wager Not Found",
-                "Balance" => $after_balance,
-                "BeforeBalance" => $member->balance
-            ];
-        }
-
-        if(Transaction::where("external_transaction_id", $transaction["TransactionID"])->exists()){
-            return [
-                "ErrorCode" => 1003,
-                "ErrorMessage" => "Duplicate Transaction",
-                "Balance" => $after_balance,
-                "BeforeBalance" => $member->balance
-            ];
-        }
-
-        Transaction::create([
-            "user_id" => $member->id,
-            "external_transaction_id" => $transaction["TransactionID"],
-            "wager_id" => $transaction["WagerID"]
-        ]);
-
-        return [
-            "ErrorCode" => 0,
-            "ErrorMessage" => "",
-            "Balance" => $after_balance,
-            "BeforeBalance" => $member->balance
-        ];
+        return SlotWebhookService::buildResponse(
+            SlotWebhookResponseCode::Success,
+            $validator->getAfterBalance(),
+            $validator->getBeforeBalance()
+        );
     }
 }

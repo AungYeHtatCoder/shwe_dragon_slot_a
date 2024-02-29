@@ -31,12 +31,12 @@ use App\Http\Controllers\Api\V1\Player\PlayerTransactionLogController;
     Route::post('Seamless/GameResult', [GameResultController::class, 'gameResult']);
     Route::post('Seamless/Rollback', [RollbackController::class, 'rollback']);
     Route::post('Seamless/PlaceBet', [PlaceBetController::class, 'placeBet']);
-    Route::post('Seamless/CancelBet', [CancelBetController::class, 'CancelBet']);
+    Route::post('Seamless/CancelBet', [CancelBetController::class, 'cancelBet']);
     Route::post('Seamless/BuyIn', [BuyInController::class, 'buyIn']);
     Route::post('Seamless/BuyOut', [BuyOutController::class, 'buyOut']);
     Route::post('Seamless/PushBet', [PushBetController::class, 'pushBet']);
-    Route::post('Seamless/Bonus', [BonusController::class, 'Bonus']);
-    Route::post('Seamless/Jackpot', [JackPotController::class, 'JackPot']);
+    Route::post('Seamless/Bonus', [BonusController::class, 'bonus']);
+    Route::post('Seamless/Jackpot', [JackPotController::class, 'jackPot']);
     Route::post('Seamless/MobileLogin', [MobileLoginController::class, 'MobileLogin']);
 
     Route::any("Seamless/*", function(){

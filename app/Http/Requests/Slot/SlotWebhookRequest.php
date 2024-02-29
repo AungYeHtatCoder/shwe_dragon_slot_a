@@ -26,7 +26,7 @@ class SlotWebhookRequest extends FormRequest
 
         if(in_array($this->getMethodName(), ["getbalance", "buyin", "buyout"])){
             $transaction_rules["Transactions"] = ["nullable"];
-            if($this->getMethod() !== "getbalance"){
+            if($this->getMethodName() !== "getbalance"){
                 $transaction_rules["Transaction"] = ["required"];
             }
         }else{
