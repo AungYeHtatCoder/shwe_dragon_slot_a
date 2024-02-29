@@ -4,15 +4,13 @@ namespace App\Services\Slot;
 
 use App\Enums\SlotWebhookResponseCode;
 use App\Http\Requests\Slot\SlotWebhookRequest;
-use App\Http\Resources\Slot\SlotWebhookResponse;
 use App\Models\Transaction;
 use App\Models\User;
-use App\Models\Wager;
 use App\Services\Slot\Dto\RequestTransaction;
 
 class SlotWebhookValidator
 {
-    protected User $member;
+    protected ?User $member;
 
     protected ?Transaction $existingTransaction;
 
@@ -176,7 +174,11 @@ class SlotWebhookValidator
 
     protected function response(SlotWebhookResponseCode $responseCode)
     {
-        $this->response = SlotWebhookService::buildResponse($responseCode, $this->getAfterBalance(), $this->getBeforeBalance());
+        $this->response = SlotWebhookService::buildResponse(
+            $responseCode,
+            $this->getMember() ? $this->getAfterBalance() : 0,
+            $this->getMember() ? $this->getBeforeBalance() : 0
+        );
 
         return $this;
     }
