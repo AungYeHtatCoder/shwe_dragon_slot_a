@@ -22,27 +22,27 @@ use App\Http\Controllers\Api\V1\Player\WithDrawController;
 use App\Http\Controllers\Api\V1\Player\PlayerTransactionLogController;
 
 //login route post
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::get('promotion', [PromotionController::class, 'index']);
-    Route::get('banner', [BannerController::class, 'index']);
-    Route::get('v1/validate',[AuthController::class,'callback']);
-    
-    Route::group(["prefix" => "Seamless"], function(){
-        Route::post('GetGameList', [LaunchGameController::class, 'getGameList']);
-        Route::post('GetBalance', [GetBalanceController::class, 'getBalance']);
-        Route::post('GameResult', [GameResultController::class, 'gameResult']);
-        Route::post('Rollback', [RollbackController::class, 'rollback']);
-        Route::post('PlaceBet', [PlaceBetController::class, 'placeBet']);
-        Route::post('CancelBet', [CancelBetController::class, 'cancelBet']);
-        Route::post('BuyIn', [BuyInController::class, 'buyIn']);
-        Route::post('BuyOut', [BuyOutController::class, 'buyOut']);
-        Route::post('PushBet', [PushBetController::class, 'pushBet']);
-        Route::post('Bonus', [BonusController::class, 'bonus']);
-        Route::post('Jackpot', [JackPotController::class, 'jackPot']);
-        Route::post('MobileLogin', [MobileLoginController::class, 'MobileLogin']);
-    });
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('promotion', [PromotionController::class, 'index']);
+Route::get('banner', [BannerController::class, 'index']);
+Route::get('v1/validate', [AuthController::class, 'callback']);
 
-    Route::group(["middleware" => ['auth:sanctum']], function () {
+Route::group(["prefix" => "Seamless"], function () {
+    Route::post('GetGameList', [LaunchGameController::class, 'getGameList']);
+    Route::post('GetBalance', [GetBalanceController::class, 'getBalance']);
+    Route::post('GameResult', [GameResultController::class, 'gameResult']);
+    Route::post('Rollback', [RollbackController::class, 'rollback']);
+    Route::post('PlaceBet', [PlaceBetController::class, 'placeBet']);
+    Route::post('CancelBet', [CancelBetController::class, 'cancelBet']);
+    Route::post('BuyIn', [BuyInController::class, 'buyIn']);
+    Route::post('BuyOut', [BuyOutController::class, 'buyOut']);
+    Route::post('PushBet', [PushBetController::class, 'pushBet']);
+    Route::post('Bonus', [BonusController::class, 'bonus']);
+    Route::post('Jackpot', [JackPotController::class, 'jackPot']);
+    Route::post('MobileLogin', [MobileLoginController::class, 'MobileLogin']);
+});
+
+Route::group(["middleware" => ['auth:sanctum']], function () {
     //logout
     Route::get('user', [AuthController::class, 'getUser']);
     Route::post('logout', [AuthController::class, 'logout']);
@@ -50,19 +50,18 @@ use App\Http\Controllers\Api\V1\Player\PlayerTransactionLogController;
     Route::post('profile', [AuthController::class, 'profile']);
 
     Route::group(['prefix' => 'transaction'], function () {
-        Route::post('withdraw',[WithDrawController::class,'withdraw']);
-        Route::get('player-transactionlog',[PlayerTransactionLogController::class,'index']);
+        Route::post('withdraw', [WithDrawController::class, 'withdraw']);
+        Route::get('player-transactionlog', [PlayerTransactionLogController::class, 'index']);
     });
 
     Route::group(['prefix' => 'bank'], function () {
         Route::get('all', [BankController::class, 'all']);
     });
     Route::group(['prefix' => 'game'], function () {
-        Route::get('gameType',[GameController::class,'gameType']);
+        Route::get('gameType', [GameController::class, 'gameType']);
         Route::get('gameTypeProducts/{id}', [GameController::class, 'gameTypeProducts']);
         Route::post('Seamless/LaunchGame', [LaunchGameController::class, 'launchGame']);
-        Route::get('gamelist/{provider_id}/{game_type_id}',[GameController::class,'gameList']);
-
+        Route::get('gamelist/{provider_id}/{game_type_id}', [GameController::class, 'gameList']);
     });
 });
 
