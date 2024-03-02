@@ -1,16 +1,21 @@
 <?php
-namespace App\Http\Controllers\Api\V1\Game;
+
+namespace App\Http\Controllers\Api\V1\Webhook;
 
 use App\Enums\SlotWebhookResponseCode;
+use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Slot\SlotWebhookRequest;
 use App\Models\Transaction;
 use App\Services\Slot\SlotWebhookService;
 use App\Services\Slot\SlotWebhookValidator;
+use Illuminate\Support\Facades\Log;
 
-class PlaceBetController extends Controller
+class CancelBetController extends Controller
 {
-    public function placeBet(SlotWebhookRequest $request)
+    public function cancelBet(SlotWebhookRequest $request)
     {
         $validator = SlotWebhookValidator::make($request)->validate();
 
@@ -24,8 +29,6 @@ class PlaceBetController extends Controller
                 "external_transaction_id" => $requestTransaction->TransactionID,
                 "wager_id" => $requestTransaction->WagerID
             ]);
-
-            // TODO: imp: wager
         }
 
         return SlotWebhookService::buildResponse(

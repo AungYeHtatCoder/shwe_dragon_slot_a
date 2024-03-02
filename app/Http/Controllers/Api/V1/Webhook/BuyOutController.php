@@ -1,22 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Game;
+namespace App\Http\Controllers\Api\V1\Webhook;
 
 use App\Enums\SlotWebhookResponseCode;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Slot\SlotWebhookRequest;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Services\Slot\SlotWebhookService;
 use App\Services\Slot\SlotWebhookValidator;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Config;
+use Illuminate\Http\Request;
 
-class RollbackController extends Controller
+class BuyOutController extends Controller
 {
-    public function rollback(SlotWebhookRequest $request)
+    public function buyOut(SlotWebhookRequest $request)
     {
         $validator = SlotWebhookValidator::make($request)->validate();
 
@@ -24,14 +21,12 @@ class RollbackController extends Controller
             return $validator->getResponse();
         }
 
-        foreach($validator->getRequestTransactions() as $requestTransaction){
-            Transaction::create([
-                "user_id" => $validator->getMember()->id,
-                "external_transaction_id" => $requestTransaction->TransactionID,
-                "wager_id" => $requestTransaction->WagerID
-            ]);
-        }
-
+        Transaction::create([
+            "user_id" => $validator->getMember()->id,
+            "external_transaction_id" => $validator->getRequestTransaction()->TransactionID,
+            "wager_id" => $validator->getRequestTransaction()->WagerID
+        ]);
+        
         return SlotWebhookService::buildResponse(
             SlotWebhookResponseCode::Success,
             $validator->getAfterBalance(),

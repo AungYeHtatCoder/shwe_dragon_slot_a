@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Game;
+namespace App\Http\Controllers\Api\V1\Webhook;
 
 use App\Enums\SlotWebhookResponseCode;
 use App\Http\Controllers\Controller;

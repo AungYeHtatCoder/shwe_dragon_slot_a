@@ -1,19 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Game;
+namespace App\Http\Controllers\Api\V1\Webhook;
 
 use App\Enums\SlotWebhookResponseCode;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Slot\SlotWebhookRequest;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Services\Slot\SlotWebhookService;
 use App\Services\Slot\SlotWebhookValidator;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Config;
 
-class PushBetController extends Controller
+class RollbackController extends Controller
 {
-    public function pushBet(SlotWebhookRequest $request)
+    public function rollback(SlotWebhookRequest $request)
     {
         $validator = SlotWebhookValidator::make($request)->validate();
 

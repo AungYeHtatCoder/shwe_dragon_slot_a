@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Game;
+namespace App\Http\Controllers\Api\V1\Webhook;
 
 use App\Enums\SlotWebhookResponseCode;
 use App\Http\Controllers\Controller;
@@ -11,9 +11,9 @@ use App\Services\Slot\SlotWebhookService;
 use App\Services\Slot\SlotWebhookValidator;
 use Illuminate\Http\Request;
 
-class BuyOutController extends Controller
+class JackPotController extends Controller
 {
-    public function buyOut(SlotWebhookRequest $request)
+    public function jackPot(SlotWebhookRequest $request)
     {
         $validator = SlotWebhookValidator::make($request)->validate();
 
@@ -21,12 +21,14 @@ class BuyOutController extends Controller
             return $validator->getResponse();
         }
 
-        Transaction::create([
-            "user_id" => $validator->getMember()->id,
-            "external_transaction_id" => $validator->getRequestTransaction()->TransactionID,
-            "wager_id" => $validator->getRequestTransaction()->WagerID
-        ]);
-        
+        foreach($validator->getRequestTransactions() as $requestTransaction){
+            Transaction::create([
+                "user_id" => $validator->getMember()->id,
+                "external_transaction_id" => $requestTransaction->TransactionID,
+                "wager_id" => $requestTransaction->WagerID
+            ]);
+        }
+
         return SlotWebhookService::buildResponse(
             SlotWebhookResponseCode::Success,
             $validator->getAfterBalance(),
