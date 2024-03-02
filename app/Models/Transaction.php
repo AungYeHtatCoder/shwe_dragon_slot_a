@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use App\Models\PlaceBet;
+use Bavix\Wallet\Models\Transaction as ModelsTransaction;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Transaction extends Model
+class Transaction extends ModelsTransaction
 {
     use HasFactory;
 
@@ -37,11 +38,14 @@ class Transaction extends Model
         "created_on",
         "modified_on"
     ];
+
     protected $dates = ['created_at', 'updated_at'];
+    
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
     public function placeBets()
 {
     return $this->hasMany(PlaceBet::class, 'transaction_id', 'id');

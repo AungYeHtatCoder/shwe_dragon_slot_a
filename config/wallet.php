@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Models\Transaction as ModelsTransaction;
+use App\Models\Transfer as ModelsTransfer;
+use App\Models\Wallet as ModelsWallet;
 use Bavix\Wallet\Internal\Assembler\AvailabilityDtoAssembler;
 use Bavix\Wallet\Internal\Assembler\BalanceUpdatedEventAssembler;
 use Bavix\Wallet\Internal\Assembler\ExtraDtoAssembler;
@@ -165,7 +168,7 @@ return [
      */
     'transaction' => [
         'table' => 'transactions',
-        'model' => Transaction::class,
+        'model' => ModelsTransaction::class,
     ],
 
     /**
@@ -173,7 +176,7 @@ return [
      */
     'transfer' => [
         'table' => 'transfers',
-        'model' => Transfer::class,
+        'model' => ModelsTransfer::class,
     ],
 
     /**
@@ -181,7 +184,7 @@ return [
      */
     'wallet' => [
         'table' => 'wallets',
-        'model' => Wallet::class,
+        'model' => ModelsWallet::class,
         'creating' => [],
         'default' => [
             'name' => 'Default Wallet',
