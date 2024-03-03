@@ -37,14 +37,13 @@ class PlayerController extends Controller
 
 
         //kzt
-        $users = DB::table('users')
-            ->join('role_user', 'role_user.user_id', '=', 'users.id')
-            ->where(function ($role) {
-                $role->where('role_user.role_id', '=', 3);
+        $users = User::with('roles')
+            ->whereHas('roles', function ($query) {
+                $query->where('role_id', 3);
             })
-            ->where('users.agent_id',  auth()->id())->tosql();
-        
-        dd($users);
+            ->where('agent_id', auth()->id())
+            ->orderBy('id', 'desc')
+            ->get();
         return view('admin.player.index', compact('users'));
     }
 
@@ -59,7 +58,7 @@ class PlayerController extends Controller
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
         $player_name = $this->generateRandomString();
-        return view('admin.player.create',compact('player_name'));
+        return view('admin.player.create', compact('player_name'));
     }
 
     /**
@@ -94,7 +93,6 @@ class PlayerController extends Controller
                 ->with('url', env('APP_URL'))
                 ->with('password', $request->password)
                 ->with('username', $user->name);
-                
         } catch (Exception $e) {
             Log::error('Error creating user: ' . $e->getMessage());
             return redirect()->back()->with('error', $e->getMessage());
@@ -186,6 +184,7 @@ class PlayerController extends Controller
         );
         return view('admin.player.cash_in', compact('player'));
     }
+    
     public function makeCashIn(TransferLogRequest $request, User $player)
     {
         abort_if(
@@ -201,12 +200,13 @@ class PlayerController extends Controller
             $agent = Auth::user();
             $cashIn = $inputs['amount'];
 
-            if ($cashIn > $agent->balance) {
+            if ($cashIn > $agent->balanceFloat) {
 
                 return redirect()->back()->with('error', 'You do not have enough balance to transfer!');
             }
 
             app(WalletService::class)->transfer($agent, $player, $request->validated("amount"), TransactionName::CreditTransfer);
+
             return redirect()->back()
                 ->with('success', ' Money CashIn submitted successfully!');
         } catch (Exception $e) {
@@ -238,13 +238,13 @@ class PlayerController extends Controller
             $agent = Auth::user();
             $cashOut = $inputs['amount'];
 
-            if ($cashOut > $player->balance) {
+            if ($cashOut > $player->balanceFloat) {
 
                 return redirect()->back()->with('error', 'You do not have enough balance to transfer!');
             }
 
             app(WalletService::class)->transfer($player, $agent, $request->validated("amount"), TransactionName::DebitTransfer);
-            
+
             return redirect()->back()
                 ->with('success', ' Money CashOut submitted successfully!');
         } catch (Exception $e) {
@@ -263,9 +263,9 @@ class PlayerController extends Controller
 
     public function logs($id)
     {
-        $logs = UserLog::with('user')->where('user_id',$id)->get();
-    
-        return view('admin.player.logs',compact('logs'));
+        $logs = UserLog::with('user')->where('user_id', $id)->get();
+
+        return view('admin.player.logs', compact('logs'));
     }
 
     private function generateRandomString()
@@ -278,5 +278,4 @@ class PlayerController extends Controller
     {
         return  uniqid($prefix);
     }
-    
 }

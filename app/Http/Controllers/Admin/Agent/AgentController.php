@@ -32,12 +32,14 @@ class AgentController extends Controller
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
         //kzt
-        $users = DB::table('users')
-            ->join('role_user', 'role_user.user_id', '=', 'users.id')
-            ->where(function ($role) {
-                $role->where('role_user.role_id', '=', 2);
+        $users = User::with('roles')
+            ->whereHas('roles', function ($query) {
+                $query->where('role_id', 2);
             })
-            ->where('users.agent_id',  auth()->id())->latest()->get();
+            ->where('agent_id', auth()->id())
+            ->orderBy('id', 'desc')
+            ->get();
+
         //kzt
         return view('admin.agent.index', compact('users'));
     }
@@ -162,6 +164,7 @@ class AgentController extends Controller
         $agent = User::find($id);
         return view('admin.agent.cash_in', compact('agent'));
     }
+
     public function getCashOut(string $id)
     {
         abort_if(
@@ -191,8 +194,7 @@ class AgentController extends Controller
             $agent = User::findOrFail($id);
             $admin = Auth::user();
             $cashIn = $inputs['amount'];
-
-            if ($cashIn > $admin->balance) {
+            if ($cashIn > $admin->balanceFloat) {
                 throw new \Exception('You do not have enough balance to transfer!');
             }
 
@@ -223,7 +225,7 @@ class AgentController extends Controller
             $admin = Auth::user();
             $cashOut = $inputs['amount'];
 
-            if ($cashOut > $agent->balance) {
+            if ($cashOut > $agent->balanceFloat) {
 
                 return redirect()->back()->with('error', 'You do not have enough balance to transfer!');
             }
@@ -279,10 +281,10 @@ class AgentController extends Controller
     public function getChangePassword($id)
     {
         $agent = User::find($id);
-        return view('admin.agent.change_password',compact('agent'));
+        return view('admin.agent.change_password', compact('agent'));
     }
 
-    public function makeChangePassword($id,Request $request)
+    public function makeChangePassword($id, Request $request)
     {
         abort_if(
             Gate::denies('agent_access'),
@@ -298,11 +300,10 @@ class AgentController extends Controller
         $agent->update([
             'password' => Hash::make($request->password)
         ]);
-        
+
         return redirect()->back()
             ->with('success', 'Agent Change Password successfully')
             ->with('password', $request->password)
             ->with('username', $agent->name);
     }
-
 }

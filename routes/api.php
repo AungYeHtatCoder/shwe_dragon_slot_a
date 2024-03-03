@@ -9,7 +9,6 @@ use App\Http\Controllers\Api\V1\Webhook\BuyInController;
 use App\Http\Controllers\Api\V1\Webhook\BuyOutController;
 use App\Http\Controllers\Api\V1\Game\GameController;
 use App\Http\Controllers\Api\V1\PromotionController;
-use App\Http\Controllers\Api\V1\Game\PlaceBetController;
 use App\Http\Controllers\Api\V1\Webhook\RollbackController;
 use App\Http\Controllers\Api\V1\Webhook\CancelBetController;
 use App\Http\Controllers\Api\V1\Webhook\GameResultController;
@@ -20,6 +19,7 @@ use App\Http\Controllers\Api\V1\Webhook\MobileLoginController;
 use App\Http\Controllers\Api\V1\Webhook\PushBetController;
 use App\Http\Controllers\Api\V1\Player\WithDrawController;
 use App\Http\Controllers\Api\V1\Player\PlayerTransactionLogController;
+use App\Http\Controllers\Api\V1\Webhook\PlaceBetController;
 
 //login route post
 Route::post('/login', [AuthController::class, 'login']);
@@ -64,12 +64,3 @@ Route::group(["middleware" => ['auth:sanctum']], function () {
         Route::get('gamelist/{provider_id}/{game_type_id}', [GameController::class, 'gameList']);
     });
 });
-
-// Route::group(['prefix' => 'Seamless'], function () {
-//     Route::post('GetGameList', [LaunchGameController::class, 'getGameList']);
-//     Route::post('GetBalance', [GetBalanceController::class, 'getBalance']);
-//     // Route::post('GameResult', [GameResultController::class, 'gameResult']);
-//     Route::post('Rollback', [RollbackController::class, 'rollback']);
-//     Route::post('PlaceBet', [PlaceBetController::class, 'placeBet']);
-
-// });

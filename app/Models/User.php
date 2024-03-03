@@ -111,10 +111,4 @@ class User extends Authenticatable implements Wallet
     {
         return $this->belongsTo(User::class, 'agent_id');
     }
-    public function userWallet()
-    {
-        return $this->hasOne(UserWallet::class);
-    }
-    
-
 }

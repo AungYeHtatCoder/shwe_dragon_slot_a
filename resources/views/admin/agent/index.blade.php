@@ -62,7 +62,7 @@
               <small class="badge bg-gradient-{{ $user->status == 1 ? 'success' : ($user->status == 2 ? 'danger' : 'warning') }}">{{ $user->status == 1 ? "active" : ($user->status == 2 ? "inactive" : "pending") }}</small>
             
               </td>
-              <td>{{ number_format($user->balance,2) }} MMK</td>
+              <td>{{ number_format($user->balanceFloat,2) }} MMK</td>
 
               <td>
                 @if ($user->status == 2)
