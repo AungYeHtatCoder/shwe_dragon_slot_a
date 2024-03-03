@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder
@@ -38,7 +37,7 @@ class UsersTableSeeder extends Seeder
                 'created_at'     => now(),
                 'updated_at'     => now(),
             ],
-                        [
+            [
                 'name'           => 'Player',
                 'user_name'      => 'SDG14893038',
                 'phone'          => '09222345678',
