@@ -2,8 +2,9 @@
 
 namespace App\Enums;
 
-enum TransactionStatus: string
+enum TransactionStatus: int
 {
-    case Success = 'success';
-    case Canceled = 'canceled';
+    case Pending = 100;
+    case Settle = 101;
+    case Void = 102;
 }

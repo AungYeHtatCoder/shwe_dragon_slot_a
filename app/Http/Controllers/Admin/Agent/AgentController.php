@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin\Agent;
 
+use App\Enums\TransactionName;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AgentRequest;
 use App\Http\Requests\TransferLogRequest;
 use App\Models\Admin\TransferLog;
+use App\Services\WalletService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Exception;
@@ -195,18 +197,7 @@ class AgentController extends Controller
             }
 
             // Transfer money
-            $agent->balance += $cashIn;
-            $agent->save();
-            $admin->balance -= $cashIn;
-            $admin->save();
-
-            $inputs['cash_balance'] = $agent->balance;
-            $inputs['phone'] = $agent->phone;
-            $inputs['cash_in'] = $cashIn;
-            $inputs['to_user_id'] = $id;
-            $inputs['type'] = 0; //deposit
-            // Create transfer log
-            TransferLog::create(array_merge($inputs));
+            app(WalletService::class)->transfer($admin, $agent, $request->validated("amount"), TransactionName::CreditTransfer);
 
             return redirect()->back()->with('success', 'Money fill request submitted successfully!');
         } catch (Exception $e) {
@@ -238,15 +229,7 @@ class AgentController extends Controller
             }
 
             // Transfer money
-            $agent->balance -= $cashOut;
-            $agent->save();
-
-            $inputs['cash_balance'] = $agent->balance;
-            $inputs['cash_out'] = $cashOut;
-            $inputs['to_user_id'] = $admin->id;
-            $inputs['type'] = 1; //withdraw
-
-            TransferLog::create($inputs);
+            app(WalletService::class)->transfer($agent, $admin, $request->validated("amount"), TransactionName::DebitTransfer);
 
             return redirect()->back()->with('success', 'Money fill request submitted successfully!');
         } catch (Exception $e) {

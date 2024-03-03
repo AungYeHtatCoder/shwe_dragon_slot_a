@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Enums\UserType;
 use App\Models\Admin\Permission;
 use App\Models\Admin\Role;
+use Bavix\Wallet\Interfaces\Wallet;
 use Bavix\Wallet\Traits\HasWalletFloat;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -29,12 +31,10 @@ class User extends Authenticatable implements Wallet
         'phone',
         'balance',
         'agent_id',
-        'status'
-
+        'status',
+        'type'
     ];
     protected $dates = ['created_at', 'updated_at'];
-
-
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -53,6 +53,7 @@ class User extends Authenticatable implements Wallet
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        "type" => UserType::class
     ];
 
    

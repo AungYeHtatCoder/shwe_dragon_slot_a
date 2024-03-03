@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Player;
 
+use App\Enums\TransactionName;
 use Exception;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -15,6 +16,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\TransferLogRequest;
 use App\Http\Requests\PlayerRequest;
 use App\Models\Admin\UserLog;
+use App\Models\Transfer;
+use App\Services\WalletService;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -221,22 +224,7 @@ class PlayerController extends Controller
                 return redirect()->back()->with('error', 'You do not have enough balance to transfer!');
             }
 
-            $agent->balance -= $cashIn;
-            /** @var \App\Models\User $agent **/
-            $agent->save();
-            $player->balance += $cashIn;
-            $player->save();
-            $userWallet = $player->userWallet;
-            $userWallet->wallet += $cashIn;
-            $userWallet->save();
-
-            $inputs['cash_balance'] = $player->balance;
-            $inputs['cash_in'] = $cashIn;
-            $inputs['to_user_id'] = $player->id;
-            $inputs['type'] = 0;
-            $inputs['phone'] = $player->phone;
-            // Create transfer log
-            TransferLog::create($inputs);
+            app(WalletService::class)->transfer($agent, $player, $request->validated("amount"), TransactionName::CreditTransfer);
             return redirect()->back()
                 ->with('success', ' Money CashIn submitted successfully!');
         } catch (Exception $e) {
@@ -273,22 +261,7 @@ class PlayerController extends Controller
                 return redirect()->back()->with('error', 'You do not have enough balance to transfer!');
             }
 
-
-            // Transfer money
-
-            $agent->balance += $cashOut;
-            /** @var \App\Models\User $agent **/
-
-            $agent->save();
-            $player->balance -= $cashOut;
-            $player->save();
-
-            $inputs['cash_balance'] = $player->balance;
-            $inputs['cash_out'] = $cashOut;
-            $inputs['to_user_id'] = $agent->id;
-            $inputs['phone'] = $player->phone;
-            // Create transfer log
-            TransferLog::create($inputs);
+            app(WalletService::class)->transfer($player, $agent, $request->validated("amount"), TransactionName::DebitTransfer);
             
             return redirect()->back()
                 ->with('success', ' Money CashOut submitted successfully!');
@@ -300,8 +273,8 @@ class PlayerController extends Controller
 
     public function getTransferDetail($id)
     {
-        $transfer_detail = TransferLog::where('from_user_id', $id)
-            ->orWhere('to_user_id', $id)
+        $transfer_detail = Transfer::where('from_id', $id)
+            ->orWhere('to_id', $id)
             ->get();
         return view('admin.player.transfer_detail', compact('transfer_detail'));
     }

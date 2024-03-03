@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\TransactionName;
 use App\Models\Admin\AdminAddBalance;
 use App\Models\User;
+use App\Services\WalletService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -76,16 +78,7 @@ class HomeController extends Controller
         $request->validate([
             'balance' => 'required|numeric',
         ]);
-        $user = Auth::user();
-        $user->balance += $request->balance;
-        $user->save();
 
-        AdminAddBalance::create([
-            'user_id' => Auth::id(),
-            'balance_up' => $request->balance,
-            'remark' => $request->remark ?? "",
-        ]);
-
-        return redirect()->back()->with('success', "Admin Balance has been Updated.");
+        app(WalletService::class)->deposit($request->user(), $request->validated("balance"), TransactionName::CapitalDeposit);
     }
 }
