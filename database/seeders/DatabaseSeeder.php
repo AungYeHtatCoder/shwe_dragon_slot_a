@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
             RolesTableSeeder::class,
             PermissionRoleTableSeeder::class,
             UsersTableSeeder::class,
-            PlayerTableSeeder::class,
             RoleUserTableSeeder::class,
             BankTableSeeder::class,
             GameTypeTableSeeder::class,
