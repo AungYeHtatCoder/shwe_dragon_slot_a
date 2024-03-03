@@ -7,7 +7,6 @@ use App\Enums\UserType;
 use App\Models\User;
 use App\Services\WalletService;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder

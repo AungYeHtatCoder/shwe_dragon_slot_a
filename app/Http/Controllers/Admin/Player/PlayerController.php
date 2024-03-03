@@ -42,8 +42,9 @@ class PlayerController extends Controller
             ->where(function ($role) {
                 $role->where('role_user.role_id', '=', 3);
             })
-            ->where('users.agent_id',  auth()->id())->latest()->get();
-        //kzt
+            ->where('users.agent_id',  auth()->id())->tosql();
+        
+        dd($users);
         return view('admin.player.index', compact('users'));
     }
 
@@ -87,25 +88,6 @@ class PlayerController extends Controller
             // Create user in local database
             $user = User::create($userPrepare);
             $user->roles()->sync('3');
-
-            // Wallet operations
-            DB::table('user_wallets')->insert([
-                'user_id' => $user->id,
-                // wallet fields and initial values go here
-                'user_id' => $user->id,
-                'wallet' => 0.00,
-                'ag_wallet' => 0.00,
-                'gb_wallet' => 0.00,
-                'g8_wallet' => 0.00,
-                'jk_wallet' => 0.00,
-                'jd_wallet' => 0.00,
-                'l4_wallet' => 0.00,
-                'k9_wallet' => 0.00,
-                'pg_wallet' => 0.00,
-                'pr_wallet' => 0.00,
-                're_wallet' => 0.00,
-                's3_wallet' => 0.00
-            ]);
 
             return redirect()->back()
                 ->with('success', 'Player created successfully')
