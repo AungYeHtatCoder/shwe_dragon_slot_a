@@ -74,20 +74,20 @@
       <tbody>
        <tr>
         <th>ID</th>
-        <td>{!! $user_detail->id !!}</td>
+        <td>{!! $master->id !!}</td>
        </tr>
        <tr>
         <th>User Name</th>
-        <td>{!! $user_detail->name !!}</td>
+        <td>{!! $master->name !!}</td>
        </tr>
        <tr>
         <th>Phone</th>
-        <td>{!! $user_detail->phone !!}</td>
+        <td>{!! $master->phone !!}</td>
        </tr>
        <tr>
         <th>Role</th>
         <td>
-         @foreach ($user_detail->roles as $role)
+         @foreach ($master->roles as $role)
          <span class="badge badge-pill badge-primary">{{ $role->title }}</span>
          @endforeach
         </td>
@@ -95,11 +95,11 @@
 
        <tr>
         <th>Create Date</th>
-        <td>{!! $user_detail->created_at !!}</td>
+        <td>{!! $master->created_at !!}</td>
        </tr>
        <tr>
         <th>Update Date</th>
-        <td>{!! $user_detail->updated_at !!}</td>
+        <td>{!! $master->updated_at !!}</td>
        </tr>
       </tbody>
      </table>

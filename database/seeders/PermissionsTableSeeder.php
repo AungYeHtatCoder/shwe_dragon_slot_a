@@ -20,13 +20,12 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'title'      => 'game_type_access',
+                'title'      => 'agent_access',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            
             [
-                'title'      => 'agent_access',
+                'title'      => 'master_access',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -152,11 +151,6 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'title'      => 'agent_transfer',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'title'      => 'make_transfer',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

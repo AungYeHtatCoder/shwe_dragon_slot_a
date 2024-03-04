@@ -115,7 +115,7 @@
      </div>
     </div>
     <div class="card-body">
-    <form action="{{ route('admin.agent.makeCashOut', $master->id) }}" method="POST">
+    <form action="{{ route('admin.master.makeCashOut', $master->id) }}" method="POST">
       @csrf
 
   <div class="row">

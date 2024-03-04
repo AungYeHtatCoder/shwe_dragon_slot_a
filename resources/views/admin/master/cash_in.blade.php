@@ -63,7 +63,7 @@
  <div class="col-lg-12">
   <div class=" mt-2">
    <div class="d-flex justify-content-between">
-    <a class="btn btn-icon btn-2 btn-primary" href="{{ route('admin.agent.index') }}">
+    <a class="btn btn-icon btn-2 btn-primary" href="{{ route('admin.master.index') }}">
      <span class="btn-inner--icon mt-1"><i class="material-icons">arrow_back</i>Back</span>
     </a>
    </div>

@@ -79,7 +79,7 @@ class MasterController extends Controller
             ]
         );
         $user = User::create($userPrepare);
-        $user->roles()->sync(self::AGENT_ROLE);
+        $user->roles()->sync(self::MASTER_ROLE);
 
         return redirect()->back()
             ->with('success', 'Master created successfully')
@@ -98,8 +98,8 @@ class MasterController extends Controller
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
 
-        $user_detail = User::find($id);
-        return view('admin.master.show', compact('user_detail'));
+        $master = User::find($id);
+        return view('admin.master.show', compact('master'));
     }
 
 
@@ -114,8 +114,8 @@ class MasterController extends Controller
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
 
-        $agent = User::find($id);
-        return view('admin.master.edit', compact('agent'));
+        $master = User::find($id);
+        return view('admin.master.edit', compact('master'));
     }
 
     /**
@@ -154,28 +154,28 @@ class MasterController extends Controller
     public function getCashIn(string $id)
     {
         abort_if(
-            Gate::denies('agent_transfer'),
+            Gate::denies('master_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
 
-        $agent = User::find($id);
-        return view('admin.agent.cash_in', compact('agent'));
+        $master = User::find($id);
+        return view('admin.master.cash_in', compact('master'));
     }
 
     public function getCashOut(string $id)
     {
         abort_if(
-            Gate::denies('agent_transfer'),
+            Gate::denies('master_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
 
         // Assuming $id is the user ID
-        $agent = User::findOrFail($id);
+        $master = User::findOrFail($id);
 
 
-        return view('admin.master.cash_out', compact('agent'));
+        return view('admin.master.cash_out', compact('master'));
     }
 
     public function makeCashIn(TransferLogRequest $request, $id)
@@ -189,7 +189,7 @@ class MasterController extends Controller
 
         try {
             $inputs = $request->validated();
-            $agent = User::findOrFail($id);
+            $master = User::findOrFail($id);
             $admin = Auth::user();
             $cashIn = $inputs['amount'];
             if ($cashIn > $admin->balanceFloat) {
@@ -197,7 +197,7 @@ class MasterController extends Controller
             }
 
             // Transfer money
-            app(WalletService::class)->transfer($admin, $agent, $request->validated("amount"), TransactionName::CreditTransfer);
+            app(WalletService::class)->transfer($admin, $master, $request->validated("amount"), TransactionName::CreditTransfer);
 
             return redirect()->back()->with('success', 'Money fill request submitted successfully!');
         } catch (Exception $e) {
@@ -219,17 +219,17 @@ class MasterController extends Controller
         try {
             $inputs = $request->validated();
 
-            $agent = User::findOrFail($id);
+            $master = User::findOrFail($id);
             $admin = Auth::user();
             $cashOut = $inputs['amount'];
 
-            if ($cashOut > $agent->balanceFloat) {
+            if ($cashOut > $master->balanceFloat) {
 
                 return redirect()->back()->with('error', 'You do not have enough balance to transfer!');
             }
 
             // Transfer money
-            app(WalletService::class)->transfer($agent, $admin, $request->validated("amount"), TransactionName::DebitTransfer);
+            app(WalletService::class)->transfer($master, $admin, $request->validated("amount"), TransactionName::DebitTransfer);
 
             return redirect()->back()->with('success', 'Money fill request submitted successfully!');
         } catch (Exception $e) {
@@ -278,8 +278,8 @@ class MasterController extends Controller
 
     public function getChangePassword($id)
     {
-        $agent = User::find($id);
-        return view('admin.master.change_password', compact('agent'));
+        $master = User::find($id);
+        return view('admin.master.change_password', compact('master'));
     }
 
     public function makeChangePassword($id, Request $request)
@@ -294,14 +294,14 @@ class MasterController extends Controller
             'password' => 'required|min:6|confirmed'
         ]);
 
-        $agent = User::find($id);
-        $agent->update([
+        $master = User::find($id);
+        $master->update([
             'password' => Hash::make($request->password)
         ]);
 
         return redirect()->back()
             ->with('success', 'Master Change Password successfully')
             ->with('password', $request->password)
-            ->with('username', $agent->name);
+            ->with('username', $master->name);
     }
 }
