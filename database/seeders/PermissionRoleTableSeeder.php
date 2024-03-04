@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Seeders;
+
 use App\Models\Admin\Role;
 use Illuminate\Database\Seeder;
 use App\Models\Admin\Permission;
@@ -14,7 +15,7 @@ class PermissionRoleTableSeeder extends Seeder
     public function run(): void
     {
         // Admin permissions
-        $admin_permissions = Permission::whereIn('title',[
+        $admin_permissions = Permission::whereIn('title', [
             'admin_access',
             'role_index',
             'role_create',
@@ -41,8 +42,34 @@ class PermissionRoleTableSeeder extends Seeder
             'game_type_access'
         ]);
         Role::findOrFail(1)->permissions()->sync($admin_permissions->pluck('id'));
+        // Admin permissions
+        $master_permissions = Permission::whereIn('title', [
+            'admin_access',
+            'role_index',
+            'role_create',
+            'role_store',
+            'role_edit',
+            'role_update',
+            'role_delete',
+            'permission_index',
+            'permission_create',
+            'permission_store',
+            'permission_edit',
+            'permission_update',
+            'permission_delete',
+            'master_index',
+            'master_create',
+            'master_store',
+            'master_edit',
+            'master_show',
+            'master_delete',
+            'master_update',
+            'master_transfer',
+            'game_type_access'
+        ]);
+        Role::findOrFail(1)->permissions()->sync($master_permissions->pluck('id'));
 
-        
+
         // Agent gets specific permissions
         $agent_permissions = Permission::whereIn('title', [
             'agent_index',
@@ -64,8 +91,6 @@ class PermissionRoleTableSeeder extends Seeder
             'transfer_log',
             'agent_transfer'
         ])->pluck('id');
-        Role::findOrFail(2)->permissions()->sync($agent_permissions);
-
-        
+        Role::findOrFail(3)->permissions()->sync($agent_permissions);
     }
 }

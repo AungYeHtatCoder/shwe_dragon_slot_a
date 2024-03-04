@@ -74,6 +74,19 @@ Route::group([
     Route::get('agent-changepassword/{id}',[AgentController::class,'getChangePassword'])->name('agent.getChangePassword');
     Route::post('agent-changepassword/{id}',[AgentController::class,'makeChangePassword'])->name('agent.makeChangePassword');
 
+    Route::resource('master',AgentController::class);
+    Route::get('master-cash-in/{id}',[AgentController::class,'getCashIn'])->name('agent.getCashIn');
+    Route::post('master-cash-in/{id}',[AgentController::class,'makeCashIn'])->name('agent.makeCashIn');
+    Route::get('master/cash-out/{id}', [AgentController::class, 'getCashOut'])->name('agent.getCashOut');
+    Route::post('master/cash-out/update/{id}', [AgentController::class, 'makeCashOut'])
+        ->name('master.makeCashOut');
+    Route::get('master/transer-detail/{id}', [AgentController::class, 'getTransferDetail'])
+        ->name('master.getTransferDetail');
+    Route::put('master/{id}/ban', [AgentController::class, 'banAgent'])->name('agent.ban');
+    Route::get('master-changepassword/{id}',[AgentController::class,'getChangePassword'])->name('agent.getChangePassword');
+    Route::post('master-changepassword/{id}',[AgentController::class,'makeChangePassword'])->name('agent.makeChangePassword');
+
+
     Route::get('withdraw',[WithDrawRequestController::class,'index'])->name('agent.withdraw');
     Route::get('withdraw/{id}',[WithDrawRequestController::class,'show'])->name('agent.withdrawshow');
 

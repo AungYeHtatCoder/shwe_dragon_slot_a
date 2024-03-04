@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Admin\Role;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class RolesTableSeeder extends Seeder
 {
@@ -22,13 +21,18 @@ class RolesTableSeeder extends Seeder
             ],
             [
             
+                'title'      => 'Master',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+            
                 'title'      => 'Agent',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            
             [
-                
+
                 'title'      => 'Player',
                 'created_at' => now(),
                 'updated_at' => now(),

@@ -165,7 +165,46 @@ class PermissionsTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-          
+            [
+                'title'      => 'master_index',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title'      => 'master_create',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title'      => 'master_store',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title'      => 'master_edit',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title'      => 'master_update',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title'      => 'master_show',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title'      => 'master_delete',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title'      => 'master_transfer',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ];
 
         Permission::insert($permissions);

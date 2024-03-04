@@ -97,6 +97,12 @@
         <span class="nav-link-text ms-2 ps-1">Admin Control</span>
       </a>
       @endcan
+      @can('master_access')
+      <a data-bs-toggle="collapse" href="#masterControl" class="nav-link text-white" aria-controls="pagesExamples" role="button" aria-expanded="false">
+        <i class="material-icons-round {% if page.brand == 'RTL' %}ms-2{% else %} me-2{% endif %}">manage_accounts</i>
+        <span class="nav-link-text ms-2 ps-1">Master Control</span>
+      </a>
+      @endcan
       @can('agent_access')
       <a data-bs-toggle="collapse" href="#masterControl" class="nav-link text-white" aria-controls="pagesExamples" role="button" aria-expanded="false">
         <i class="material-icons-round {% if page.brand == 'RTL' %}ms-2{% else %} me-2{% endif %}">manage_accounts</i>
@@ -110,6 +116,14 @@
               <ul class="nav nav-sm flex-column">
 
                 @can('agent_index')
+                <li class="nav-item">
+                  <a class="nav-link text-white " href="{{ route('admin.agent.index')}}">
+                    <span class="sidenav-mini-icon"> <i class="fas fa-users"></i> </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> Agent Lists </span>
+                  </a>
+                </li>
+                @endcan
+                @can('master_index')
                 <li class="nav-item">
                   <a class="nav-link text-white " href="{{ route('admin.agent.index')}}">
                     <span class="sidenav-mini-icon"> <i class="fas fa-users"></i> </span>
