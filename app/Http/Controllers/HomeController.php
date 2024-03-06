@@ -33,7 +33,7 @@ class HomeController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->hasRole('Owner')) {
+        if ($user->hasRole('Admin')) {
 
             $startLastMonth = now()->subMonth()->startOfMonth();
             $endLastMonth = now()->subMonth()->endOfMonth();
@@ -47,7 +47,22 @@ class HomeController extends Controller
                 'lastUserCount',
                 'user'
             ));
-        } elseif ($user->hasRole('Agent')) {
+        }elseif ($user->hasRole('Master')) {
+
+            $startLastMonth = now()->subMonth()->startOfMonth();
+            $endLastMonth = now()->subMonth()->endOfMonth();
+
+            $userCount = User::where('agent_id', $user->id)->count();
+
+            $lastUserCount = User::where('agent_id', null)->whereBetween('created_at', [$startLastMonth, $endLastMonth])
+                ->count();
+
+            return view('admin.dashboard', compact(
+                'userCount',
+                'lastUserCount',
+                'user'
+            ));
+        }elseif ($user->hasRole('Agent')) {
 
             $startLastMonth = now()->subMonth()->startOfMonth();
             $endLastMonth = now()->subMonth()->endOfMonth();

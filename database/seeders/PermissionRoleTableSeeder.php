@@ -65,7 +65,16 @@ class PermissionRoleTableSeeder extends Seeder
             'master_delete',
             'master_update',
             'master_transfer',
-            'transfer_log'
+            'transfer_log',
+            'agent_access',
+            'agent_index',
+            'agent_create',
+            'agent_store',
+            'agent_edit',
+            'agent_show',
+            'agent_delete',
+            'agent_update',
+            'agent_transfer'
         ]);
         Role::findOrFail(2)->permissions()->sync($master_permissions->pluck('id'));
 
