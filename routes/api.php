@@ -27,6 +27,7 @@ Route::get('promotion', [PromotionController::class, 'index']);
 Route::get('banner', [BannerController::class, 'index']);
 Route::get('v1/validate', [AuthController::class, 'callback']);
 
+
 Route::group(["prefix" => "Seamless"], function () {
     Route::post('GetGameList', [LaunchGameController::class, 'getGameList']);
     Route::post('GetBalance', [GetBalanceController::class, 'getBalance']);

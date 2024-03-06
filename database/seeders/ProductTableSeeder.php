@@ -36,7 +36,7 @@ class ProductTableSeeder extends Seeder
             [
                 'code'  => '1009',
                 'name'  => 'CQ9',
-                'order' => '6'
+                'order' => '6',
             ],
             [
                 'code'  => '1011',
@@ -150,6 +150,6 @@ class ProductTableSeeder extends Seeder
             ],
         ];
 
-        Product::insert($data);
+        Product ::insert($data);
     }
 }
