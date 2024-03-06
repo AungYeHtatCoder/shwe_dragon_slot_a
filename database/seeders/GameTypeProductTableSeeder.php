@@ -17,52 +17,52 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id'  => 1,
                 'game_type_id'  => 2,
-                'image' => 'test.png'
+                'image' => 'evolution_gaming.webp'
             ],
             [
                 'product_id'  => 2,
                 'game_type_id'  => 2,
-                'image' => 'test.png'
+                'image' => 'all_bet.jpeg'
             ],
             [
                 'product_id'  => 3,
                 'game_type_id'  => 2,
-                'image' => 'test.png'
+                'image' => 'big_gaming.jpeg'
             ],
             [
                 'product_id'  => 4,
                 'game_type_id'  => 2,
-                'image' => 'test.png'
+                'image' => 'sa_gaming.jpeg'
             ],
             [
                 'product_id'  => 5,
                 'game_type_id'  => 1,
-                'image' => 'test.png'
+                'image' => 'cq9.jpeg'
             ],
             [
                 'product_id'  => 5,
                 'game_type_id'  => 2,
-                'image' => 'test.png'
+                'image' => 'cq9.jpeg'
             ],
             [
                 'product_id'  => 6,
                 'game_type_id'  => 1,
-                'image' => 'test.png'
+                'image' => 'play_tech.png'
             ],
             [
                 'product_id'  => 6,
                 'game_type_id'  => 2,
-                'image' => 'test.png'
+                'image' => 'play_tech.png'
             ],
             [
                 'product_id'  => 7,
                 'game_type_id'  => 1,
-                'image' => 'test.png'
+                'image' => 'joker.png'
             ],
             [
                 'product_id'  => 8,
                 'game_type_id'  => 1,
-                'image' => 'test.png'
+                'image' => 'dragon_soft.jpeg'
             ],
             [
                 'product_id'  => 9,
@@ -72,102 +72,102 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id'  => 10,
                 'game_type_id'  => 2,
-                'image' => 'test.png'
+                'image' => 'wm_casino.jpeg'
             ],
             [
                 'product_id'  => 11,
                 'game_type_id'  => 2,
-                'image' => 'test.png'
+                'image' => 'sexy_gaming.jpeg'
             ],
             [
                 'product_id'  => 12,
                 'game_type_id'  => 1,
-                'image' => 'test.png'
+                'image' => 'amaya.png'
             ],
             [
                 'product_id'  => 13,
                 'game_type_id'  => 1,
-                'image' => 'test.png'
+                'image' => 'habanero.jpeg'
             ],
             [
                 'product_id'  => 14,
                 'game_type_id'  => 3,
-                'image' => 'test.png'
+                'image' => 'IBC.png'
             ],
             [
                 'product_id'  => 15,
                 'game_type_id'  => 1,
-                'image' => 'test.png'
+                'image' => 'reevo.jpeg'
             ],
             [
                 'product_id'  => 16,
                 'game_type_id'  => 1,
-                'image' => 'test.png'
+                'image' => 'evoplay.png'
             ],
             [
                 'product_id'  => 17,
                 'game_type_id'  => 1,
-                'image' => 'test.png'
+                'image' => 'playstar.png'
             ],
             [
                 'product_id'  => 18,
                 'game_type_id'  => 2,
-                'image' => 'test.png'
+                'image' => 'dream_gaming.jpeg'
             ],
             [
                 'product_id'  => 19,
                 'game_type_id'  => 5,
-                'image' => 'test.png'
+                'image' => 'nex4d.jpeg'
             ],
             [
                 'product_id'  => 20,
                 'game_type_id'  => 5,
-                'image' => 'test.png'
+                'image' => 'lottery.jpeg'
             ],
             [
                 'product_id'  => 21,
                 'game_type_id'  => 1,
-                'image' => 'test.png'
+                'image' => 'slogxo.jpeg'
             ],
             [
                 'product_id'  => 22,
                 'game_type_id'  => 7,
-                'image' => 'test.png'
+                'image' => 'ambpoker.webp'
             ],
             [
                 'product_id'  => 23,
                 'game_type_id'  => 1,
-                'image' => 'test.png'
+                'image' => 'sky_wind.webp'
             ],
             [
                 'product_id'  => 23,
                 'game_type_id'  => 2,
-                'image' => 'test.png'
+                'image' => 'sky_wind.webp'
             ],
             [
                 'product_id'  => 24,
                 'game_type_id'  => 3,
-                'image' => 'test.png'
+                'image' => 'BTI.jpeg'
             ],
             [
                 'product_id'  => 25,
                 'game_type_id'  => 1,
-                'image' => 'test.png'
+                'image' => 'advant_play.jpeg'
             ],
             [
                 'product_id'  => 26,
                 'game_type_id'  => 1,
-                'image' => 'test.png'
+                'image' => 'jdb.jpeg'
             ],
             [
                 'product_id'  => 27,
                 'game_type_id'  => 1,
-                'image' => 'test.png'
+                'image' => 'jili.png'
             ],
             [
                 'product_id'  => 27,
                 'game_type_id'  => 8,
-                'image' => 'test.png'
+                'image' => 'jili.png'
             ],
             ];
 

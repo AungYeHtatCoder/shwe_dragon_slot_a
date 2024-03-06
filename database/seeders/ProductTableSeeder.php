@@ -16,50 +16,42 @@ class ProductTableSeeder extends Seeder
             [
                 'code'  => '1002',
                 'name'  => 'Evolution Gaming',
-                'order' => '1',
-                'image' => 'evolution_gaming.webp'
+                'order' => '1'
             ],
             [
                 'code'  => '1003',
                 'name'  => 'All Bet',
-                'order' => '2',
-                'image' => 'all_bet.jpeg'
+                'order' => '2'
             ],
             [
                 'code'  => '1004',
                 'name'  => 'Big Gaming',
-                'order' => '3',
-                'image' => 'big_gaming.jpeg'
+                'order' => '3'
             ],
             [
                 'code'  => '1005',
                 'name'  => 'SA Gaming',
-                'order' => '4',
-                'image' => 'sa_gaming.jpeg'
+                'order' => '4'
             ],
             [
                 'code'  => '1009',
                 'name'  => 'CQ9',
                 'order' => '6',
-                'image' => 'cq9.jpeg'
             ],
             [
                 'code'  => '1011',
                 'name'  => 'Play Tech',
-                'order' => '7',
-                'image' => 'play_tech.png'
+                'order' => '7'
             ],
             [
                 'code'  => '1013',
                 'name'  => 'Joker',
-                'order' => '8',
-                'image' => 'joker.png'
+                'order' => '8'
             ],
             [
                 'code'  => '1014',
                 'name'  => 'Dragon Soft',
-                'order' => '9',
-                'image' => 'dragon_soft.jpeg'
+                'order' => '9'
             ],
             [
                 'code'  => '1017',
@@ -69,110 +61,92 @@ class ProductTableSeeder extends Seeder
             [
                 'code'  => '1020',
                 'name'  => 'WM Casino',
-                'order' => '11',
-                'image' => 'wm_casino.jpeg'
+                'order' => '11'
             ],
             [
                 'code'  => '1022',
                 'name'  => 'Sexy Gaming',
-                'order' => '12',
-                'image' => 'sexy_gaming.jpeg'
+                'order' => '12'
             ],
             [
                 'code'  => '1039',
                 'name'  => 'AMAYA',
-                'order' => '13',
-                'image' => 'amaya.png'
+                'order' => '13'
             ],
             [
                 'code'  => '1041',
                 'name'  => 'Habanero',
-                'order' => '14',
-                'image' => 'habanero.jpeg'
+                'order' => '14'
             ],
             [
                 'code'  => '1046',
                 'name'  => 'IBC',
-                'order' => '15',
-                'image' => 'IBC.png'
+                'order' => '15'
             ],
             [
                 'code'  => '1048',
                 'name'  => 'Reevo',
-                'order' => '16',
-                'image' => 'reevo.jpeg'
+                'order' => '16'
             ],
             [
                 'code'  => '1049',
                 'name'  => 'EvoPlay',
-                'order' => '17',
-                'image' => 'evoplay.png'
+                'order' => '17'
             ],
             [
                 'code'  => '1050',
                 'name'  => 'PlayStar',
-                'order' => '18',
-                'image' => 'playstar.png'
+                'order' => '18'
             ],
             [
                 'code'  => '1052',
                 'name'  => 'Dream Gaming',
-                'order' => '19',
-                'image' => 'dream_gaming.jpeg'
+                'order' => '19'
             ],
             [
                 'code'  => '1053',
                 'name'  => 'Nexus 4D',
-                'order' => '20',
-                'image' => 'nex4d.jpeg'
+                'order' => '20'
             ],
             [
                 'code'  => '1074',
                 'name'  => 'HKGP Lottery',
-                'order' => '21',
-                'image' => 'lottery.jpeg'
+                'order' => '21'
             ],
             [
                 'code'  => '1075',
                 'name'  => 'SlotXo',
-                'order' => '22',
-                'image' => 'slogxo.jpeg'
+                'order' => '22'
             ],
             [
                 'code'  => '1076',
                 'name'  => 'AMB Poker',
-                'order' => '23',
-                'image' => 'ambpoker.webp'
+                'order' => '23'
             ],
             [
                 'code'  => '1077',
                 'name'  => 'SkyWind',
-                'order' => '24',
-                'image' => 'sky_wind.webp'
+                'order' => '24'
             ],
             [
                 'code'  => '1081',
                 'name'  => 'BTI',
-                'order' => '25',
-                'image' => 'BTI.jpeg'
+                'order' => '25'
             ],
             [
                 'code'  => '1084',
                 'name'  => 'Advant Play',
-                'order' => '26',
-                'image' => 'advant_play.jpeg'
+                'order' => '26'
             ],
             [
                 'code'  => '1085',
                 'name'  => 'JDB',
-                'order' => '27',
-                'image' => 'jdb.jpeg'
+                'order' => '27'
             ],
             [
                 'code'  => '1091',
                 'name'  => 'Jili',
-                'order' => '28',
-                'image' => 'jili.png'
+                'order' => '28'
             ],
         ];
 
