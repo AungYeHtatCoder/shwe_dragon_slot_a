@@ -17,7 +17,7 @@ class GameType extends Model
         return $this->belongsToMany(Product::class,'game_type_product')->withPivot('image');
     }
 
-    public function getImageAttribute()
+    public function getImageAttribute() //getImageAttribute
     {
         return $this->products->pluck('pivot.image');
     }

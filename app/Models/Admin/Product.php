@@ -10,7 +10,8 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = ['product_id','name','order'];
-    protected $appends = ['image'];
+    protected $appends = ['imgUrl']; // Changed from 'image' to 'imgUrl'
+    //protected $appends = ['image'];
 
     public function gameTypes()
     {
