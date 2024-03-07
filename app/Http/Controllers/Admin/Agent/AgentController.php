@@ -22,7 +22,7 @@ class AgentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    private const AGENT_ROLE = 2;
+    private const AGENT_ROLE = 3;
 
     public function index()
     {
@@ -77,7 +77,8 @@ class AgentController extends Controller
             [
                 'password' => Hash::make($inputs['password']),
                 'agent_id' => Auth()->user()->id,
-                'status' => 1
+                'status' => 1,
+                'type' => 'agent'
             ]
         );
         $user = User::create($userPrepare);

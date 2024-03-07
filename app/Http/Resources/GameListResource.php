@@ -18,9 +18,11 @@ class GameListResource extends JsonResource
         return [
             'id' => $this->id,
             'code' => $this->code,
-            'providers' => $this->products->map(function ($product) {
+            'products' => $this->products->map(function ($product) {
                 return [
                     'id' => $product->id,
+                    'name' => $product->name,
+                    'image' => $product->getImgUrlAttribute()
                 ];
             }),
         ];
