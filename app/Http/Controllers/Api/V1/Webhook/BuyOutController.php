@@ -22,7 +22,7 @@ class BuyOutController extends Controller
         }
 
         Transaction::create([
-            "user_id" => $validator->getMember()->id,
+            "user_id" => $request->getMember()->id,
             "external_transaction_id" => $validator->getRequestTransaction()->TransactionID,
             "wager_id" => $validator->getRequestTransaction()->WagerID
         ]);

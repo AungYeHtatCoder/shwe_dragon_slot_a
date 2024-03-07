@@ -6,16 +6,16 @@ use App\Enums\SlotWebhookResponseCode;
 use App\Http\Requests\Slot\SlotWebhookRequest;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Models\Wager;
 use App\Services\Slot\Dto\RequestTransaction;
 
 class SlotWebhookValidator
 {
-    protected ?User $member;
 
     protected ?Transaction $existingTransaction;
 
     // TODO: imp: chang with actual wager
-    protected ?Transaction $existingWager;
+    protected ?Wager $existingWager;
 
     protected float $totalTransactionAmount = 0;
 
@@ -43,7 +43,7 @@ class SlotWebhookValidator
             return $this->response(SlotWebhookResponseCode::InvalidSign);
         }
 
-        if (!$this->getMember()) {
+        if (!$this->request->getMember()) {
             return $this->response(SlotWebhookResponseCode::MemberNotExists);
         }
 
@@ -97,15 +97,6 @@ class SlotWebhookValidator
         return $this->request->getSign() == $signature;
     }
 
-    public function getMember()
-    {
-        if (!isset($this->member)) {
-            $this->member = User::where("user_name", $this->request->getMemberName())->first();
-        }
-
-        return $this->member;
-    }
-
     protected function isNewWager(RequestTransaction $transaction)
     {
         return !$this->getExistingWager($transaction);
@@ -114,7 +105,7 @@ class SlotWebhookValidator
     public function getExistingWager(RequestTransaction $transaction)
     {
         if (!isset($this->existingWager)) {
-            $this->existingWager = Transaction::where("wager_id", $transaction->WagerID)->first();
+            $this->existingWager = Wager::where("seamless_wager_id", $transaction->WagerID)->first();
         }
 
         return $this->existingWager;
@@ -128,7 +119,7 @@ class SlotWebhookValidator
     public function getExistingTransaction(RequestTransaction $transaction)
     {
         if (!isset($this->existingTransaction)) {
-            $this->existingTransaction = Transaction::where("external_transaction_id", $transaction->TransactionID)->first();
+            $this->existingTransaction = Transaction::where("seamless_transaction_id", $transaction->TransactionID)->first();
         }
 
         return $this->existingTransaction;
@@ -136,6 +127,7 @@ class SlotWebhookValidator
 
     public function getAfterBalance()
     {
+        logger($this->totalTransactionAmount);
         if (!isset($this->after_balance)) {
             $this->after_balance = $this->getBeforeBalance() + $this->totalTransactionAmount;
         }
@@ -146,7 +138,7 @@ class SlotWebhookValidator
     public function getBeforeBalance()
     {
         if (!isset($this->before_balance)) {
-            $this->before_balance = $this->getMember()->balance;
+            $this->before_balance = $this->request->getMember()->balanceFloat;
         }
 
         return $this->before_balance;
@@ -176,8 +168,8 @@ class SlotWebhookValidator
     {
         $this->response = SlotWebhookService::buildResponse(
             $responseCode,
-            $this->getMember() ? $this->getAfterBalance() : 0,
-            $this->getMember() ? $this->getBeforeBalance() : 0
+            $this->request->getMember() ? $this->getAfterBalance() : 0,
+            $this->request->getMember() ? $this->getBeforeBalance() : 0
         );
 
         return $this;

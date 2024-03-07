@@ -23,7 +23,7 @@ class PushBetController extends Controller
 
         foreach($validator->getRequestTransactions() as $requestTransaction){
             Transaction::create([
-                "user_id" => $validator->getMember()->id,
+                "user_id" => $request->getMember()->id,
                 "external_transaction_id" => $requestTransaction->TransactionID,
                 "wager_id" => $requestTransaction->WagerID
             ]);

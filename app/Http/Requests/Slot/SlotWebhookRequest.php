@@ -2,11 +2,15 @@
 
 namespace App\Http\Requests\Slot;
 
+use App\Models\User;
+use App\Services\Slot\SlotWebhookValidator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class SlotWebhookRequest extends FormRequest
 {
+    private ?User $member;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -42,6 +46,22 @@ class SlotWebhookRequest extends FormRequest
             "Sign" => ["required"],
             ...$transaction_rules
         ];
+    }
+
+    public function check()
+    {
+        $validator = SlotWebhookValidator::make($this)->validate();
+
+        return $validator;
+    }
+
+    public function getMember()
+    {
+        if (!isset($this->member)) {
+            $this->member = User::where("user_name", $this->getMemberName())->first();
+        }
+
+        return $this->member;
     }
 
     public function getMemberName(){

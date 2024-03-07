@@ -111,4 +111,8 @@ class User extends Authenticatable implements Wallet
     {
         return $this->belongsTo(User::class, 'agent_id');
     }
+
+    public static function adminUser(){
+        return self::where("type", UserType::Admin)->first();
+    }
 }

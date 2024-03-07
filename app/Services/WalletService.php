@@ -9,12 +9,12 @@ class WalletService
 {
     public function forceTransfer(User $from, User $to, float $amount, TransactionName $transaction_name, array $meta = [])
     {
-        $from->forceTransferFloat($to, $amount, self::buildTransferMeta($from, $to, $transaction_name, $meta));
+        return $from->forceTransferFloat($to, $amount, self::buildTransferMeta($from, $to, $transaction_name, $meta));
     }
 
     public function transfer(User $from, User $to, float $amount, TransactionName $transaction_name, array $meta = [])
     {
-        $from->transferFloat($to, $amount, self::buildTransferMeta($from, $to, $transaction_name, $meta));
+        return $from->transferFloat($to, $amount, self::buildTransferMeta($from, $to, $transaction_name, $meta));
     }
 
     public function deposit(User $user, float $amount, TransactionName $transaction_name, array $meta = [])
