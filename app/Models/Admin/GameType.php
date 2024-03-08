@@ -19,7 +19,7 @@ class GameType extends Model
 
     public function getImageAttribute() //getImageAttribute
     {
-        return $this->products->pluck('pivot.product_image');
+        return $this->products->pluck('pivot.image');
     }
 
     // getImgUrlAttribute
