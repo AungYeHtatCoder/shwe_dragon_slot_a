@@ -16,7 +16,7 @@ class GameTypeTableSeeder extends Seeder
             [
                 'name'  => 'Slot',
                 'code'  => '1',
-                'img' => 'slot.png',
+                'img' => 'slots.png',
                 'order' => '1'
             ],
             [
@@ -28,7 +28,7 @@ class GameTypeTableSeeder extends Seeder
             [
                 'name'  => 'Sport Book',
                 'code'  => '3',
-                'img' => 'sport_book.png',
+                'img' => 'sportbook.png',
                 'order' => '3'
             ],
             [

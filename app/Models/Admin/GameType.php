@@ -25,7 +25,7 @@ class GameType extends Model
     // getImgUrlAttribute
     public function getImgUrlAttribute()
     {
-        return asset('assets/img/game_type/' . $this->image);
+        return asset('assets/img/game_type/' . $this->img);
     }
      // Define an accessor for the "image" attribute
     // public function getImageAttribute()
