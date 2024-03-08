@@ -9,8 +9,8 @@ class GameType extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','code', 'img','order'];
-    protected  $appends = ['image', 'img_url'];
+    protected $fillable = ['name','code','order'];
+    protected  $appends = ['image'];
 
     public function products()
     {
@@ -27,16 +27,4 @@ class GameType extends Model
     {
         return asset('assets/img/game_type/' . $this->img);
     }
-     // Define an accessor for the "image" attribute
-    // public function getImageAttribute()
-    // {
-    //     // Return the image attribute from related products or any default logic you prefer
-    //     // For example, if you want to return the first product's image
-    //     if ($this->products->first()) {
-    //         return $this->products->first()->pivot->image;
-    //     }
-
-    //     // Return default image or null if no products are associated
-    //     return null;
-    // }
 }
