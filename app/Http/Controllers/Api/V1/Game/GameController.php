@@ -22,11 +22,12 @@ class GameController extends Controller
     
     public function gameTypeProducts($gameTypeID)
     {
-        $gameTypes = GameType::with(['products' => function ($query) {
+        $gameTypes = GameType::select('id', 'code')->with(['products' => function ($query) {
             $query->orderBy('order', 'asc');
         }])->where('id', $gameTypeID)
-            ->get();
-            return $this->success(GameListResource::collection($gameTypes), 'Game Detail Successfully');
+            ->first();
+            return $this->success($gameTypes);
+            // return $this->success(GameListResource::collection($gameTypes), 'Game Detail Successfully');
         }
 
     public function gameList($provider_id, $game_type_id)
