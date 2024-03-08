@@ -39,7 +39,7 @@ class MasterController extends Controller
             ->get();
 
         //kzt
-        return view('admin.agent.index', compact('users'));
+        return view('admin.master.index', compact('users'));
     }
 
     /**
@@ -48,13 +48,13 @@ class MasterController extends Controller
     public function create()
     {
         abort_if(
-            Gate::denies('agent_create'),
+            Gate::denies('master_create'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
         $agent_name = $this->generateRandomString();
 
-        return view('admin.agent.create', compact('agent_name'));
+        return view('admin.master.create', compact('agent_name'));
     }
 
     /**
@@ -109,7 +109,7 @@ class MasterController extends Controller
     public function edit(string $id)
     {
         abort_if(
-            Gate::denies('agent_edit'),
+            Gate::denies('master_edit'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -182,7 +182,7 @@ class MasterController extends Controller
     {
 
         abort_if(
-            Gate::denies('agent_transfer'),
+            Gate::denies('master_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -211,7 +211,7 @@ class MasterController extends Controller
     {
 
         abort_if(
-            Gate::denies('agent_transfer'),
+            Gate::denies('master_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );

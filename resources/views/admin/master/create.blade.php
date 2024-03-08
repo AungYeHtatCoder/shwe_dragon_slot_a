@@ -79,7 +79,7 @@
           </div>
         </div>
         <div class="card-body">
-          <form role="form" method="POST" class="text-start" action="{{ route('admin.agent.store') }}">
+          <form role="form" method="POST" class="text-start" action="{{ route('admin.master.store') }}">
             @csrf
             <div class="custom-form-group">
               <label for="title">Master Name <span class="text-danger">*</span></label>

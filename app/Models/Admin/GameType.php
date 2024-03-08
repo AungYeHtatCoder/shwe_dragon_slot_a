@@ -9,17 +9,23 @@ class GameType extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','code','order'];
-    protected  $appends = ['image'];
+    protected $fillable = ['name','code', 'image','order'];
+    protected  $appends = ['product_image', 'img_url'];
 
     public function products()
     {
-        return $this->belongsToMany(Product::class,'game_type_product')->withPivot('image');
+        return $this->belongsToMany(Product::class,'game_type_product')->withPivot('product_image');
     }
 
     public function getImageAttribute() //getImageAttribute
     {
-        return $this->products->pluck('pivot.image');
+        return $this->products->pluck('pivot.product_image');
+    }
+
+    // getImgUrlAttribute
+    public function getImgUrlAttribute()
+    {
+        return asset('assets/img/game_type/' . $this->image);
     }
      // Define an accessor for the "image" attribute
     // public function getImageAttribute()
