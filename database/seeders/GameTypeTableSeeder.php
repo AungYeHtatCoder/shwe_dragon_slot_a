@@ -16,82 +16,82 @@ class GameTypeTableSeeder extends Seeder
             [
                 'name'  => 'Slot',
                 'code'  => '1',
-                'img' => 'slots.png',
-                'order' => '1'
+                'order' => '1',
+                'img' => 'slots.png'
             ],
             [
                 'name'  => 'Live Casino',
                 'code'  => '2',
-                'img' => 'live_casino.png',
-                'order' => '2'
+                'order' => '2',
+                'img'   => 'live_casino.png'
             ],
             [
                 'name'  => 'Sport Book',
                 'code'  => '3',
-                'img' => 'sportbook.png',
-                'order' => '3'
+                'order' => '3',
+                'img'   => 'sportbook.png'
             ],
             [
                 'name'  => 'Virtual Sport',
                 'code'  => '4',
-                'img' => 'virtual_sport.png',
-                'order' => '4'
+                'order' => '4',
+                'img'   => 'virtual_sport.png'
             ],
             [
                 'name' => 'Lottery',
                 'code' => '5',
-                'img' => 'lottery.png',
-                'order' => '5'
+                'order'=> '5',
+                'img'  => 'lottery.png'
             ],
             [
                 'name' => 'Qipai',
                 'code' => '6',
-                'img' => 'qipai.png',
-                'order' => '6'
+                'order' => '6',
+                'img'   => 'qipai.png'
             ],
             [
                 'name' => 'P2P',
                 'code' => '7',
-                'img' => 'p2p.png',
-                'order' => '7'
+                'order' => '7',
+                'img'  => 'p2p.png'
             ],
             [
                 'name' => 'Fishing',
                 'code' => '8',
-                'img' => 'fishing.png',
-                'order' => '8'
+                'order' => '8',
+                'img'  => 'fishing.png'
             ],
             [
                 'name' => 'Others',
                 'code' => '9',
-                'img' => 'others.png',
-                'order' => ''
+                'order' => '9',
+                'img'  => 'others.png'
             ],
             [
                 'name' => 'Cock Fighting',
                 'code' => '10',
-                'img' => 'cock_fighting.png',
-                'order' => '10'
+                'order' => '10',
+                'img'  => 'cook_fighting.png'
             ],
             [
                 'name' => 'Bonus',
                 'code' => '11',
-                'img' => 'bonus.png',
-                'order' => '11'
+                'order' => '11',
+                'img'   => 'bonus.png'
             ],
             [
                 'name' => 'Jackpot',
                 'code' => '12',
-                'img' => 'jackpot.png',
-                'order' => '12'
+                'order' => '12',
+                'img'  => 'jackpot.png'
             ],
             [
                 'name' => 'ESport',
                 'code' => '13',
-                'img' => 'esport.png',
-                'order' => '13'
+                'order' => '13',
+                'img' => 'esport.png'
             ]
-            ];
+        ];
 
         GameType::insert($data);
     }
