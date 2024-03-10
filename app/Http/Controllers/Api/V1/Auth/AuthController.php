@@ -7,6 +7,7 @@ use App\Http\Requests\Api\ChangePasswordRequest;
 use App\Http\Requests\Api\LoginRequest;
 use App\Http\Requests\Api\ProfileRequest;
 use App\Http\Resources\PlayerResource;
+use App\Http\Resources\UserResource;
 use App\Models\Admin\UserLog;
 use App\Models\User;
 use App\Traits\HttpResponses;
@@ -28,10 +29,7 @@ class AuthController extends Controller
                 'user_id' => $user->id
             ]);
             
-            return $this->success([
-                'user' => $user,
-                'token' => $user->createToken('Api Token of '. $user->name)->plainTextToken
-            ], "Logged In Successfully.");
+            return $this->success(new UserResource($user), 'User Login Successfully');
         } else {
             return $this->error("", "Credentials do not match!", 401);
         }

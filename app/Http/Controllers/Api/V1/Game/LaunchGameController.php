@@ -65,5 +65,4 @@ class LaunchGameController extends Controller
         }
     }
 
-
 }

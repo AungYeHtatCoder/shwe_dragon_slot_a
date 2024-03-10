@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\BettingHistory::class
+        Commands\FetchReport::class
     ];
 
     /**
@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('make:betting-history')->everyMinute();
+        $schedule->command('make:fetch-report')->everyMinute();
         $schedule->command('make:mark-history')->everyMinute();
 
         
