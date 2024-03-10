@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1\Webhook\Traits;
 
+use App\Enums\TransactionStatus;
 use App\Http\Requests\Slot\SlotWebhookRequest;
 use App\Models\SeamlessEvent;
 use App\Models\Wager;
@@ -28,6 +29,10 @@ trait UseWebhook {
         foreach ($requestTransactions as $requestTransaction) {
             $wager = Wager::firstOrCreate([
                 "seamless_wager_id" => $requestTransaction->WagerID
+            ]);
+
+            $wager->update([
+                "status" => $requestTransaction->Status
             ]);
 
             $event->transactions()->create([

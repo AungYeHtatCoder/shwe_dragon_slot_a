@@ -3,7 +3,9 @@
 namespace App\Services\Slot;
 
 use App\Enums\SlotWebhookResponseCode;
+use App\Enums\TransactionStatus;
 use App\Http\Requests\Slot\SlotWebhookRequest;
+use App\Models\SeamlessTransaction;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Wager;
@@ -12,7 +14,7 @@ use App\Services\Slot\Dto\RequestTransaction;
 class SlotWebhookValidator
 {
 
-    protected ?Transaction $existingTransaction;
+    protected ?SeamlessTransaction $existingTransaction;
 
     // TODO: imp: chang with actual wager
     protected ?Wager $existingWager;
@@ -30,8 +32,6 @@ class SlotWebhookValidator
      * @var RequestTransaction[]
      */
     protected $requestTransactions;
-
-    protected RequestTransaction $requestTransaction;
 
     protected function __construct(protected SlotWebhookRequest $request)
     {
@@ -56,25 +56,19 @@ class SlotWebhookValidator
                 return $this->response(SlotWebhookResponseCode::DuplicateTransaction);
             }
 
+            // dd($this->getExistingWager($requestTransaction)->toArray());
+
+            // dd($this->isNewWager($requestTransaction));
+
+            // if (in_array($this->request->getMethodName(), ["pushbet"]) && !$this->isNewWager($requestTransaction)) {
+            //     return $this->response(SlotWebhookResponseCode::DuplicateTransaction);
+            // }
+
             if (!in_array($this->request->getMethodName(), ["placebet", "bonus", "jackpot", "buyin", "buyout", "pushbet"]) && $this->isNewWager($requestTransaction)) {
                 return $this->response(SlotWebhookResponseCode::BetNotExist);
             }
 
             $this->totalTransactionAmount += $requestTransaction->TransactionAmount;
-        }
-
-        if ($this->request->filled("Transaction")) {
-            $this->requestTransaction = RequestTransaction::from($this->request->getTransaction());
-
-            if ($this->requestTransaction->TransactionID && !$this->isNewTransaction($this->requestTransaction)) {
-                return $this->response(SlotWebhookResponseCode::DuplicateTransaction);
-            }
-
-            if (!in_array($this->request->getMethodName(), ["placebet", "bonus", "jackpot", "buyin", "buyout", "pushbet"]) && $this->isNewWager($this->requestTransaction)) {
-                return $this->response(SlotWebhookResponseCode::BetNotExist);
-            }
-
-            $this->totalTransactionAmount += $this->requestTransaction->TransactionAmount;
         }
 
         if (!$this->hasEnoughBalance()) {
@@ -119,7 +113,7 @@ class SlotWebhookValidator
     public function getExistingTransaction(RequestTransaction $transaction)
     {
         if (!isset($this->existingTransaction)) {
-            $this->existingTransaction = Transaction::where("seamless_transaction_id", $transaction->TransactionID)->first();
+            $this->existingTransaction = SeamlessTransaction::where("seamless_transaction_id", $transaction->TransactionID)->first();
         }
 
         return $this->existingTransaction;
@@ -127,7 +121,6 @@ class SlotWebhookValidator
 
     public function getAfterBalance()
     {
-        logger($this->totalTransactionAmount);
         if (!isset($this->after_balance)) {
             $this->after_balance = $this->getBeforeBalance() + $this->totalTransactionAmount;
         }
@@ -152,11 +145,6 @@ class SlotWebhookValidator
     public function getRequestTransactions()
     {
         return $this->requestTransactions;
-    }
-
-    public function getRequestTransaction()
-    {
-        return $this->requestTransaction;
     }
 
     protected function getSecretKey()

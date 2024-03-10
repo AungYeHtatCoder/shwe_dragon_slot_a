@@ -20,6 +20,7 @@ use App\Http\Controllers\Api\V1\Webhook\PushBetController;
 use App\Http\Controllers\Api\V1\Player\WithDrawController;
 use App\Http\Controllers\Api\V1\Player\PlayerTransactionLogController;
 use App\Http\Controllers\Api\V1\Webhook\PlaceBetController;
+use App\Http\Controllers\TestController;
 
 //login route post
 Route::post('/login', [AuthController::class, 'login']);
@@ -42,6 +43,8 @@ Route::group(["prefix" => "Seamless"], function () {
     Route::post('Jackpot', [JackPotController::class, 'jackPot']);
     Route::post('MobileLogin', [MobileLoginController::class, 'MobileLogin']);
 });
+
+Route::get("test", TestController::class);
 
 Route::group(["middleware" => ['auth:sanctum']], function () {
     //logout

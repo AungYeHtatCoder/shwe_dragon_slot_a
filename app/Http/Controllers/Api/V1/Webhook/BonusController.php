@@ -31,10 +31,11 @@ class BonusController extends Controller
         $this->createWagerTransactions($validator->getRequestTransactions(), $event);
 
         foreach ($validator->getRequestTransactions() as $requestTransaction) {
+            // TODO: ask: what if operator doesn't want to pay bonus
             app(WalletService::class)
                 ->transfer(
-                    $request->getMember(),
                     User::adminUser(),
+                    $request->getMember(),
                     $requestTransaction->TransactionAmount,
                     TransactionName::JackPot,
                     [

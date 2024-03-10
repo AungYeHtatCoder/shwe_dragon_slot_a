@@ -19,7 +19,6 @@ class LaunchGameController extends Controller
             'gameType' => 'required|integer',
             'languageCode' => 'integer',
             'platform' => 'integer',
-            'password' => 'required|string',
             // Add other validation rules as necessary
         ]);
 
@@ -27,7 +26,7 @@ class LaunchGameController extends Controller
         $user = Auth::user();
         $operatorCode = Config::get('game.api.operator_code');
         $secretKey = Config::get('game.api.secret_key');
-        $apiUrl = Config::get('game.api.url') . '/Seamless/LaunchGame';
+        return $apiUrl = Config::get('game.api.url') . '/Seamless/LaunchGame';
 
         // Generate the signature
         $requestTime = now()->format('YmdHis');
