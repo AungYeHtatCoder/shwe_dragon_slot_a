@@ -67,7 +67,7 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id'  => 9,
                 'game_type_id'  => 13,
-                'image' => 'tf_gaming.jpeg'
+                'image' => 'dragon_soft.jpeg'
             ],
             [
                 'product_id'  => 10,
