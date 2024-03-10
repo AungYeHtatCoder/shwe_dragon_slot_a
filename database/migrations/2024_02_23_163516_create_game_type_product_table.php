@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('game_type_id');
             $table->unsignedBigInteger('product_id');
             $table->string('image');
+            $table->integer('rate');
             $table->timestamps();
 
             $table->foreign('game_type_id')->references('id')->on('game_types')->onDelete('cascade');

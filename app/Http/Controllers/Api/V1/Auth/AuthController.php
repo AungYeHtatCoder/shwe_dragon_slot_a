@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\ChangePasswordRequest;
 use App\Http\Requests\Api\LoginRequest;
 use App\Http\Requests\Api\ProfileRequest;
+use App\Http\Requests\PlayerRequest;
 use App\Http\Resources\PlayerResource;
 use App\Http\Resources\UserResource;
 use App\Models\Admin\UserLog;
@@ -45,7 +46,7 @@ class AuthController extends Controller
 
     public function getUser()
     {
-        return $this->success(Auth::user(),'User Success');
+        return $this->success(new PlayerResource(Auth::user()),'User Success');
     }
 
     public function changePassword(ChangePasswordRequest $request)
@@ -80,7 +81,6 @@ class AuthController extends Controller
         ]);
      
         return new PlayerResource($player);
-      
     }
     
 }
