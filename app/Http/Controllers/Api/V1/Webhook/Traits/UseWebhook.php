@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1\Webhook\Traits;
 use App\Enums\TransactionStatus;
 use App\Http\Requests\Slot\SlotWebhookRequest;
 use App\Models\SeamlessEvent;
+use App\Models\User;
 use App\Models\Wager;
 
 trait UseWebhook {

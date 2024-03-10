@@ -28,6 +28,8 @@ class CancelBetController extends Controller
             return $validator->getResponse();
         }
 
+        $before_balance = $request->getMember()->balanceFloat;
+
         $event = $this->createEvent($request);
 
         $this->createWagerTransactions($validator->getRequestTransactions(), $event);
@@ -37,7 +39,7 @@ class CancelBetController extends Controller
                 ->transfer(
                     User::adminUser(),
                     $request->getMember(),
-                    $requestTransaction->TransactionAmount,
+                    abs($requestTransaction->TransactionAmount),
                     TransactionName::Cancel,
                     [
                         "event_id" => $request->getMessageID(),
@@ -46,10 +48,14 @@ class CancelBetController extends Controller
                 );
         }
 
+        $request->getMember()->wallet->refreshBalance();
+
+        $after_balance = $request->getMember()->balanceFloat;
+
         return SlotWebhookService::buildResponse(
             SlotWebhookResponseCode::Success,
-            $validator->getAfterBalance(),
-            $validator->getBeforeBalance()
+            $after_balance,
+            $before_balance
         );
     }
 }
