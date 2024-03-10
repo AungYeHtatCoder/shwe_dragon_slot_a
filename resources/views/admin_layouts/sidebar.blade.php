@@ -163,8 +163,35 @@
 
         </ul>
       </div>
+      
     </li>
-   
+    <li class="nav-item">
+      <a data-bs-toggle="collapse" href="#report" class="nav-link text-white" aria-controls="pagesExamples" role="button" aria-expanded="false">
+        <i class="material-icons-round {% if page.brand == 'RTL' %}ms-2{% else %} me-2{% endif %}">manage_accounts</i>
+        <span class="nav-link-text ms-2 ps-1">Report</span>
+      </a>
+      <div class="collapse show" id="pagesExamples">
+        <ul class="nav">
+          <li class="nav-item ">
+            <div class="collapse " id="report">
+              <ul class="nav nav-sm flex-column">
+
+                @can('admin_access')
+                <li class="nav-item">
+                  <a class="nav-link text-white " href="{{ route('admin.pullreport')}}">
+                    <span class="sidenav-mini-icon"> <i class="fas fa-users"></i> </span>
+                    <span class="sidenav-normal  ms-2  ps-1">Pull Report</span>
+                  </a>
+                </li>
+                @endcan
+              </ul>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+      
+    </li>
     <li class="nav-item">
       <a href="{{ route('logout') }}" onclick="event.preventDefault();
       document.getElementById('logout-form').submit();" class="nav-link text-white">

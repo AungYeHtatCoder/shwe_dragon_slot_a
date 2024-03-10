@@ -15,8 +15,7 @@ use App\Http\Controllers\Admin\Master\MasterController;
 use App\Http\Controllers\Admin\Player\PlayerController;
 use App\Http\Controllers\Admin\TransferLog\TransferLogController;
 use App\Http\Controllers\Admin\WithDraw\WithDrawRequestController;
-
-
+use App\Http\Controllers\ReportController;
 
 Route::group([
     'prefix' => 'admin', 'as' => 'admin.',
@@ -94,5 +93,5 @@ Route::group([
     Route::post('withdraw/{withdraw}',[WithDrawRequestController::class,'statusChange'])->name('agent.statusChange');
 
     Route::get('transer-log',[TransferLogController::class,'index'])->name('transferLog');
-    
+    Route::get('pull-report',[ReportController::class,'pullReport'])->name('pullreport');
 });
