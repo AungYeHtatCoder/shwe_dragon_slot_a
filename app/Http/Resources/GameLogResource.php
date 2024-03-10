@@ -14,7 +14,6 @@ class GameLogResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
- 
         return [
             'game_name' =>  $this->name_en,
             'game_type' => $this->description,

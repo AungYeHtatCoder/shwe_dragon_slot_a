@@ -29,7 +29,7 @@ class AuthController extends Controller
                 'user_id' => $user->id
             ]);
             
-            return new UserResource($user);
+            return $this->success(new UserResource($user), 'User Login Successfully');
         } else {
             return $this->error("", "Credentials do not match!", 401);
         }
