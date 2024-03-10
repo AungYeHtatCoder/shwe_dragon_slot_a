@@ -71,7 +71,7 @@
             </div>
             <div class="ms-auto my-auto mt-lg-0 mt-4">
               <div class="ms-auto my-auto">
-                <a class="btn btn-icon btn-2 btn-primary" href="{{ route('admin.agent.index') }}">
+                <a class="btn btn-icon btn-2 btn-primary" href="{{ route('admin.master.index') }}">
                   <span class="btn-inner--icon mt-1"><i class="material-icons">arrow_back</i>Back</span>
                 </a>
               </div>
@@ -79,7 +79,7 @@
           </div>
         </div>
         <div class="card-body">
-          <form role="form" method="POST" class="text-start" action="{{ route('admin.agent.store') }}">
+          <form role="form" method="POST" class="text-start" action="{{ route('admin.master.store') }}">
             @csrf
             <div class="custom-form-group">
               <label for="title">Master Name <span class="text-danger">*</span></label>

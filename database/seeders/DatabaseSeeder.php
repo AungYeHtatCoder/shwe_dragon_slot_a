@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             GameTypeTableSeeder::class,
             ProductTableSeeder::class,
             GameTypeProductTableSeeder::class,
+            AmayaGameListTableSeeder::class,
             CQ9GameListTableSeeder::class,
             DragonSoftGameListTableSeeder::class,
             EvoPlayGameListTableSeeder::class,

@@ -115,15 +115,15 @@
             <div class="collapse " id="masterControl">
               <ul class="nav nav-sm flex-column">
 
-                @can('agent_index')
+                @can('admin_access')
                 <li class="nav-item">
-                  <a class="nav-link text-white " href="{{ route('admin.agent.index')}}">
+                  <a class="nav-link text-white " href="{{ route('admin.master.index')}}">
                     <span class="sidenav-mini-icon"> <i class="fas fa-users"></i> </span>
-                    <span class="sidenav-normal  ms-2  ps-1"> Agent Lists </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> Master Lists </span>
                   </a>
                 </li>
                 @endcan
-                @can('master_index')
+                @can('agent_index')
                 <li class="nav-item">
                   <a class="nav-link text-white " href="{{ route('admin.agent.index')}}">
                     <span class="sidenav-mini-icon"> <i class="fas fa-users"></i> </span>

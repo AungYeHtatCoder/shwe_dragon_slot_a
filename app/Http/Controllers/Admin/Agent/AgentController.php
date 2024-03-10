@@ -34,12 +34,11 @@ class AgentController extends Controller
         //kzt
         $users = User::with('roles')
             ->whereHas('roles', function ($query) {
-                $query->where('role_id', 2);
+                $query->where('role_id', 3);
             })
             ->where('agent_id', auth()->id())
             ->orderBy('id', 'desc')
             ->get();
-
         //kzt
         return view('admin.agent.index', compact('users'));
     }
@@ -262,7 +261,7 @@ class AgentController extends Controller
     private function generateRandomString()
     {
         $randomNumber = mt_rand(10000000, 99999999);
-        return 'MW' . $randomNumber;
+        return 'SDG' . $randomNumber;
     }
 
 

@@ -70,15 +70,15 @@
                   <i class="fas fa-user-slash text-danger" style="font-size: 20px;"></i>
                 </a>
                 @elseif($user->status == 1)
-                <a onclick="event.preventDefault(); document.getElementById('banUser-{{ $user->id }}').submit();" class="me-2" href="#" data-bs-toggle="tooltip" data-bs-original-title="Active Agent">
+                <a onclick="event.preventDefault(); document.getElementById('banUser-{{ $user->id }}').submit();" class="me-2" href="#" data-bs-toggle="tooltip" data-bs-original-title="Active Master">
                   <i class="fas fa-user-check text-success" style="font-size: 20px;"></i>
                 </a>
                 @else
-                <a href="" class="me-2" href="#" data-bs-toggle="tooltip" data-bs-original-title="Active Agent">
+                <a href="" class="me-2" href="#" data-bs-toggle="tooltip" data-bs-original-title="Active Master">
                   <i class="fas fa-user-check text-warning" style="font-size: 20px;"></i>
                 </a>
                 @endif
-                <form class="d-none" id="banUser-{{ $user->id }}" action="{{ route('admin.agent.ban', $user->id) }}" method="post">
+                <form class="d-none" id="banUser-{{ $user->id }}" action="{{ route('admin.master.ban', $user->id) }}" method="post">
                   @csrf
                   @method('PUT')
                 </form>

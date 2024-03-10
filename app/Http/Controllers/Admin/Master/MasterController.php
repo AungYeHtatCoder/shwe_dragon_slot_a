@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Admin\Master;
 
-use App\Enums\TransactionName;
+use Exception;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\TransferLogRequest;
-use App\Models\Admin\TransferLog;
+use App\Enums\TransactionName;
 use App\Services\WalletService;
+use App\Models\Admin\TransferLog;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MasterRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Exception;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\TransferLogRequest;
 use Symfony\Component\HttpFoundation\Response;
 
 class MasterController extends Controller
@@ -20,7 +21,7 @@ class MasterController extends Controller
     /**
      * Display a listing of the resource.
      */
-    private const MASTER_ROLE = 3;
+    private const MASTER_ROLE = 2;
 
     public function index()
     {
@@ -39,7 +40,7 @@ class MasterController extends Controller
             ->get();
 
         //kzt
-        return view('admin.agent.index', compact('users'));
+        return view('admin.master.index', compact('users'));
     }
 
     /**
@@ -48,19 +49,19 @@ class MasterController extends Controller
     public function create()
     {
         abort_if(
-            Gate::denies('agent_create'),
+            Gate::denies('master_create'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
         $agent_name = $this->generateRandomString();
 
-        return view('admin.agent.create', compact('agent_name'));
+        return view('admin.master.create', compact('agent_name'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(MasterRequest $request)
     {
         abort_if(
             Gate::denies('master_store'),
@@ -75,7 +76,8 @@ class MasterController extends Controller
             [
                 'password' => Hash::make($inputs['password']),
                 'agent_id' => Auth()->user()->id,
-                'status' => 1
+                'status' => 1,
+                'type' => 'master'
             ]
         );
         $user = User::create($userPrepare);
@@ -109,7 +111,7 @@ class MasterController extends Controller
     public function edit(string $id)
     {
         abort_if(
-            Gate::denies('agent_edit'),
+            Gate::denies('master_edit'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -182,7 +184,7 @@ class MasterController extends Controller
     {
 
         abort_if(
-            Gate::denies('agent_transfer'),
+            Gate::denies('master_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -211,7 +213,7 @@ class MasterController extends Controller
     {
 
         abort_if(
-            Gate::denies('agent_transfer'),
+            Gate::denies('master_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
