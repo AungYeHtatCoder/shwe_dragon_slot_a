@@ -71,7 +71,7 @@
             </div>
             <div class="ms-auto my-auto mt-lg-0 mt-4">
               <div class="ms-auto my-auto">
-                <a class="btn btn-icon btn-2 btn-primary" href="{{ route('admin.agent.index') }}">
+                <a class="btn btn-icon btn-2 btn-primary" href="{{ route('admin.master.index') }}">
                   <span class="btn-inner--icon mt-1"><i class="material-icons">arrow_back</i>Back</span>
                 </a>
               </div>
