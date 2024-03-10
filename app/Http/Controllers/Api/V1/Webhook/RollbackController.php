@@ -36,8 +36,8 @@ class RollbackController extends Controller
         foreach ($validator->getRequestTransactions() as $requestTransaction) {
             app(WalletService::class)
                 ->transfer(
-                    $request->getMember(),
                     User::adminUser(),
+                    $request->getMember(),
                     $requestTransaction->TransactionAmount,
                     TransactionName::Rollback,
                     [

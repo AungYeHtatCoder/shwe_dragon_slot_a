@@ -28,12 +28,12 @@ class SlotWebhookRequest extends FormRequest
     {
         $transaction_rules = [];
 
-        if(in_array($this->getMethodName(), ["getbalance", "buyin", "buyout"])){
+        if (in_array($this->getMethodName(), ["getbalance", "buyin", "buyout"])) {
             $transaction_rules["Transactions"] = ["nullable"];
-            if($this->getMethodName() !== "getbalance"){
+            if ($this->getMethodName() !== "getbalance") {
                 $transaction_rules["Transaction"] = ["required"];
             }
-        }else{
+        } else {
             $transaction_rules["Transactions"] = ["required"];
         }
 
@@ -64,19 +64,23 @@ class SlotWebhookRequest extends FormRequest
         return $this->member;
     }
 
-    public function getMemberName(){
+    public function getMemberName()
+    {
         return $this->get('MemberName');
     }
 
-    public function getProductID(){
+    public function getProductID()
+    {
         return $this->get('ProductID');
     }
 
-    public function getMessageID(){
+    public function getMessageID()
+    {
         return $this->get('MessageID');
     }
 
-    public function getMethodName(){
+    public function getMethodName()
+    {
         return strtolower(str($this->url())->explode("/")->last());
     }
 
@@ -95,11 +99,20 @@ class SlotWebhookRequest extends FormRequest
         return $this->get('Sign');
     }
 
-    public function getTransactions(){
-        return $this->get("Transactions", []);
-    }
+    public function getTransactions()
+    {
+        $transactions = $this->get("Transactions", []);
 
-    public function getTransaction(){
-        return $this->get("Transaction", []);
+        if ($transactions) {
+            return $transactions;
+        }
+
+        $transaction = $this->get("Transaction", []);
+
+        if ($transaction) {
+            return [$transaction];
+        }
+
+        return [];
     }
 }
