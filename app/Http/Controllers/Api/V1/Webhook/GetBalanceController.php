@@ -18,10 +18,12 @@ class GetBalanceController extends Controller
             return $validator->getResponse();
         }
 
+        $balance = $request->getMember()->balanceFloat;
+
         return SlotWebhookService::buildResponse(
             SlotWebhookResponseCode::Success,
-            $validator->getAfterBalance(),
-            $validator->getBeforeBalance()
+            $balance,
+            $balance
         );
     }
 }

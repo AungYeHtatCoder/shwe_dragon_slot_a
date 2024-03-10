@@ -29,16 +29,26 @@ class RollbackController extends Controller
             return $validator->getResponse();
         }
 
+        $before_balance = $request->getMember()->balanceFloat;
+
         $event = $this->createEvent($request);
 
         $this->createWagerTransactions($validator->getRequestTransactions(), $event);
 
         foreach ($validator->getRequestTransactions() as $requestTransaction) {
+            if($requestTransaction->TransactionAmount < 0){
+                $from = $request->getMember();
+                $to = User::adminUser();
+            }else{
+                $from = User::adminUser();
+                $to = $request->getMember();
+            }
+
             app(WalletService::class)
                 ->transfer(
-                    User::adminUser(),
-                    $request->getMember(),
-                    $requestTransaction->TransactionAmount,
+                    $from,
+                    $to,
+                    abs($requestTransaction->TransactionAmount),
                     TransactionName::Rollback,
                     [
                         "event_id" => $request->getMessageID(),
@@ -47,10 +57,14 @@ class RollbackController extends Controller
                 );
         }
 
+        $request->getMember()->wallet->refreshBalance();
+
+        $after_balance = $request->getMember()->balanceFloat;
+
         return SlotWebhookService::buildResponse(
             SlotWebhookResponseCode::Success,
-            $validator->getAfterBalance(),
-            $validator->getBeforeBalance()
+            $after_balance,
+            $before_balance
         );
     }
 }

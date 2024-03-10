@@ -26,6 +26,8 @@ class BuyInController extends Controller
             return $validator->getResponse();
         }
 
+        $before_balance = $request->getMember()->balanceFloat;
+
         $event = $this->createEvent($request);
 
         $this->createWagerTransactions($validator->getRequestTransactions(), $event);
@@ -35,7 +37,7 @@ class BuyInController extends Controller
                 ->transfer(
                     $request->getMember(),
                     User::adminUser(),
-                    $requestTransaction->TransactionAmount,
+                    abs($requestTransaction->TransactionAmount),
                     TransactionName::Cancel,
                     [
                         "event_id" => $request->getMessageID(),
@@ -44,10 +46,14 @@ class BuyInController extends Controller
                 );
         }
 
+        $request->getMember()->wallet->refreshBalance();
+
+        $after_balance = $request->getMember()->balanceFloat;
+
         return SlotWebhookService::buildResponse(
             SlotWebhookResponseCode::Success,
-            $validator->getAfterBalance(),
-            $validator->getBeforeBalance()
+            $after_balance,
+            $before_balance
         );
     }
 }
