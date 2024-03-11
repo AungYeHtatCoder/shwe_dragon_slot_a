@@ -38,7 +38,7 @@ class PlayerController extends Controller
         //kzt
         $users = User::with('roles')
             ->whereHas('roles', function ($query) {
-                $query->where('role_id', 3);
+                $query->where('role_id', 4);
             })
             ->where('agent_id', auth()->id())
             ->orderBy('id', 'desc')
@@ -76,16 +76,22 @@ class PlayerController extends Controller
             $inputs = $request->validated();
             $userPrepare = array_merge(
                 $inputs,
-                [
-                    'password' => Hash::make($inputs['password']),
-                    'agent_id' => Auth()->user()->id
+                // [
+                //     'password' => Hash::make($inputs['password']),
+                //     'agent_id' => Auth()->user()->id
+                // ]
+                 [
+                'password' => Hash::make($inputs['password']),
+                'agent_id' => Auth()->user()->id,
+                'status' => 1,
+                'type' => 'agent'
                 ]
             );
 
 
             // Create user in local database
             $user = User::create($userPrepare);
-            $user->roles()->sync('3');
+            $user->roles()->sync('4');
 
             return redirect()->back()
                 ->with('success', 'Player created successfully')
