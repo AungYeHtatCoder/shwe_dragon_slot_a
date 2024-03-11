@@ -27,6 +27,7 @@ return new class extends Migration
             $table->integer('jp_bet');
             $table->integer('status');
             $table->datetime('created_on');
+            $table->datetime('settlement_date');
             $table->datetime('modified_on');
             $table->timestamps();
         });

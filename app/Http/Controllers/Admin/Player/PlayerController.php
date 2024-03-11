@@ -35,7 +35,6 @@ class PlayerController extends Controller
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
 
-
         //kzt
         $users = User::with('roles')
             ->whereHas('roles', function ($query) {

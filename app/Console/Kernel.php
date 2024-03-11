@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\FetchReport::class
+        Commands\PullReport::class
     ];
 
     /**
@@ -25,10 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('make:fetch-report')->everyMinute();
-        $schedule->command('make:mark-history')->everyMinute();
-
-        
+        $schedule->command('make:pull-report')->everySecond();
     }
 
     /**

@@ -17,19 +17,41 @@ class UsersTableSeeder extends Seeder
     public function run(): void
     {
         $admin = $this->createUser(UserType::Admin, "Owner", "SDG898787", "09123456789");
-        (new WalletService())->deposit($admin, 1000 * 100000, TransactionName::CapitalDeposit);
+        (new WalletService())->deposit($admin, 1000 * 10000000000000000, TransactionName::CapitalDeposit);
 
         $master = $this->createUser(UserType::Master, "Master 1", "SDG898437", "09112345678", $admin->id);
-        (new WalletService())->transfer($admin, $master, 100 * 100000, TransactionName::CreditTransfer);
+        (new WalletService())->transfer($admin, $master, 100 * 100000000000, TransactionName::CreditTransfer);
 
         $agent_1 = $this->createUser(UserType::Agent, "Agent 1", "SDG898737", "09112345674", $master->id);
-        (new WalletService())->transfer($admin, $agent_1, 100 * 100000, TransactionName::CreditTransfer);
+        (new WalletService())->transfer($admin, $agent_1, 100 * 10000000000, TransactionName::CreditTransfer);
 
-        $player_1 = $this->createUser(UserType::Player, "Player 1", "SDG14893038", "09222345678", $agent_1->id);
+        $player_1 = $this->createUser(UserType::Player, "Player 1", "SDG11111111", "09111111111", $agent_1->id);
         (new WalletService())->transfer($agent_1, $player_1, 40 * 100000, TransactionName::CreditTransfer);
         
-        $player_2 = $this->createUser(UserType::Player, "Player 2", "tak", "091234567890", $agent_1->id);
+        $player_2 = $this->createUser(UserType::Player, "Player 2", "SDB22222222", "09222222222", $agent_1->id);
         (new WalletService())->transfer($agent_1, $player_2, 50 * 100000, TransactionName::CreditTransfer);
+       
+        $player_3 = $this->createUser(UserType::Player, "Player 3", "SDG33333333", "09333333333", $agent_1->id);
+        (new WalletService())->transfer($agent_1, $player_3, 50 * 100000, TransactionName::CreditTransfer);
+        
+        $player_4 = $this->createUser(UserType::Player, "Player 4", "SDG44444444", "09444444444", $agent_1->id);
+        (new WalletService())->transfer($agent_1, $player_4, 50 * 100000, TransactionName::CreditTransfer);
+
+        $player_5 = $this->createUser(UserType::Player, "Player 5", "SDG55555555", "09555555555", $agent_1->id);
+        (new WalletService())->transfer($agent_1, $player_5, 50 * 100000, TransactionName::CreditTransfer);
+
+        $player_6 = $this->createUser(UserType::Player, "Player 6", "SDG66666666", "09666666666", $agent_1->id);
+        (new WalletService())->transfer($agent_1, $player_6, 50 * 100000, TransactionName::CreditTransfer);
+        
+        $player_7 = $this->createUser(UserType::Player, "Player 7", "SDG77777777", "09777777777", $agent_1->id);
+        (new WalletService())->transfer($agent_1, $player_7, 50 * 100000, TransactionName::CreditTransfer);
+        
+        $player_8 = $this->createUser(UserType::Player, "Player 8", "SDG88888888", "09888888888", $agent_1->id);
+        (new WalletService())->transfer($agent_1, $player_8, 50 * 100000, TransactionName::CreditTransfer);
+
+        $player_9 = $this->createUser(UserType::Player, "Player 9", "SDG999999999", "09999999999", $agent_1->id);
+        (new WalletService())->transfer($agent_1, $player_9, 50 * 100000, TransactionName::CreditTransfer);
+
     }
 
     private function createUser(UserType $type, $name, $user_name, $phone, $parent_id = null)
