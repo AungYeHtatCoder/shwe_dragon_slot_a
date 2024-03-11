@@ -50,8 +50,8 @@ class PullReport extends Command
         // Prepare the payload
         $data = [
             'OperatorCode' => $operatorCode,
-            'StartDate' => now()->format('YmdHi'),
-            'EndDate' => now()->addMinute(5)->format('YmdHi'),
+            'StartDate' => now()->format('Y-m-d H:i'),
+            'EndDate' => now()->addMinute(5)->format('Y-m-d H:i'),
             'Sign' => $signature,
             'RequestTime' => $requestTime,
         ];
