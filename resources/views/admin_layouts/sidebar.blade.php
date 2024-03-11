@@ -184,6 +184,14 @@
                   </a>
                 </li>
                 @endcan
+                @can('admin_access')
+                <li class="nav-item">
+                  <a class="nav-link text-white " href="{{ route('admin.getBetDetail')}}">
+                    <span class="sidenav-mini-icon"> <i class="fas fa-users"></i> </span>
+                    <span class="sidenav-normal  ms-2  ps-1">GetBetDetail</span>
+                  </a>
+                </li>
+                @endcan
               </ul>
             </div>
           </li>

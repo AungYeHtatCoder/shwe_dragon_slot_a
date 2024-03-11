@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\Admin\GameController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\BannerController;
@@ -11,11 +12,11 @@ use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\BannerTextController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\Agent\AgentController;
+use App\Http\Controllers\Admin\GetBetDetailController;
 use App\Http\Controllers\Admin\Master\MasterController;
 use App\Http\Controllers\Admin\Player\PlayerController;
 use App\Http\Controllers\Admin\TransferLog\TransferLogController;
 use App\Http\Controllers\Admin\WithDraw\WithDrawRequestController;
-use App\Http\Controllers\ReportController;
 
 Route::group([
     'prefix' => 'admin', 'as' => 'admin.',
@@ -94,4 +95,6 @@ Route::group([
 
     Route::get('transer-log',[TransferLogController::class,'index'])->name('transferLog');
     Route::get('pull-report',[ReportController::class,'pullReport'])->name('pullreport');
+    // get bet deatil 
+    Route::get('get-bet-detail', [GetBetDetailController::class, 'index'])->name('getBetDetail');
 });
