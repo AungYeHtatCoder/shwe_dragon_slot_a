@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use App\Enums\UserType;
-use App\Models\Admin\Permission;
 use App\Models\Admin\Role;
+use App\Models\Admin\Permission;
+use Laravel\Sanctum\HasApiTokens;
+use App\Models\SeamlessTransaction;
 use Bavix\Wallet\Interfaces\Wallet;
 use Bavix\Wallet\Traits\HasWalletFloat;
-use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -115,4 +116,10 @@ class User extends Authenticatable implements Wallet
     public static function adminUser(){
         return self::where("type", UserType::Admin)->first();
     }
+
+    public function seamlessTransactions()
+    {
+        return $this->hasMany(SeamlessTransaction::class, 'user_id');
+    }
+
 }
