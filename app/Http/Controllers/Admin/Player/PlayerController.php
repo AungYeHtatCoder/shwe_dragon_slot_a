@@ -39,7 +39,7 @@ class PlayerController extends Controller
         //kzt
         $users = User::with('roles')
             ->whereHas('roles', function ($query) {
-                $query->where('role_id', 3);
+                $query->where('role_id', 4);
             })
             ->where('agent_id', auth()->id())
             ->orderBy('id', 'desc')
