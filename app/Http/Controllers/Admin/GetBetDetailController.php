@@ -4,16 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\SeamlessTransaction;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Config;
 use App\Http\Controllers\Controller;
 
 class GetBetDetailController extends Controller
 {
-    // public function index()
-    // {
-    //     $transactions = SeamlessTransaction::with(['user', 'seamlessEvent'])->get();
-
-    //     return view('admin.get_bet_detail.index', compact('transactions'));
-    // }
+    
     public function index(Request $request)
     {
         $query = SeamlessTransaction::with(['user', 'seamlessEvent']);
@@ -29,4 +26,21 @@ class GetBetDetailController extends Controller
 
         return view('admin.get_bet_detail.index', compact('transactions'));
     }
+
+    public function getBetDetail(Request $request, $wagerId)
+{
+    $operatorCode = Config::get('game.api.operator_code');
+    $apiUrl = Config::get('game.api.url') . "/Report/BetDetail?agentCode={$operatorCode}&WagerID={$wagerId}";
+
+    // Make the API request
+    $response = Http::get($apiUrl);
+    if ($response->successful()) {
+        $betDetails = $response->json();
+        //return redirect()->route('getBetDetail.show', ['betDetails' => $betDetails]);
+        return view('admin.get_bet_detail.show', compact(['betDetails' => $betDetails]));
+    } else {
+        return back()->withErrors('Unable to fetch bet details.');
+    }
+}
+    
 }

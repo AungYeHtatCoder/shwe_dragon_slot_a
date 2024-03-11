@@ -97,4 +97,5 @@ Route::group([
     Route::get('pull-report',[ReportController::class,'pullReport'])->name('pullreport');
     // get bet deatil 
     Route::get('get-bet-detail', [GetBetDetailController::class, 'index'])->name('getBetDetail');
+    Route::get('get-bet-detail/{wagerId}', [GetBetDetailController::class, 'getBetDetail'])->name('getBetDetail.show');
 });
