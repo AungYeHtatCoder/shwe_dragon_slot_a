@@ -36,8 +36,7 @@ class GetBetDetailController extends Controller
     $response = Http::get($apiUrl);
     if ($response->successful()) {
         $betDetails = $response->json();
-        //return redirect()->route('getBetDetail.show', ['betDetails' => $betDetails]);
-        return view('admin.get_bet_detail.show', compact(['betDetails' => $betDetails]));
+        return view('admin.get_bet_detail.show', compact('betDetails'));
     } else {
         return back()->withErrors('Unable to fetch bet details.');
     }
