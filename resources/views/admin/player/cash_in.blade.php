@@ -121,7 +121,7 @@
             <div class="col-md-6">
               <div class="input-group input-group-outline is-valid my-3">
                 <label class="form-label">Current Balance</label>
-                <input type="text" class="form-control" name="phone" value="{{ $player->balance .'.00'}}" readonly>
+                <input type="text" class="form-control" name="phone" value="{{number_format($player->balanceFloat,2) }}" readonly>
 
               </div>
               @error('phone')
@@ -156,7 +156,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="input-group input-group-outline is-valid my-3">
-                <button type="submit" class="btn btn-primary">ငွေလွဲပေးမည်</button>
+                <button type="submit" class="btn btn-primary">Confirm</button>
               </div>
             </div>
           </div>
