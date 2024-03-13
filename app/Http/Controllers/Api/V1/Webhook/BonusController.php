@@ -39,7 +39,7 @@ class BonusController extends Controller
                     User::adminUser(),
                     $request->getMember(),
                     abs($requestTransaction->TransactionAmount),
-                    TransactionName::JackPot,
+                    TransactionName::Bonus,
                     [
                         "event_id" => $request->getMessageID(),
                         "seamless_transaction_id" => $requestTransaction->TransactionID,

@@ -40,15 +40,18 @@ class Transaction extends ModelsTransaction
     ];
 
     protected $dates = ['created_at', 'updated_at'];
-    
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
     public function placeBets()
-{
-    return $this->hasMany(PlaceBet::class, 'transaction_id', 'id');
-}
+    {
+        return $this->hasMany(PlaceBet::class, 'transaction_id', 'id');
+    }
 
+    public function targetUser(){
+        return $this->belongsTo(User::class);
+    }
 }
