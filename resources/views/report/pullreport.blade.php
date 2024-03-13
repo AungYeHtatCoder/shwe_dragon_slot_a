@@ -71,16 +71,16 @@
                 @foreach ($result as $res)
 
                 <tr>
-                    <td>{{$res['MemberName']}}</td>
-                    <td>{{$res['ProductID']}}</td>
-                    <td>{{$res['GameType']}}</td>
-                    <td>{{$res['GameID']}}</td>
-                    <td>{{$res['ValidBetAmount']}}</td>
-                    <td>{{$res['BetAmount']}}</td>
-                    <td>{{$res['PayoutAmount']}}</td>
-                    <td>{{$res['CommissionAmount']}}</td>
-                    <td>{{$res['JackpotAmount']}}</td>
-                    <td>{{$res['JPBet']}}</td>
+                    <td>{{$res->member_name}}</td>
+                    <td>{{$res->product_code}}</td>
+                    <td>{{$res->game_type_id}}</td>
+                    <td>{{$res->game_id}}</td>
+                    <td>{{$res->valid_bet_amount}}</td>
+                    <td>{{$res->bet_amount}}</td>
+                    <td>{{$res->payout_amount}}</td>
+                    <td>{{$res->commission_amount}}</td>
+                    <td>{{$res->jack_pot_amount}}</td>
+                    <td>{{$res->jp_bet}}</td>
                 </tr>
                 @endforeach
             @else

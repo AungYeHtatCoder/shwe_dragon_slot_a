@@ -34,7 +34,6 @@ class PlayerController extends Controller
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
-
         //kzt
         $users = User::with('roles')
             ->whereHas('roles', function ($query) {
@@ -183,7 +182,7 @@ class PlayerController extends Controller
     public function getCashIn(User $player)
     {
         abort_if(
-            Gate::denies('make_transfer'),
+            Gate::denies('agent_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -193,7 +192,7 @@ class PlayerController extends Controller
     public function makeCashIn(TransferLogRequest $request, User $player)
     {
         abort_if(
-            Gate::denies('make_transfer'),
+            Gate::denies('agent_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -222,7 +221,7 @@ class PlayerController extends Controller
     public function getCashOut(User $player)
     {
         abort_if(
-            Gate::denies('make_transfer'),
+            Gate::denies('agent_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -231,7 +230,7 @@ class PlayerController extends Controller
     public function makeCashOut(TransferLogRequest $request, User $player)
     {
         abort_if(
-            Gate::denies('make_transfer'),
+            Gate::denies('agent_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
