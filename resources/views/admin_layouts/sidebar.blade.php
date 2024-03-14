@@ -8,7 +8,7 @@
           <h3 class=" text-warning"> <i class="fas fa-coins" aria-hidden="true"></i></h3>
         </span>
         <span class="sidenav-normal  ms-2  ps-1 ">
-          <h3 class=" text-warning"> {{auth()->user()->balance}}</h3>
+          <h3 class=" text-warning"> {{auth()->user()->balanceFloat}}</h3>
         </span>
       </a>
     </li>
@@ -40,6 +40,12 @@
             <a class="nav-link text-white " href="{{ route('admin.banners.index') }}">
               <span class="sidenav-mini-icon"> <i class="fa-solid fa-panorama"></i> </span>
               <span class="sidenav-normal  ms-2  ps-1"> Banner </span>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link text-white " href="{{ route('admin.text.index') }}">
+              <span class="sidenav-mini-icon"> <i class="fa-solid fa-panorama"></i> </span>
+              <span class="sidenav-normal  ms-2  ps-1"> Banner Text </span>
             </a>
           </li>
           <li class="nav-item ">
@@ -128,14 +134,6 @@
                   <a class="nav-link text-white " href="{{ route('admin.agent.index')}}">
                     <span class="sidenav-mini-icon"> <i class="fas fa-users"></i> </span>
                     <span class="sidenav-normal  ms-2  ps-1"> Agent Lists </span>
-                  </a>
-                </li>
-                @endcan
-                @can('agent_access')
-                <li class="nav-item">
-                  <a class="nav-link text-white " href="{{ route('admin.agent.withdraw')}}">
-                    <span class="sidenav-mini-icon"> <i class="fas fa-users"></i> </span>
-                    <span class="sidenav-normal  ms-2  ps-1">WithDraw Requests</span>
                   </a>
                 </li>
                 @endcan

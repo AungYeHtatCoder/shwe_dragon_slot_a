@@ -39,12 +39,8 @@
         <tr>
             <th>#</th>
             <th>Date</th>
-            <th>From User</th>
             <th>To User</th>
-            <th>Cash In</th>
-            <th>Cash Out</th>
-            <th>Profit</th>
-            <th>Note</th>
+            <th>Amount</th>
         </tr>
     </thead>
     <tbody>
@@ -57,22 +53,9 @@
                     echo date_format($date,"d/m/Y");
                   @endphp
                 </td>
-                <td>{{ $log->fromUser->name }}</td>
-                <td>{{ $log->toUser->name }}</td>
-                <td>{{ $log->cash_in }}</td>
-                <td>{{ $log->cash_out }}</td>
-                <td>
-                  @php
-
-                $profit = $log->cash_in - $log->cash_out;
-                  @endphp
-                  @if ($profit < 0)
-                      <span class="text-danger">{{ $profit }}</span>
-                  @else
-                      <span class="text-success">{{ $profit }}</span>
-                  @endif
-                </td>
-                <td>{{ $log->note }}</td>
+                <td>{{ $log->targetUser->name }}</td>
+                <td>{{$log->type == 'deposit' ? '+' : ''}}{{ $log->amountFloat }}</td>
+                
             </tr>
         @endforeach
     </tbody>

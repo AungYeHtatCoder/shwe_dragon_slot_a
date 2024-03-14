@@ -22,8 +22,8 @@ class ProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'profile' => ['nullable','image'],
-            'phone' => ['required'],
+            'name' => 'required|min:3|string',
+            'phone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'unique:users,phone'],
         ];
     }
 }

@@ -51,9 +51,8 @@ class AuthController extends Controller
 
     public function changePassword(ChangePasswordRequest $request)
     {
-        $request->validated();
-        $player = User::find(Auth::user()->id);
-        if(Hash::check($request->currentPassword, $player->password)) {
+        $player = Auth::user();
+        if(Hash::check($request->current_password, $player->password)) {
              $player->update([
                 'password' => $request->password
              ]);
@@ -66,21 +65,13 @@ class AuthController extends Controller
     public function profile(ProfileRequest $request)
     {
         
-        $image = $request->file('profile');
-        $filename = null;
-        if($image){
-            $ext = $image->getClientOriginalExtension();
-            $filename = uniqid('player_profile') . '.' . $ext; // Generate a unique filename
-            $image->move(public_path('assets/img/player_profile/'), $filename); // Save the file
-
-        }
         $player = Auth::user();
         $player->update([
-            'profile' => $filename,
+            'name' => $request->name,
             'phone' => $request->phone
         ]);
      
-        return new PlayerResource($player);
+        return $this->success(new PlayerResource($player),'Update profile');
     }
     
 }
