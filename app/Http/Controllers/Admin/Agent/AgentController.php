@@ -262,7 +262,7 @@ class AgentController extends Controller
     private function generateRandomString()
     {
         $randomNumber = mt_rand(10000000, 99999999);
-        return 'SDG' . $randomNumber;
+        return 'DC' . $randomNumber;
     }
 
 
