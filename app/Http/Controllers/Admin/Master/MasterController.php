@@ -77,6 +77,7 @@ class MasterController extends Controller
                 'password' => Hash::make($inputs['password']),
                 'agent_id' => Auth()->user()->id,
                 'status' => 1,
+                'max_score' => $request->max_score ?? '0.00',
                 'type' => 'master'
             ]
         );
@@ -261,7 +262,7 @@ class MasterController extends Controller
     private function generateRandomString()
     {
         $randomNumber = mt_rand(10000000, 99999999);
-        return 'MW' . $randomNumber;
+        return 'DC' . $randomNumber;
     }
 
 
