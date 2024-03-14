@@ -89,6 +89,15 @@
         <!-- Card header -->
         <div class="card-header pb-0">
           <div class="d-lg-flex">
+              <h5>
+                Master ID : 
+                <span>{{ Auth::user()->user_name }}</span>
+
+              </h5>
+            </div>
+        </div>
+        <div class="card-header pb-0">
+          <div class="d-lg-flex">
             <div>
               <h5 class="mb-0">Create New Master</h5>
 

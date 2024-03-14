@@ -89,10 +89,21 @@
         <!-- Card header -->
         <div class="card-header pb-0">
           <div class="d-lg-flex">
+              <h5>
+                Agent ID : 
+                <span>{{ Auth::user()->user_name }}</span>
+
+              </h5>
+            </div>
+        </div>
+        <div class="card-header pb-0">
+          <div class="d-lg-flex">
             <div>
-              <h5 class="mb-0">Create New Player</h5>
+              <h5 class="mb-0">Create New Player
+              </h5>
 
             </div>
+            
             <div class="ms-auto my-auto mt-lg-0 mt-4">
               <div class="ms-auto my-auto">
                 <a class="btn btn-icon btn-2 btn-primary" href="{{ route('admin.player.index') }}">
