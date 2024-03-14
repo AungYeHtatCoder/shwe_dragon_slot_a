@@ -31,6 +31,7 @@ class User extends Authenticatable implements Wallet
         'profile',
         'phone',
         'balance',
+        'max_score',
         'agent_id',
         'status',
         'type'

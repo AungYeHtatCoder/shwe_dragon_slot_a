@@ -83,9 +83,13 @@ class PlayerController extends Controller
                 'password' => Hash::make($inputs['password']),
                 'agent_id' => Auth()->user()->id,
                 'status' => 1,
+                // Set 'max_score' to request value or default to '0.00' if not present
+                //'max_score' => $request->has('max_score') ? $request->max_score : '0.00',
+                'max_score' => $request->max_score ?? '0.00',
                 'type' => 'agent'
                 ]
             );
+            Log::info('User prepared: ' . json_encode($userPrepare));
 
 
             // Create user in local database

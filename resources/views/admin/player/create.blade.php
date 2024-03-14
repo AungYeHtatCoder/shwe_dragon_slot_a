@@ -54,6 +54,30 @@
   .submit-btn:hover {
     background-color: #b8328b;
   }
+  .custom-select-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.custom-select-wrapper::after {
+    content: '\25BC'; /* Unicode character for "downwards black arrow" */
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    pointer-events: none; /* This makes sure clicks pass through to the select element underneath */
+}
+
+.form-control.custom-select {
+    appearance: none; /* This removes default browser styling */
+    -webkit-appearance: none; /* For Safari */
+    -moz-appearance: none; /* For Firefox */
+    padding-right: 30px; /* Make space for custom arrow */
+}
+
+/* Add more styling here for the select and wrapper elements as needed */
+
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css">
 @endsection
@@ -82,15 +106,22 @@
           <form role="form" method="POST" class="text-start" action="{{ route('admin.player.store') }}">
             @csrf
             <div class="custom-form-group">
-              <label for="title">PlayerName <span class="text-danger">*</span></label>
+              <label for="title">Player ID <span class="text-danger">*</span></label>
               <input type="text"  name="user_name" class="form-control" value="{{$player_name}}" readonly>
               @error('name')
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
             </div>
             <div class="custom-form-group">
+              <label for="title">Password <span class="text-danger">*</span></label>
+              <input type="text"  name="password" class="form-control" value="{{old('password')}}" placeholder="6-20 characters without spacing">
+              @error('password')
+              <span class="text-danger d-block">*{{ $message }}</span>
+              @enderror
+            </div>
+            <div class="custom-form-group">
               <label for="title">Name <span class="text-danger">*</span></label>
-              <input type="text"  name="name" class="form-control" value="{{old('name')}}">
+              <input type="text"  name="name" class="form-control" value="{{old('name')}}" placeholder="6-20 characters without spacing">
               @error('player_name')
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
@@ -102,16 +133,37 @@
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
             </div>
+
             <div class="custom-form-group">
-              <label for="title">Password <span class="text-danger">*</span></label>
-              <input type="text"  name="password" class="form-control" value="{{old('password')}}">
-              @error('password')
+              <p>Max Score : </p>
+              <p class="badge badge-dark">1.00</p>
+            </div>
+            <div class="custom-form-group">
+              <label for="title">Max Score <span class="text-danger">*</span></label>
+              <input type="text"  name="max_score" class="form-control" value="{{old('max_score')}}" placeholder="0.00">
+              @error('max_score')
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
             </div>
+            {{-- active and inactive with dropdown --}} 
+            <div class="custom-form-group">
+            <label for="title">Status <span class="text-danger">*</span></label>
+            <div class="custom-select-wrapper">
+                <select name="status" class="form-control custom-select">
+                    <option value="1">Active</option>
+                    <option value="0">Inactive</option>
+                </select>
+            </div>
+            @error('status')
+            <span class="text-danger d-block">*{{ $message }}</span>
+            @enderror
+          </div>
+
            
             <div class="custom-form-group">
-              <button type="submit" class="btn btn-primary" type="button">Create</button>
+              <button class="btn btn-info" type="button" id="resetFormButton">Reset</button>
+
+              <button type="submit" class="btn btn-primary" type="button">Submit</button>
             </div>
           </form>
         </div>
@@ -193,4 +245,21 @@
         }
 
   </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('resetFormButton').addEventListener('click', function () {
+            var form = this.closest('form');
+            form.querySelectorAll('input[type="text"]').forEach(input => {
+                // Resets input fields to their default values
+                input.value = '';
+            });
+            form.querySelectorAll('select').forEach(select => {
+                // Resets select fields to their default selected option
+                select.selectedIndex = 0;
+            });
+            // Add any additional field resets here if necessary
+        });
+    });
+</script>
+
 @endsection
