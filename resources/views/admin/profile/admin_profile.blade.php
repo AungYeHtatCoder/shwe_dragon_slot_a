@@ -1,51 +1,9 @@
 @extends('admin_layouts.app')
 @section('content')
 
-
-<div class="row align-items-center">
-    <div class="col-lg-4 col-sm-8">
-        <div class="nav-wrapper position-relative end-0">
-            <ul class="nav nav-pills nav-fill p-1" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link mb-0 px-0 py-1 active  active " data-bs-toggle="tab" href="../../../examples/pages/account/settings.html" role="tab" aria-selected="true">
-                        Messages
-                    </a>
-                </li>
-
-            </ul>
-        </div>
-    </div>
-</div>
-</div>
 <div class="container-fluid my-3 py-3">
     <div class="row mb-5">
-        <div class="col-lg-3">
-            <div class="card position-sticky top-1">
-                <ul class="nav flex-column bg-white border-radius-lg p-3">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark d-flex" data-scroll href="#profile">
-                            <i class="material-icons text-lg me-2">person</i>
-                            <span class="text-sm">Profile</span>
-                        </a>
-                    </li>
-                    <li class="nav-item pt-2">
-                        <a class="nav-link text-dark d-flex" data-scroll href="#basic-info">
-                            <i class="material-icons text-lg me-2">receipt_long</i>
-                            <span class="text-sm">Basic Info</span>
-                        </a>
-                    </li>
-                    <li class="nav-item pt-2">
-                        <a class="nav-link text-dark d-flex" data-scroll href="#password">
-                            <i class="material-icons text-lg me-2">lock</i>
-                            <span class="text-sm">Change Password</span>
-                        </a>
-                    </li>
 
-
-
-                </ul>
-            </div>
-        </div>
         <div class="col-lg-9 mt-lg-0 mt-4">
 
             <div class="card card-body" id="profile">

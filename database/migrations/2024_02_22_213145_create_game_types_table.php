@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('code');
             $table->string('img')->default('default.png');
+            $table->integer('status');
             $table->string('order');
             $table->timestamps();
         });

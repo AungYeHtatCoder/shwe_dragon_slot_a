@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Report;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
-    public function pullReport(Request $request)
+    public function index(Request $request)
     {
-        $report = Report::all();
+        $report = DB::table('seamless_transactions')
+            ->join('users', 'seamless_transactions.user_id', '=', 'users.id')
+            ->where('users.agent_id', Auth::id())
+            ->get();
 
-        return view('report.pullreport',compact('report'));
+        return view('report.index', compact('report'));
     }
 }

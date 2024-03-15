@@ -21,14 +21,14 @@
       <div class="card-header pb-0">
         <div class="d-lg-flex">
           <div>
-            <h5 class="mb-0">Agent List Dashboards</h5>
+            <h5 class="mb-0">Win/lose Report</h5>
 
           </div>
           
         </div>
       </div>
       <div class="container">
-        <form action="{{ route('admin.pullreport')}}" method="GET">
+        <form action="{{ route('admin.report.index')}}" method="GET">
           <div class="row">
             <div class="col-md-3">
               <div class="input-group input-group-static my-3">
@@ -54,35 +54,20 @@
         <table class="table table-flush" id="users-search">
           <thead class="thead-light">
             <th>PlayerName</th>
-            <th>ProductId</th>
-            <th>GameType</th>
-            <th>GameID</th>
+            <th>TransactionAmount</th>
             <th>ValidBetAmount</th>
             <th>BetAmount</th>
-            <th>PayoutAmount</th>
-            <th>CommissionAmount</th>
-            <th>JackpotAmount</th>
-            <th>JPBet</th>
           </thead>
           <tbody>
           
             @if(isset($result))
             @if(count($result) > 0)
-                @foreach ($result as $res)
-
-                <tr>
-                    <td>{{$res->member_name}}</td>
-                    <td>{{$res->product_code}}</td>
-                    <td>{{$res->game_type_id}}</td>
-                    <td>{{$res->game_id}}</td>
-                    <td>{{$res->valid_bet_amount}}</td>
-                    <td>{{$res->bet_amount}}</td>
-                    <td>{{$res->payout_amount}}</td>
-                    <td>{{$res->commission_amount}}</td>
-                    <td>{{$res->jack_pot_amount}}</td>
-                    <td>{{$res->jp_bet}}</td>
-                </tr>
-                @endforeach
+              <tr>
+                <td>{{$result->user->user_name}}</td>
+                <td>{{$result->transaction_amount}}</td>
+                <td>{{$result->bet_amount}}</td>
+                <td>{{$result->valid_amount}}</td>
+              </tr>
             @else
             <tr>
               <td col-span=8>

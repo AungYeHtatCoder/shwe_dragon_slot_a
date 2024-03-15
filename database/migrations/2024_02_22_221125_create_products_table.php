@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code')->index();
             $table->string('name');
-            $table->string('order');
+            $table->integer('order');
             $table->timestamps();
         });
     }

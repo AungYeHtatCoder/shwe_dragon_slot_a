@@ -18,7 +18,6 @@ class TransferLogController extends Controller
         return view('admin.trans_log.index', compact('transferLogs'));
     }
 
-
     public function AdminToMasterDailyStatusTransferLog()
 {
     // authorize 

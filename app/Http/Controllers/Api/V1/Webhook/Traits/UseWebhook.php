@@ -7,6 +7,7 @@ use App\Http\Requests\Slot\SlotWebhookRequest;
 use App\Models\SeamlessEvent;
 use App\Models\User;
 use App\Models\Wager;
+use Illuminate\Support\Facades\Log;
 
 trait UseWebhook {
     public function createEvent(
@@ -35,7 +36,8 @@ trait UseWebhook {
             $wager->update([
                 "status" => $requestTransaction->Status
             ]);
-
+            Log::info($requestTransaction);
+            
             $event->transactions()->create([
                 "user_id" => $event->user_id,
                 "wager_id" => $wager->id,

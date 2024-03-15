@@ -16,142 +16,142 @@ class ProductTableSeeder extends Seeder
             [
                 'code'  => '1002',
                 'name'  => 'Evolution Gaming',
-                'order' => '1'
+                'order' => 28,
             ],
             [
                 'code'  => '1003',
                 'name'  => 'All Bet',
-                'order' => '2'
+                'order' => 29,
             ],
             [
                 'code'  => '1004',
                 'name'  => 'Big Gaming',
-                'order' => '3'
+                'order' => 3,
             ],
             [
                 'code'  => '1005',
                 'name'  => 'SA Gaming',
-                'order' => '4'
+                'order' => 4,
             ],
             [
                 'code'  => '1009',
                 'name'  => 'CQ9',
-                'order' => '6',
+                'order' => 5,
             ],
             [
                 'code'  => '1011',
                 'name'  => 'Play Tech',
-                'order' => '7'
+                'order' => 6,
             ],
             [
                 'code'  => '1013',
                 'name'  => 'Joker',
-                'order' => '8'
+                'order' => 7,
             ],
             [
                 'code'  => '1014',
                 'name'  => 'Dragon Soft',
-                'order' => '9'
+                'order' => 8,
             ],
             [
                 'code'  => '1017',
                 'name'  => 'TF Gaming',
-                'order' => '10'
+                'order' => 9,
             ],
             [
                 'code'  => '1020',
                 'name'  => 'WM Casino',
-                'order' => '11'
+                'order' => 10,
             ],
             [
                 'code'  => '1022',
                 'name'  => 'Sexy Gaming',
-                'order' => '12'
+                'order' => 11,
             ],
             [
                 'code'  => '1034',
                 'name'  => 'Spade Gaming',
-                'order' => '13'
+                'order' => 12,
             ],
             [
                 'code'  => '1039',
                 'name'  => 'AMAYA',
-                'order' => '14'
+                'order' => 13,
             ],
             [
                 'code'  => '1041',
                 'name'  => 'Habanero',
-                'order' => '15'
+                'order' => 14,
             ],
             [
                 'code'  => '1046',
                 'name'  => 'IBC',
-                'order' => '16'
+                'order' => 15,
             ],
             [
                 'code'  => '1048',
                 'name'  => 'Reevo',
-                'order' => '17'
+                'order' => 16,
             ],
             [
                 'code'  => '1049',
                 'name'  => 'EvoPlay',
-                'order' => '18'
+                'order' => 17,
             ],
             [
                 'code'  => '1050',
                 'name'  => 'PlayStar',
-                'order' => '19'
+                'order' => 18,
             ],
             [
                 'code'  => '1052',
                 'name'  => 'Dream Gaming',
-                'order' => '20'
+                'order' => 29,
             ],
             [
                 'code'  => '1053',
                 'name'  => 'Nexus 4D',
-                'order' => '21'
+                'order' => 20,
             ],
             [
                 'code'  => '1074',
                 'name'  => 'HKGP Lottery',
-                'order' => '22'
+                'order' => 21,
             ],
             [
                 'code'  => '1075',
                 'name'  => 'SlotXo',
-                'order' => '23'
+                'order' => 22,
             ],
             [
                 'code'  => '1076',
                 'name'  => 'AMB Poker',
-                'order' => '24'
+                'order' => 23,
             ],
             [
                 'code'  => '1077',
                 'name'  => 'SkyWind',
-                'order' => '25'
+                'order' => 24,
             ],
             [
                 'code'  => '1081',
                 'name'  => 'BTI',
-                'order' => '26'
+                'order' => 25,
             ],
             [
                 'code'  => '1084',
                 'name'  => 'Advant Play',
-                'order' => '27'
+                'order' => 26,
             ],
             [
                 'code'  => '1085',
                 'name'  => 'JDB',
-                'order' => '28'
+                'order' => 1,
             ],
             [
                 'code'  => '1091',
                 'name'  => 'Jili',
-                'order' => '29'
+                'order' => 2,
             ],
         ];
 
