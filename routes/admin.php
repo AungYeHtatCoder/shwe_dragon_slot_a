@@ -83,7 +83,7 @@ Route::group([
         ->name('master.makeCashOut');
     Route::get('master/transer-detail/{id}', [MasterController::class, 'getTransferDetail'])
         ->name('master.getTransferDetail');
-    Route::put('master/{id}/ban', [MasterController::class, 'banAgent'])->name('master.ban');
+    Route::put('master/{id}/ban', [MasterController::class, 'banMaster'])->name('master.ban');
     Route::get('master-changepassword/{id}',[MasterController::class,'getChangePassword'])->name('master.getChangePassword');
     Route::post('master-changepassword/{id}',[MasterController::class,'makeChangePassword'])->name('master.makeChangePassword');
 

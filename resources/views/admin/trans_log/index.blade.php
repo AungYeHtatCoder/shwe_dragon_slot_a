@@ -37,24 +37,22 @@
      <thead class="thead-light">
 
         <tr>
-            <th>#</th>
             <th>Date</th>
             <th>To User</th>
             <th>Amount</th>
         </tr>
     </thead>
     <tbody>
-        @foreach($transferLogs as $index => $log)
+        @foreach($transferLogs as $log)
             <tr>
-                <td>{{ $index+1 }}</td>
                 <td>
-                  @php
-                    $date = date_create($log->created_at);
-                    echo date_format($date,"d/m/Y");
-                  @endphp
+                  {{ $log->created_at }}
                 </td>
                 <td>{{ $log->targetUser->name }}</td>
-                <td>{{$log->type == 'deposit' ? '+' : ''}}{{ $log->amountFloat }}</td>
+                <td>
+                  <div class="d-flex align-items-center text-{{$log->type =='deposit' ? 'success' : 'danger'}} text-gradient text-sm font-weight-bold ms-auto"> {{$log->type == 'deposit' ? '+' : ''}}{{ $log->amountFloat }}</div>
+              
+                </td>
                 
             </tr>
         @endforeach

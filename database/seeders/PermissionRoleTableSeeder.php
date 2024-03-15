@@ -29,7 +29,6 @@ class PermissionRoleTableSeeder extends Seeder
             'permission_edit',
             'permission_update',
             'permission_delete',
-            //'master_access', 
             'master_index',
             'master_create',
             'master_store',
@@ -37,18 +36,8 @@ class PermissionRoleTableSeeder extends Seeder
             'master_show',
             'master_delete',
             'master_update',
-            'master_transfer',
-
-            // 'agent_index',
-            // 'agent_create',
-            // 'agent_store',
-            // 'agent_edit',
-            // 'agent_show',
-            // 'agent_delete',
-            // 'agent_update',
-            // 'agent_transfer',
             'transfer_log',
-            'master_transfer',
+            'make_transfer',
             'game_type_access'
         ]);
         Role::findOrFail(1)->permissions()->sync($admin_permissions->pluck('id'));
@@ -67,14 +56,6 @@ class PermissionRoleTableSeeder extends Seeder
             'permission_edit',
             'permission_update',
             'permission_delete',
-            'master_index',
-            'master_create',
-            'master_store',
-            'master_edit',
-            'master_show',
-            'master_delete',
-            'master_update',
-            'master_transfer',
             'transfer_log',
             'agent_index',
             'agent_create',
@@ -83,7 +64,7 @@ class PermissionRoleTableSeeder extends Seeder
             'agent_show',
             'agent_delete',
             'agent_update',
-            'agent_transfer'
+            'make_transfer'
         ]);
         Role::findOrFail(2)->permissions()->sync($master_permissions->pluck('id'));
 
@@ -91,13 +72,6 @@ class PermissionRoleTableSeeder extends Seeder
         // Agent gets specific permissions
         $agent_permissions = Permission::whereIn('title', [
             'agent_access',
-            'agent_index',
-            'agent_create',
-            'agent_store',
-            'agent_edit',
-            'agent_show',
-            'agent_delete',
-            'agent_update',
             'player_index',
             'player_create',
             'player_store',
@@ -106,7 +80,7 @@ class PermissionRoleTableSeeder extends Seeder
             'player_update',
             'player_delete',
             'transfer_log',
-            'agent_transfer'
+            'make_transfer'
         ])->pluck('id');
         Role::findOrFail(3)->permissions()->sync($agent_permissions);
     }

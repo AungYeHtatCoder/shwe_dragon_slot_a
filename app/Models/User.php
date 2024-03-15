@@ -87,6 +87,7 @@ class User extends Authenticatable implements Wallet
     {
         return $this->belongsToMany(Permission::class);
     }
+    
     public function hasRole($role)
     {
         return $this->roles->contains('title', $role);

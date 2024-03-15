@@ -13,11 +13,8 @@ class TransferLogController extends Controller
 {
     public function index()
     {
-        // authorize 
         $this->authorize('transfer_log', User::class);
-        // $transferLogs = Transaction::where('from_id',Auth::id())->orWhere('user_id',Auth::id())->get();
         $transferLogs = Auth::user()->transactions()->with("targetUser")->latest()->paginate();
-        // return $transferLogs;
         return view('admin.trans_log.index', compact('transferLogs'));
     }
 

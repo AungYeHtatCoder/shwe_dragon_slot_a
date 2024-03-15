@@ -68,7 +68,7 @@
     </a>
    </div>
    <div class="card">
-   <h4 class="ms-3">Agent Information </h4>
+   <h4 class="ms-3">Master Information </h4>
     <div class="table-responsive">
      <table class="table align-items-center mb-0">
       <tbody>

@@ -65,12 +65,12 @@
    <div class="d-flex justify-content-between">
 
 
-    <a class="btn btn-icon btn-2 btn-primary" href="{{ route('admin.agent.index') }}">
+    <a class="btn btn-icon btn-2 btn-primary" href="{{ route('admin.master.index') }}">
      <span class="btn-inner--icon mt-1"><i class="material-icons">arrow_back</i>Back</span>
     </a>
    </div>
    <div class="card">
-   <h4 class="ms-3">Agent Information 
+   <h4 class="ms-3">Master Information
 </h4>
     <div class="table-responsive">
      <table class="table align-items-center mb-0">

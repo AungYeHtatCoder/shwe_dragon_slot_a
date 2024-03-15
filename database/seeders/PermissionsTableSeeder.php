@@ -150,11 +150,6 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'title'      => 'agent_transfer',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
                 'title'      => 'transfer_log',
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -195,7 +190,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'title'      => 'master_transfer',
+                'title'      => 'make_transfer',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class ProfileRequest extends FormRequest
 {
@@ -23,7 +25,9 @@ class ProfileRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3|string',
-            'phone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'unique:users,phone'],
+            'phone' => [
+                'required', 'regex:/^([0-9\s\-\+\(\)]*)$/', Rule::unique('users')->ignore(Auth::id())
+            ],
         ];
     }
 }

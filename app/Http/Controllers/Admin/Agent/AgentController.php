@@ -157,7 +157,7 @@ class AgentController extends Controller
     public function getCashIn(string $id)
     {
         abort_if(
-            Gate::denies('agent_transfer'),
+            Gate::denies('make_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -169,7 +169,7 @@ class AgentController extends Controller
     public function getCashOut(string $id)
     {
         abort_if(
-            Gate::denies('agent_transfer'),
+            Gate::denies('make_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -185,7 +185,7 @@ class AgentController extends Controller
     {
 
         abort_if(
-            Gate::denies('agent_transfer'),
+            Gate::denies('make_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -214,7 +214,7 @@ class AgentController extends Controller
     {
 
         abort_if(
-            Gate::denies('agent_transfer'),
+            Gate::denies('make_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -249,7 +249,7 @@ class AgentController extends Controller
     {
 
         abort_if(
-            Gate::denies('agent_transfer'),
+            Gate::denies('make_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
