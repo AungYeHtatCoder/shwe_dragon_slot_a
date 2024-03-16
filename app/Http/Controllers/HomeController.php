@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Enums\TransactionName;
 use App\Models\Admin\AdminAddBalance;
+use App\Models\SeamlessTransaction;
 use App\Models\User;
 use App\Services\WalletService;
+use App\Settings\AppSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -42,7 +44,10 @@ class HomeController extends Controller
             $lastUserCount = User::where('agent_id', null)->whereBetween('created_at', [$startLastMonth, $endLastMonth])
                 ->count();
 
+            $provider_balance = (new AppSetting())->provider_balance + SeamlessTransaction::sum("transaction_amount");
+
             return view('admin.dashboard', compact(
+                'provider_balance',
                 'userCount',
                 'lastUserCount',
                 'user'

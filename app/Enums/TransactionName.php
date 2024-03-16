@@ -20,7 +20,7 @@ enum TransactionName: string
     case Commission = 'commission';
     case Refund = "refund";
 
-    case CreditTransfer = 'credit_transfer';
+    case CreditTransfer = 'credit_transfer'; 
     case DebitTransfer = 'debit_transfer';
 
     case CreditAdjustment = 'credit_adjustment';
