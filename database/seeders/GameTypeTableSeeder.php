@@ -45,7 +45,7 @@ class GameTypeTableSeeder extends Seeder
                 'name' => 'Lottery',
                 'code' => '5',
                 'order'=> '5',
-                'status' => 1,
+                'status' => 0,
                 'img'  => 'lottery.png'
             ],
             [
@@ -101,7 +101,7 @@ class GameTypeTableSeeder extends Seeder
                 'name' => 'ESport',
                 'code' => '13',
                 'order' => '13',
-                'status' => 1,
+                'status' => 0,
                 'img' => 'esport.png'
             ]
         ];
