@@ -21,17 +21,7 @@ class DatabaseSeeder extends Seeder
             BankTableSeeder::class,
             GameTypeTableSeeder::class,
             ProductTableSeeder::class,
-            GameTypeProductTableSeeder::class,
-            AmayaGameListTableSeeder::class,
-            CQ9GameListTableSeeder::class,
-            DragonSoftGameListTableSeeder::class,
-            EvoPlayGameListTableSeeder::class,
-            HabaneroGameListTableSeeder::class,
-            JokerGameListTableSeeder::class,
-            PlayStarGameListTableSeeder::class,
-            PlayTechGameListSeeder::class,
-            ReevoGameListTableSeeder::class,
-            SkyWindGameListTableSeeder::class
+            GameTypeProductTableSeeder::class
         ]);
       
     }
