@@ -34,7 +34,7 @@ class GameController extends Controller
             $query->orderBy('order', 'desc');
         }])->where('status',1)
             ->get();
-        return $gameTypes;
+        // return $gameTypes;
         return $this->success($gameTypes);
     }
 
