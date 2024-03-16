@@ -2,18 +2,26 @@
 
 namespace App\Http\Controllers\Api\V1\Webhook\Traits;
 
+use App\Enums\TransactionName;
 use App\Enums\TransactionStatus;
 use App\Http\Requests\Slot\SlotWebhookRequest;
+use App\Models\Admin\GameType;
+use App\Models\Admin\GameTypeProduct;
+use App\Models\Admin\Product;
 use App\Models\SeamlessEvent;
+use App\Models\SeamlessTransaction;
 use App\Models\User;
 use App\Models\Wager;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\MassAssignmentException;
+use App\Services\Slot\Dto\RequestTransaction;
+use App\Services\WalletService;
+use Illuminate\Contracts\Container\BindingResolutionException;
 
-trait UseWebhook {
+trait UseWebhook
+{
     public function createEvent(
         SlotWebhookRequest $request
-    ): SeamlessEvent
-    {
+    ): SeamlessEvent {
         return SeamlessEvent::create([
             "user_id" => $request->getMember()->id,
             "message_id" => $request->getMessageID(),
@@ -23,11 +31,19 @@ trait UseWebhook {
         ]);
     }
 
+    /**
+     * 
+     * @param array<int,RequestTransaction> $requestTransactions 
+     * @param SeamlessEvent $event 
+     * @return array<int, SeamlessTransaction> 
+     * @throws MassAssignmentException 
+     */
     public function createWagerTransactions(
         $requestTransactions,
         SeamlessEvent $event,
-    )
-    {
+    ) {
+        $seamless_transactions = [];
+
         foreach ($requestTransactions as $requestTransaction) {
             $wager = Wager::firstOrCreate([
                 "seamless_wager_id" => $requestTransaction->WagerID
@@ -36,18 +52,43 @@ trait UseWebhook {
             $wager->update([
                 "status" => $requestTransaction->Status
             ]);
-            Log::info($requestTransaction);
-            
-            $event->transactions()->create([
+
+            $game_type = GameType::where("code", $requestTransaction->GameType)->first();
+            $product = Product::where("code", $requestTransaction->ProductID)->first();
+
+            $game_type_product = GameTypeProduct::where("game_type_id", $game_type->id)
+                ->where("product_id", $product->id)
+                ->first();
+
+            $rate = $game_type_product->rate;
+
+            $seamless_transactions[] = $event->transactions()->create([
                 "user_id" => $event->user_id,
                 "wager_id" => $wager->id,
+                "game_type_id" => $game_type->id,
+                "product_id" => $product->id,
                 "seamless_transaction_id" => $requestTransaction->TransactionID,
+                "rate" => $rate,
                 "transaction_amount" => $requestTransaction->TransactionAmount,
                 "bet_amount" => $requestTransaction->BetAmount,
                 "valid_amount" => $requestTransaction->ValidBetAmount,
                 "status" => $requestTransaction->Status,
             ]);
-
         }
+
+        return $seamless_transactions;
+    }
+
+    public function processTransfer(User $from, User $to, TransactionName $transactionName, float $amount, int $rate, array $meta)
+    {
+        // TODO: ask: what if operator doesn't want to pay bonus
+        app(WalletService::class)
+            ->transfer(
+                $from,
+                $to,
+                abs($amount * $rate),
+                $transactionName,
+                $meta
+            );
     }
 }
