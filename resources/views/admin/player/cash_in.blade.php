@@ -129,7 +129,6 @@
               @enderror
             </div>
           </div>
-          <input type="hidden" name="from_user_id" value="{{ Auth::id() }}">
           
           <div class="row">
             <div class="col-md-6">

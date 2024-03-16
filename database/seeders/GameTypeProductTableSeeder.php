@@ -53,13 +53,13 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id'  => 6,
                 'game_type_id'  => 1,
-                'image' => 'play_tech.png',
+                'image' => 'play_tech.webp',
                 'rate' => '1.0000'
             ],
             [
                 'product_id'  => 6,
                 'game_type_id'  => 2,
-                'image' => 'play_tech.png',
+                'image' => 'play_tech.webp',
                 'rate' => '1.0000'
             ],
             [
@@ -162,13 +162,13 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id'  => 22,
                 'game_type_id'  => 1,
-                'image' => 'slogxo.jpeg',
+                'image' => 'slotxo.jpeg',
                 'rate' => '1.0000'
             ],
             [
                 'product_id'  => 23,
                 'game_type_id'  => 7,
-                'image' => 'ambpoker.webp',
+                'image' => 'amb_poker.webp',
                 'rate' => '1.0000'
             ],
             [

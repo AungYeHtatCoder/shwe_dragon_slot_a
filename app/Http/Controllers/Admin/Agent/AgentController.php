@@ -77,6 +77,7 @@ class AgentController extends Controller
                 'password' => Hash::make($inputs['password']),
                 'agent_id' => Auth()->user()->id,
                 'status' => 1,
+                'max_score' => $request->max_score ?? '0.00',
                 'type' => 'agent'
             ]
         );
@@ -156,7 +157,7 @@ class AgentController extends Controller
     public function getCashIn(string $id)
     {
         abort_if(
-            Gate::denies('agent_transfer'),
+            Gate::denies('make_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -168,7 +169,7 @@ class AgentController extends Controller
     public function getCashOut(string $id)
     {
         abort_if(
-            Gate::denies('agent_transfer'),
+            Gate::denies('make_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -184,7 +185,7 @@ class AgentController extends Controller
     {
 
         abort_if(
-            Gate::denies('agent_transfer'),
+            Gate::denies('make_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -213,7 +214,7 @@ class AgentController extends Controller
     {
 
         abort_if(
-            Gate::denies('agent_transfer'),
+            Gate::denies('make_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -248,7 +249,7 @@ class AgentController extends Controller
     {
 
         abort_if(
-            Gate::denies('agent_transfer'),
+            Gate::denies('make_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -261,7 +262,7 @@ class AgentController extends Controller
     private function generateRandomString()
     {
         $randomNumber = mt_rand(10000000, 99999999);
-        return 'SDG' . $randomNumber;
+        return 'DC' . $randomNumber;
     }
 
 

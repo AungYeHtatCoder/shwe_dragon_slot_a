@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BannerTextController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\BannerController;
 use App\Http\Controllers\Api\V1\Auth\AuthController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\TestController;
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('promotion', [PromotionController::class, 'index']);
 Route::get('banner', [BannerController::class, 'index']);
+Route::get('bannerText', [BannerController::class, 'bannerText']);
 Route::get('v1/validate', [AuthController::class, 'callback']);
 Route::get('gameTypeProducts/{id}', [GameController::class, 'gameTypeProducts']);
 Route::get('gameType', [GameController::class, 'gameType']);
@@ -47,8 +49,6 @@ Route::group(["prefix" => "Seamless", "middleware" => ["webhook_log"]], function
     Route::post('Jackpot', [JackPotController::class, 'jackPot']);
     Route::post('MobileLogin', [MobileLoginController::class, 'MobileLogin']);
 });
-
-Route::get("test", TestController::class);
 
 Route::group(["middleware" => ['auth:sanctum']], function () {
     //logout

@@ -77,6 +77,7 @@ class MasterController extends Controller
                 'password' => Hash::make($inputs['password']),
                 'agent_id' => Auth()->user()->id,
                 'status' => 1,
+                'max_score' => $request->max_score ?? '0.00',
                 'type' => 'master'
             ]
         );
@@ -156,7 +157,7 @@ class MasterController extends Controller
     public function getCashIn(string $id)
     {
         abort_if(
-            Gate::denies('master_transfer'),
+            Gate::denies('make_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -168,7 +169,7 @@ class MasterController extends Controller
     public function getCashOut(string $id)
     {
         abort_if(
-            Gate::denies('master_transfer'),
+            Gate::denies('make_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -184,7 +185,7 @@ class MasterController extends Controller
     {
 
         abort_if(
-            Gate::denies('master_transfer'),
+            Gate::denies('make_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -213,7 +214,7 @@ class MasterController extends Controller
     {
 
         abort_if(
-            Gate::denies('master_transfer'),
+            Gate::denies('make_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -248,7 +249,7 @@ class MasterController extends Controller
     {
 
         abort_if(
-            Gate::denies('master_transfer'),
+            Gate::denies('make_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -261,20 +262,18 @@ class MasterController extends Controller
     private function generateRandomString()
     {
         $randomNumber = mt_rand(10000000, 99999999);
-        return 'MW' . $randomNumber;
+        return 'DC' . $randomNumber;
     }
 
 
     public function banMaster($id)
     {
         $user = User::find($id);
-        $user->update(['status' => $user->status == 1 ? 2 : 1]);
-        if (Auth::check() && Auth::id() == $id) {
-            Auth::logout();
-        }
+        $user->update(['status' => $user->status ==  1 ? 0 : 1 ]);
+      
         return redirect()->back()->with(
             'success',
-            'User ' . ($user->status == 1 ? 'activated' : 'banned') . ' successfully'
+            'User ' . ($user->status == 1 ? 'activate' : 'inactive') . ' successfully'
         );
     }
 
@@ -287,7 +286,7 @@ class MasterController extends Controller
     public function makeChangePassword($id, Request $request)
     {
         abort_if(
-            Gate::denies('master_access'),
+            Gate::denies('make_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );

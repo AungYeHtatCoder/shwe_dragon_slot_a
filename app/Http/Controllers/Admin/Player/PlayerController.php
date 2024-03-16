@@ -18,6 +18,7 @@ use App\Http\Requests\PlayerRequest;
 use App\Models\Admin\UserLog;
 use App\Models\Transfer;
 use App\Services\WalletService;
+use Illuminate\Http\Client\Request as ClientRequest;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -83,9 +84,13 @@ class PlayerController extends Controller
                 'password' => Hash::make($inputs['password']),
                 'agent_id' => Auth()->user()->id,
                 'status' => 1,
+                // Set 'max_score' to request value or default to '0.00' if not present
+                //'max_score' => $request->has('max_score') ? $request->max_score : '0.00',
+                'max_score' => $request->max_score ?? '0.00',
                 'type' => 'agent'
                 ]
             );
+            Log::info('User prepared: ' . json_encode($userPrepare));
 
 
             // Create user in local database
@@ -169,20 +174,18 @@ class PlayerController extends Controller
     public function banUser($id)
     {
         $user = User::find($id);
-        $user->update(['status' => $user->status == 1 ? 2 : 1]);
-        if (Auth::check() && Auth::id() == $id) {
-            Auth::logout();
-        }
+        $user->update(['status' => $user->status == 1 ? 0 : 1]);
+
         return redirect()->back()->with(
             'success',
-            'User ' . ($user->status == 1 ? 'activated' : 'banned') . ' successfully'
+            'User ' . ($user->status == 1 ? 'activate' : 'inactive') . ' successfully'
         );
     }
 
     public function getCashIn(User $player)
     {
         abort_if(
-            Gate::denies('agent_transfer'),
+            Gate::denies('make_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -192,7 +195,7 @@ class PlayerController extends Controller
     public function makeCashIn(TransferLogRequest $request, User $player)
     {
         abort_if(
-            Gate::denies('agent_transfer'),
+            Gate::denies('make_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -212,7 +215,7 @@ class PlayerController extends Controller
             app(WalletService::class)->transfer($agent, $player, $request->validated("amount"), TransactionName::CreditTransfer);
 
             return redirect()->back()
-                ->with('success', ' Money CashIn submitted successfully!');
+                ->with('success', 'CashIn submitted successfully!');
         } catch (Exception $e) {
 
             return redirect()->back()->with('error', $e->getMessage());
@@ -221,7 +224,7 @@ class PlayerController extends Controller
     public function getCashOut(User $player)
     {
         abort_if(
-            Gate::denies('agent_transfer'),
+            Gate::denies('make_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -230,7 +233,7 @@ class PlayerController extends Controller
     public function makeCashOut(TransferLogRequest $request, User $player)
     {
         abort_if(
-            Gate::denies('agent_transfer'),
+            Gate::denies('make_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -250,7 +253,7 @@ class PlayerController extends Controller
             app(WalletService::class)->transfer($player, $agent, $request->validated("amount"), TransactionName::DebitTransfer);
 
             return redirect()->back()
-                ->with('success', ' Money CashOut submitted successfully!');
+                ->with('success', 'CashOut submitted successfully!');
         } catch (Exception $e) {
 
             return redirect()->back()->with('error', $e->getMessage());
@@ -262,6 +265,7 @@ class PlayerController extends Controller
         $transfer_detail = Transfer::where('from_id', $id)
             ->orWhere('to_id', $id)
             ->get();
+        
         return view('admin.player.transfer_detail', compact('transfer_detail'));
     }
 
@@ -275,7 +279,7 @@ class PlayerController extends Controller
     private function generateRandomString()
     {
         $randomNumber = mt_rand(10000000, 99999999);
-        return 'SDG' . $randomNumber;
+        return 'DC' . $randomNumber;
     }
 
     private function getRefrenceId($prefix = 'REF')

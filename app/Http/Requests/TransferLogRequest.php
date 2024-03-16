@@ -24,8 +24,6 @@ class TransferLogRequest extends FormRequest
         return [
             'name' => 'required|min:3',
             'amount' => 'required|numeric',
-            'from_user_id' => ['required','exists:users,id'],
-            'note' => ['nullable','string']
         ];
     }
 

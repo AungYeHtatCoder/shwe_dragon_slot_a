@@ -7,18 +7,16 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin\TransferLog;
+use App\Models\Transaction;
 
 class TransferLogController extends Controller
 {
     public function index()
     {
-        // authorize 
         $this->authorize('transfer_log', User::class);
-        $transferLogs = TransferLog::where('from_user_id',Auth::id())->orWhere('to_user_id',Auth::id())->get();
-        
+        $transferLogs = Auth::user()->transactions()->with("targetUser")->latest()->paginate();
         return view('admin.trans_log.index', compact('transferLogs'));
     }
-
 
     public function AdminToMasterDailyStatusTransferLog()
 {

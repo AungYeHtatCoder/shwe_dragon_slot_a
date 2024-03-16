@@ -37,42 +37,23 @@
      <thead class="thead-light">
 
         <tr>
-            <th>#</th>
             <th>Date</th>
-            <th>From User</th>
             <th>To User</th>
-            <th>Cash In</th>
-            <th>Cash Out</th>
-            <th>Profit</th>
-            <th>Note</th>
+            <th>Amount</th>
         </tr>
     </thead>
     <tbody>
-        @foreach($transferLogs as $index => $log)
+        @foreach($transferLogs as $log)
             <tr>
-                <td>{{ $index+1 }}</td>
                 <td>
-                  @php
-                    $date = date_create($log->created_at);
-                    echo date_format($date,"d/m/Y");
-                  @endphp
+                  {{ $log->created_at }}
                 </td>
-                <td>{{ $log->fromUser->name }}</td>
-                <td>{{ $log->toUser->name }}</td>
-                <td>{{ $log->cash_in }}</td>
-                <td>{{ $log->cash_out }}</td>
+                <td>{{ $log->targetUser->name }}</td>
                 <td>
-                  @php
-
-                $profit = $log->cash_in - $log->cash_out;
-                  @endphp
-                  @if ($profit < 0)
-                      <span class="text-danger">{{ $profit }}</span>
-                  @else
-                      <span class="text-success">{{ $profit }}</span>
-                  @endif
+                  <div class="d-flex align-items-center text-{{$log->type =='deposit' ? 'success' : 'danger'}} text-gradient text-sm font-weight-bold ms-auto"> {{$log->type == 'deposit' ? '+' : ''}}{{ $log->amountFloat }}</div>
+              
                 </td>
-                <td>{{ $log->note }}</td>
+                
             </tr>
         @endforeach
     </tbody>

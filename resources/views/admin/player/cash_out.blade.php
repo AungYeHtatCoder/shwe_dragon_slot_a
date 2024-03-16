@@ -12,7 +12,6 @@
     /* For some browsers */
   }
 
-
   .custom-form-group {
     margin-bottom: 20px;
   }
@@ -61,9 +60,9 @@
 @section('content')
 <div class="row justify-content-center">
   <div class="col-lg-12">
-    <div class="container mt-2">
+    <div class=" mt-2">
       <div class="d-flex justify-content-between">
-        <a class="btn btn-icon btn-2 btn-primary" href="{{route('admin.player.index') }}">
+        <a class="btn btn-icon btn-2 btn-primary" href="{{ route('admin.player.index')}}">
           <span class="btn-inner--icon mt-1"><i class="material-icons">arrow_back</i>Back</span>
         </a>
       </div>
@@ -84,11 +83,6 @@
                 <th>Phone</th>
                 <td>{!! $player->phone !!}</td>
               </tr>
-              <tr>
-                <th>Balance</th>
-                <td>{!! $player->balance !!} MMK</td>
-              </tr>
-              </tr>
             </tbody>
           </table>
         </div>
@@ -105,22 +99,18 @@
       <div class="card-header pb-0">
         <div class="d-lg-flex">
           <div>
-            <h5 class="mb-0">{{ $player->name ?? "" }} ထံမှ ငွေထုတ်ယူမည်
-              
-            </h5>
-
+          <h5 class="mb-0">WithDraw</h5>
           </div>
-          
+        
         </div>
       </div>
-      
       <div class="card-body">
-        <form action="{{ route('admin.player.makeCashOut', $player->id) }}" method="POST">
+        <form action="{{ route('admin.player.makeCashOut',$player->id) }}" method="POST">
           @csrf
           <div class="row">
             <div class="col-md-6">
               <div class="input-group input-group-outline is-valid my-3">
-                <label class="form-label">Master Real Name</label>
+                <label class="form-label">Player Name</label>
                 <input type="text" class="form-control" name="name" value="{{ $player->name ?? "" }}" readonly>
 
               </div>
@@ -130,8 +120,8 @@
             </div>
             <div class="col-md-6">
               <div class="input-group input-group-outline is-valid my-3">
-                <label class="form-label">Phone</label>
-                <input type="text" class="form-control" name="phone" value="{{ $player->phone }}" readonly>
+                <label class="form-label">Current Balance</label>
+                <input type="text" class="form-control" name="phone" value="{{number_format($player->balanceFloat,2) }}" readonly>
 
               </div>
               @error('phone')
@@ -139,21 +129,17 @@
               @enderror
             </div>
           </div>
-          <input type="hidden" name="from_user_id" value="{{ $player->id }}">
-         
-
+          
           <div class="row">
             <div class="col-md-6">
               <div class="input-group input-group-outline is-valid my-3">
-                <label class="form-label">ငွေနုတ်ယူမည့်ပမာဏ</label>
+                <label class="form-label">Amount</label>
                 <input type="text" class="form-control" name="amount" required>
               </div>
               @error('amount')
               <span class="d-block text-danger">*{{ $message }}</span>
               @enderror
             </div>
-            
-            
             <div class="col-md-6">
               <div class="input-group input-group-outline is-valid my-3">
                 <label class="form-label">Addition Note (optional)</label>
@@ -169,7 +155,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="input-group input-group-outline is-valid my-3">
-                <button type="submit" class="btn btn-primary">ငွေထုတ်ယူမည်</button>
+                <button type="submit" class="btn btn-primary">Confirm</button>
               </div>
             </div>
           </div>
@@ -178,6 +164,7 @@
     </div>
   </div>
 </div>
+
 @endsection
 @section('scripts')
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
