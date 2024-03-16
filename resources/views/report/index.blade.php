@@ -54,19 +54,19 @@
       <table class="table table-flush" id="users-search">
         <thead class="thead-light">
           <th>PlayerName</th>
-          <th>TransactionAmount</th>
-          <th>ValidBetAmount</th>
-          <th>BetAmount</th>
+          <th>TotalBetAmount</th>
+          <th>TotalValidAmount</th>
+          <th>TotalTransactionAmount</th>
         </thead>
         <tbody>
           @if(count($report) > 0)
           @foreach ($report as $rep)
 
           <tr>
-            <td><a href="{{route('admin.report.show',$rep->user_id)}}">{{$rep->user_name}}</a></td>
-            <td>{{$rep->total_transaction_amount}}</td>
+            <td><a href="">{{$rep->user_name}}</a></td>
             <td>{{$rep->total_bet_amount}}</td>
             <td>{{$rep->total_valid_amount}}</td>
+            <td>{{$rep->total_transaction_amount}}</td>
           </tr>
           @endforeach
           @else
