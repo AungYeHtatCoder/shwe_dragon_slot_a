@@ -30,21 +30,21 @@ class BonusController extends Controller
 
         $event = $this->createEvent($request);
 
-        $this->createWagerTransactions($validator->getRequestTransactions(), $event);
+        $seamless_transactions = $this->createWagerTransactions($validator->getRequestTransactions(), $event);
 
-        foreach ($validator->getRequestTransactions() as $requestTransaction) {
+        foreach ($seamless_transactions as $seamless_transaction) {
             // TODO: ask: what if operator doesn't want to pay bonus
-            app(WalletService::class)
-                ->transfer(
-                    User::adminUser(),
-                    $request->getMember(),
-                    abs($requestTransaction->TransactionAmount),
-                    TransactionName::Bonus,
-                    [
-                        "event_id" => $request->getMessageID(),
-                        "seamless_transaction_id" => $requestTransaction->TransactionID,
-                    ]
-                );
+            $this->processTransfer(
+                User::adminUser(),
+                $request->getMember(),
+                TransactionName::Bonus,
+                $seamless_transaction->transaction_amount,
+                $seamless_transaction->rate,
+                [
+                    "event_id" => $request->getMessageID(),
+                    "seamless_transaction_id" => $seamless_transaction->TransactionID,
+                ]
+            );
         }
 
         $request->getMember()->wallet->refreshBalance();

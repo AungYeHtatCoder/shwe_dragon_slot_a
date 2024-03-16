@@ -33,28 +33,28 @@ class RollbackController extends Controller
 
         $event = $this->createEvent($request);
 
-        $this->createWagerTransactions($validator->getRequestTransactions(), $event);
+        $seamless_transactions = $this->createWagerTransactions($validator->getRequestTransactions(), $event);
 
-        foreach ($validator->getRequestTransactions() as $requestTransaction) {
-            if($requestTransaction->TransactionAmount < 0){
+        foreach ($seamless_transactions as $seamless_transaction) {
+            if ($seamless_transaction->transaction_amount < 0) {
                 $from = $request->getMember();
                 $to = User::adminUser();
-            }else{
+            } else {
                 $from = User::adminUser();
                 $to = $request->getMember();
             }
 
-            app(WalletService::class)
-                ->transfer(
-                    $from,
-                    $to,
-                    abs($requestTransaction->TransactionAmount),
-                    TransactionName::Rollback,
-                    [
-                        "event_id" => $request->getMessageID(),
-                        "seamless_transaction_id" => $requestTransaction->TransactionID,
-                    ]
-                );
+            $this->processTransfer(
+                $from,
+                $to,
+                TransactionName::Rollback,
+                $seamless_transaction->transaction_amount,
+                $seamless_transaction->rate,
+                [
+                    "event_id" => $request->getMessageID(),
+                    "seamless_transaction_id" => $seamless_transaction->TransactionID,
+                ]
+            );
         }
 
         $request->getMember()->wallet->refreshBalance();

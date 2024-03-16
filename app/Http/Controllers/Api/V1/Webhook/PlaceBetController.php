@@ -31,20 +31,20 @@ class PlaceBetController extends Controller
 
         $event = $this->createEvent($request);
 
-        $this->createWagerTransactions($validator->getRequestTransactions(), $event);
+        $seamless_transactions = $this->createWagerTransactions($validator->getRequestTransactions(), $event);
 
-        foreach ($validator->getRequestTransactions() as $requestTransaction) {
-            app(WalletService::class)
-                ->transfer(
-                    $request->getMember(),
-                    User::adminUser(),
-                    abs($requestTransaction->TransactionAmount),
-                    TransactionName::Stake,
-                    [
-                        "event_id" => $request->getMessageID(),
-                        "seamless_transaction_id" => $requestTransaction->TransactionID,
-                    ]
-                );
+        foreach ($seamless_transactions as $seamless_transaction) {
+            $this->processTransfer(
+                $request->getMember(),
+                User::adminUser(),
+                TransactionName::Stake,
+                $seamless_transaction->transaction_amount,
+                $seamless_transaction->rate,
+                [
+                    "event_id" => $request->getMessageID(),
+                    "seamless_transaction_id" => $seamless_transaction->TransactionID,
+                ]
+            );
         }
 
         $request->getMember()->wallet->refreshBalance();

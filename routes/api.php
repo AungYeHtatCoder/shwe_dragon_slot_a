@@ -33,7 +33,7 @@ Route::get('gamelist/{product_id}/{game_type_id}', [GameController::class, 'game
 Route::post('Seamless/PullReport', [LaunchGameController::class, 'pullReport']);
 
 
-Route::group(["prefix" => "Seamless"], function () {
+Route::group(["prefix" => "Seamless", "middleware" => ["webhook_log"]], function () {
     Route::post('GetGameList', [LaunchGameController::class, 'getGameList']);
     Route::post('GetBalance', [GetBalanceController::class, 'getBalance']);
     Route::post('GameResult', [GameResultController::class, 'gameResult']);

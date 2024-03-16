@@ -9,6 +9,8 @@ class TestController extends Controller
 {
     public function __invoke(Request $request)
     {
+        // return $transactions = User::adminUser()->transactions()->with("targetUser")->latest()->paginate();
+        return User::where("user_name", "tak")->first()->balanceFloat;
         $user = User::first();
 
         $base_url = config('game.api.url');
