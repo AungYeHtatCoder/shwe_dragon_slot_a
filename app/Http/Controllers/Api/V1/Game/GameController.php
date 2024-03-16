@@ -15,7 +15,7 @@ class GameController extends Controller
 
     public function gameType()
     {
-        $gameType = GameType::all();
+        $gameType = GameType::where('status',1)->get();
 
         return $this->success($gameType);
     }
