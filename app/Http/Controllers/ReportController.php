@@ -26,6 +26,7 @@ class ReportController extends Controller
             ->join('products', 'seamless_transactions.product_id', '=', 'products.id')
             ->join('game_types', 'seamless_transactions.game_type_id', '=', 'game_types.id')
             ->where('users.agent_id', Auth::id())
+            ->groupBy('users.user_name')
             ->get();
 
         return view('report.index', compact('report'));
