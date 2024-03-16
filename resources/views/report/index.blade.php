@@ -60,13 +60,13 @@
           </thead>
           <tbody>
           
-            @if(isset($result))
-            @if(count($result) > 0)
+            @if(isset($report))
+            @if(count($report) > 0)
               <tr>
                 <td><a href="{{route('admin.report.show',$result->user_id)}}">{{$result->user_name}}</a></td>
-                <td>{{$result->total_transaction_amount}}</td>
-                <td>{{$result->total_bet_amount}}</td>
-                <td>{{$result->total_valid_amount}}</td>
+                <td>{{$report->total_transaction_amount}}</td>
+                <td>{{$report->total_bet_amount}}</td>
+                <td>{{$report->total_valid_amount}}</td>
               </tr>
             @else
             <tr>
