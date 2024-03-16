@@ -41,7 +41,7 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 3,
                 'game_type_id' => 2,
-                'image' => 'big_gaming.png',
+                'image' => 'big_gaming.jpeg',
                 'rate' => '1000.0000'
             ],
             [
@@ -65,13 +65,13 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 6,
                 'game_type_id' => 1,
-                'image' => 'cq_9.jpeg',
+                'image' => 'cq9.jpeg',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 6,
                 'game_type_id' => 4,
-                'image' => 'cq_9.jpeg',
+                'image' => 'cq9.jpeg',
                 'rate' => '1.0000'
             ],
             [
@@ -107,7 +107,7 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 10,
                 'game_type_id' => 2,
-                'image' => 'yee_bet.png',
+                'image' => 'yee_bet.jpeg',
                 'rate' => '1.0000'
             ],
             [
@@ -119,7 +119,7 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 12,
                 'game_type_id' => 2,
-                'image' => 'sexy_gaming.png',
+                'image' => 'sexy_gaming.jpeg',
                 'rate' => '1.0000'
             ],
             [
@@ -209,7 +209,7 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 24,
                 'game_type_id' => 1,
-                'image' => 'advance_play.jpeg',
+                'image' => 'advant_play.jpeg',
                 'rate' => '1.0000'
             ],
             [
