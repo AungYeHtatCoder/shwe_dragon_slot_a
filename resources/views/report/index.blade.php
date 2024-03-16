@@ -63,7 +63,7 @@
             @if(isset($result))
             @if(count($result) > 0)
               <tr>
-                <td><a href="{{route('admin.report.show',$result->)}}">{{$result->user_name}}</a></td>
+                <td><a href="{{route('admin.report.show',$result->user_id)}}">{{$result->user_name}}</a></td>
                 <td>{{$result->total_transaction_amount}}</td>
                 <td>{{$result->total_bet_amount}}</td>
                 <td>{{$result->total_valid_amount}}</td>
