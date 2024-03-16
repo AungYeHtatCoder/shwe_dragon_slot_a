@@ -24,7 +24,7 @@
             <h5 class="mb-0">Win/lose Report</h5>
 
           </div>
-          
+
         </div>
       </div>
       <div class="container">
@@ -46,40 +46,41 @@
               <button type="submit" class="btn btn-sm btn-warning mt-5" id="search">Search</button>
             </div>
         </form>
-        
+
       </div>
     </div>
 
-      <div class="table-responsive">
-        <table class="table table-flush" id="users-search">
-          <thead class="thead-light">
-            <th>PlayerName</th>
-            <th>TransactionAmount</th>
-            <th>ValidBetAmount</th>
-            <th>BetAmount</th>
-          </thead>
-          <tbody>
-          
-            @if(isset($report))
-            @if(count($report) > 0)
-              <tr>
-                <td><a href="{{route('admin.report.show',$result->user_id)}}">{{$result->user_name}}</a></td>
-                <td>{{$report->total_transaction_amount}}</td>
-                <td>{{$report->total_bet_amount}}</td>
-                <td>{{$report->total_valid_amount}}</td>
-              </tr>
-            @else
-            <tr>
-              <td col-span=8>
-                There was no Agents.
-              </td>
-            </tr>
-            @endif
-            @endif
-          </tbody>
-        </table>
-      </div>
+    <div class="table-responsive">
+      <table class="table table-flush" id="users-search">
+        <thead class="thead-light">
+          <th>PlayerName</th>
+          <th>TransactionAmount</th>
+          <th>ValidBetAmount</th>
+          <th>BetAmount</th>
+        </thead>
+        <tbody>
+          @if(count($report) > 0)
+          @foreach ($report as $rep)
+
+          <tr>
+            <td><a href="{{route('admin.report.show',$rep->user_id)}}">{{$rep->user_name}}</a></td>
+            <td>{{$rep->total_transaction_amount}}</td>
+            <td>{{$rep->total_bet_amount}}</td>
+            <td>{{$rep->total_valid_amount}}</td>
+          </tr>
+          @endforeach
+          @else
+          <tr>
+            <td col-span=8>
+              There was no Agents.
+            </td>
+          </tr>
+
+          @endif
+        </tbody>
+      </table>
     </div>
   </div>
+</div>
 </div>
 @endsection
