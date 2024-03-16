@@ -94,7 +94,11 @@ Route::group([
     Route::post('withdraw/{withdraw}', [WithDrawRequestController::class, 'statusChange'])->name('agent.statusChange');
 
     Route::get('transer-log', [TransferLogController::class, 'index'])->name('transferLog');
-    Route::get('winlost-report', [ReportController::class, 'index'])->name('report.index');
+    Route::group(['prefix' => 'report'], function () {
+        Route::get('index', [ReportController::class, 'index'])->name('report.index');
+        Route::get('show/{user_id}', [ReportController::class, 'show'])->name('report.show');
+        });
+
     // get bet deatil 
     Route::get('get-bet-detail', [GetBetDetailController::class, 'index'])->name('getBetDetail');
     Route::get('get-bet-detail/{wagerId}', [GetBetDetailController::class, 'getBetDetail'])->name('getBetDetail.show');
