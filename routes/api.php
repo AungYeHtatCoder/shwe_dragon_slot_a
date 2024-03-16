@@ -30,6 +30,7 @@ Route::get('banner', [BannerController::class, 'index']);
 Route::get('bannerText', [BannerController::class, 'bannerText']);
 Route::get('v1/validate', [AuthController::class, 'callback']);
 Route::get('gameTypeProducts/{id}', [GameController::class, 'gameTypeProducts']);
+Route::get('allGameProducts', [GameController::class, 'allGameProducts']);
 Route::get('gameType', [GameController::class, 'gameType']);
 Route::get('gamelist/{product_id}/{game_type_id}', [GameController::class, 'gameList']);
 Route::post('Seamless/PullReport', [LaunchGameController::class, 'pullReport']);
