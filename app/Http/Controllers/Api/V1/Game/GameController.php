@@ -22,7 +22,7 @@ class GameController extends Controller
 
     public function gameTypeProducts($gameTypeID)
     {
-        $gameTypes = GameType::select('id', 'code')->with(['products' => function ($query) {
+        $gameTypes = GameType::with(['products' => function ($query) {
             $query->orderBy('order', 'desc');
         }])->where('id', $gameTypeID)->where('status',1)
             ->first();
