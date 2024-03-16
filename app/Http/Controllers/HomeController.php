@@ -44,7 +44,7 @@ class HomeController extends Controller
             $lastUserCount = User::where('agent_id', null)->whereBetween('created_at', [$startLastMonth, $endLastMonth])
                 ->count();
 
-            $provider_balance = (new AppSetting())->provider_balance + SeamlessTransaction::sum("transaction_amount");
+            $provider_balance = (new AppSetting())->provider_initial_balance + SeamlessTransaction::sum("transaction_amount");
 
             return view('admin.dashboard', compact(
                 'provider_balance',
