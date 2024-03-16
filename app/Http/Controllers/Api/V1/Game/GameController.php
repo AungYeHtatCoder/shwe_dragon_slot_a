@@ -29,6 +29,15 @@ class GameController extends Controller
         return $this->success($gameTypes);
     }
 
+    public function allGameProducts(){
+        $gameTypes = GameType::with(['products' => function ($query) {
+            $query->orderBy('order', 'desc');
+        }])->where('status',1)
+            ->get();
+        return $gameTypes;
+        return $this->success($gameTypes);
+    }
+
     public function gameList($product_id, $game_type_id)
     {
         $gameLists = GameList::where('product_id', $product_id)
