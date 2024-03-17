@@ -84,8 +84,8 @@ class ReportController extends Controller
             ->join('game_types', 'seamless_transactions.game_type_id', '=', 'game_types.id')
             ->join('wagers', 'seamless_transactions.wager_id', '=', 'wagers.id')
             ->where('users.id',$request->user_id)
-            ->where('users.id',$request->product_id)
-            ->where('users.id',$request->game_type_id)
+            ->where('products.id',$request->product_id)
+            ->where('game_types.id',$request->game_type_id)
             ->where('users.agent_id', Auth::id())
             ->where('wagers.status','101')
             ->get();

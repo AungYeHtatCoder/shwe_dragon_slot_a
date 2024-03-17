@@ -40,7 +40,7 @@
                 <div class="row">
                   <div class="col-md-3">
                     <div class="input-group input-group-static my-3">
-                      <label>Game</label>
+                      <label>Product</label>
                       <input type="text" class="form-control" id="" value="{{$product->name}}" name="description" readonly>
                     </div>
                   </div>
