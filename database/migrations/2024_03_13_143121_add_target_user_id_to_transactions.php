@@ -15,6 +15,7 @@ return new class extends Migration
         DB::statement(
             <<<SQL
             ALTER TABLE transactions
+            ADD COLUMN name VARCHAR(100) GENERATED ALWAYS AS ( json_unquote(json_extract(meta, '$.name'))) STORED,
             ADD COLUMN target_user_id bigint GENERATED ALWAYS AS ( json_unquote(json_extract(meta, '$.target_user_id'))) STORED
             SQL
         );

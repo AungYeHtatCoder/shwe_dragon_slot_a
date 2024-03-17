@@ -35,74 +35,11 @@ class GameTypeTableSeeder extends Seeder
                 'img'   => 'sportbook.png'
             ],
             [
-                'name'  => 'Virtual Sport',
-                'code'  => '4',
-                'order' => '4',
-                'status' => 0,
-                'img'   => 'virtual_sport.png'
-            ],
-            [
-                'name' => 'Lottery',
-                'code' => '5',
-                'order'=> '5',
-                'status' => 1,
-                'img'  => 'lottery.png'
-            ],
-            [
-                'name' => 'Qipai',
-                'code' => '6',
-                'order' => '6',
-                'status' => 0,
-                'img'   => 'qipai.png'
-            ],
-            [
-                'name' => 'P2P',
-                'code' => '7',
-                'order' => '7',
-                'status' => 0,
-                'img'  => 'p2p.png'
-            ],
-            [
                 'name' => 'Fishing',
                 'code' => '8',
-                'order' => '8',
+                'order' => '4',
                 'status' => 1,
                 'img'  => 'fishing.png'
-            ],
-            [
-                'name' => 'Others',
-                'code' => '9',
-                'order' => '9',
-                'status' => 0,
-                'img'  => 'others.png'
-            ],
-            [
-                'name' => 'Cock Fighting',
-                'code' => '10',
-                'order' => '10',
-                'status' => 0,
-                'img'  => 'cook_fighting.png'
-            ],
-            [
-                'name' => 'Bonus',
-                'code' => '11',
-                'order' => '11',
-                'status' => 0,
-                'img'   => 'bonus.png'
-            ],
-            [
-                'name' => 'Jackpot',
-                'code' => '12',
-                'order' => '12',
-                'status' => 0,
-                'img'  => 'jackpot.png'
-            ],
-            [
-                'name' => 'ESport',
-                'code' => '13',
-                'order' => '13',
-                'status' => 1,
-                'img' => 'esport.png'
             ]
         ];
 

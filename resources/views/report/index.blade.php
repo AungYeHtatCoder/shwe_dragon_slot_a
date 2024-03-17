@@ -24,7 +24,7 @@
             <h5 class="mb-0">Win/lose Report</h5>
 
           </div>
-          
+
         </div>
       </div>
       <div class="container">
@@ -46,40 +46,41 @@
               <button type="submit" class="btn btn-sm btn-warning mt-5" id="search">Search</button>
             </div>
         </form>
-        
+
       </div>
     </div>
 
-      <div class="table-responsive">
-        <table class="table table-flush" id="users-search">
-          <thead class="thead-light">
-            <th>PlayerName</th>
-            <th>TransactionAmount</th>
-            <th>ValidBetAmount</th>
-            <th>BetAmount</th>
-          </thead>
-          <tbody>
-          
-            @if(isset($result))
-            @if(count($result) > 0)
-              <tr>
-                <td>{{$result->user->user_name}}</td>
-                <td>{{$result->transaction_amount}}</td>
-                <td>{{$result->bet_amount}}</td>
-                <td>{{$result->valid_amount}}</td>
-              </tr>
-            @else
-            <tr>
-              <td col-span=8>
-                There was no Agents.
-              </td>
-            </tr>
-            @endif
-            @endif
-          </tbody>
-        </table>
-      </div>
+    <div class="table-responsive">
+      <table class="table table-flush" id="users-search">
+        <thead class="thead-light">
+          <th>PlayerName</th>
+          <th>TotalBetAmount</th>
+          <th>TotalValidAmount</th>
+          <th>TotalTransactionAmount</th>
+        </thead>
+        <tbody>
+          @if(count($report) > 0)
+          @foreach ($report as $rep)
+
+          <tr>
+            <td><a href="">{{$rep->user_name}}</a></td>
+            <td>{{$rep->total_bet_amount}}</td>
+            <td>{{$rep->total_valid_amount}}</td>
+            <td>{{$rep->total_transaction_amount}}</td>
+          </tr>
+          @endforeach
+          @else
+          <tr>
+            <td col-span=8>
+              There was no Agents.
+            </td>
+          </tr>
+
+          @endif
+        </tbody>
+      </table>
     </div>
   </div>
+</div>
 </div>
 @endsection
