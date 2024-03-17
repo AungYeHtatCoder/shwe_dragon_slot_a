@@ -97,6 +97,8 @@ Route::group([
     Route::group(['prefix' => 'report'], function () {
         Route::get('index', [ReportController::class, 'index'])->name('report.index');
         Route::get('show/{user_id}', [ReportController::class, 'show'])->name('report.show');
+        Route::get('detail', [ReportController::class, 'detail'])->name('report.detail');
+
         });
 
     // get bet deatil 

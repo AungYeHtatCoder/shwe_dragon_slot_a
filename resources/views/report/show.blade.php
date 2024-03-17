@@ -59,6 +59,7 @@
           <th>TotalBetAmount</th>
           <th>TotalValidAmount</th>
           <th>TotalTransactionAmount</th>
+          <th>Action</th>
         </thead>
         <tbody>
           @if(count($report) > 0)
@@ -71,6 +72,10 @@
             <td>{{$rep->total_bet_amount}}</td>
             <td>{{$rep->total_valid_amount}}</td>
             <td>{{$rep->total_transaction_amount}}</td>
+            <td>
+                <a href="{{route('admin.report.detail',
+                    ['user_name' => $rep->user_id , 'product' => $rep->product_id , 'game_type' => $rep->game_type_id']}}">Detail</a>
+            </td>
           </tr>
           @endforeach
           @else
