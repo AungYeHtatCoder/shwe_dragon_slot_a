@@ -77,7 +77,8 @@ class ReportController extends Controller
             'users.id as user_id',
             'seamless_transactions.bet_amount',
             'seamless_transactions.valid_amount',
-            'seamless_transactions.transaction_amount'
+            'seamless_transactions.transaction_amount',
+            'seamless_transactions.created_at'
             )
             ->join('users', 'seamless_transactions.user_id', '=', 'users.id')
             ->join('products', 'seamless_transactions.product_id', '=', 'products.id')
