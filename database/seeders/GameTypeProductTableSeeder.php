@@ -29,19 +29,19 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 2,
                 'game_type_id' => 2,
-                'image' => 'all_bet.jpeg',
+                'image' => 'all_bet.png',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 3,
                 'game_type_id' => 1,
-                'image' => 'big_gaming.jpeg',
+                'image' => 'big_gaming.png',
                 'rate' => '1000.0000'
             ],
             [
                 'product_id' => 3,
                 'game_type_id' => 2,
-                'image' => 'big_gaming.jpeg',
+                'image' => 'big_gaming.png',
                 'rate' => '1000.0000'
             ],
             [
@@ -65,25 +65,25 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 6,
                 'game_type_id' => 1,
-                'image' => 'cq9.jpeg',
+                'image' => 'cq_9.png',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 6,
                 'game_type_id' => 4,
-                'image' => 'cq9.jpeg',
+                'image' => 'cq_9.png',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 7,
                 'game_type_id' => 1,
-                'image' => 'play_tech.webp',
+                'image' => 'play_tech.png',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 7,
                 'game_type_id' => 2,
-                'image' => 'play_tech.webp',
+                'image' => 'play_tech.png',
                 'rate' => '1.0000'
             ],
             [
@@ -113,7 +113,7 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 11,
                 'game_type_id' => 2,
-                'image' => 'wm_casino.jpeg',
+                'image' => 'wm_casino.png',
                 'rate' => '1.0000'
             ],
             [
@@ -167,7 +167,7 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 18,
                 'game_type_id' => 1,
-                'image' => 'habanero.jpeg',
+                'image' => 'habanero.png',
                 'rate' => '1.0000'
             ],
             [
@@ -179,25 +179,25 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 20,
                 'game_type_id' => 1,
-                'image' => 'reevo.jpeg',
+                'image' => 'reevo.png',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 21,
                 'game_type_id' => 2,
-                'image' => 'dream_gaming.jpeg',
+                'image' => 'dream_gaming.png',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 22,
                 'game_type_id' => 1,
-                'image' => 'sky_wind.webp',
+                'image' => 'sky_wind.jpg',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 22,
                 'game_type_id' => 2,
-                'image' => 'sky_wind.webp',
+                'image' => 'sky_wind.jpg',
                 'rate' => '1.0000'
             ],
             [
