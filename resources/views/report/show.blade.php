@@ -53,7 +53,9 @@
     <div class="table-responsive">
       <table class="table table-flush" id="users-search">
         <thead class="thead-light">
-          <th>PlayerName</th>
+          <th>Player Name</th>
+          <th>Product Name</th>
+          <th>Game Type</th>
           <th>TotalBetAmount</th>
           <th>TotalValidAmount</th>
           <th>TotalTransactionAmount</th>
@@ -63,7 +65,9 @@
           @foreach ($report as $rep)
 
           <tr>
-            <td><a href="{{route('admin.report.show',$rep->user_id)}}">{{$rep->user_name}}</a></td>
+            <td>{{$rep->user_name}}</td>
+            <td>{{$rep->product_name}}</td>
+            <td>{{$res->game_type_name}}</td>
             <td>{{$rep->total_bet_amount}}</td>
             <td>{{$rep->total_valid_amount}}</td>
             <td>{{$rep->total_transaction_amount}}</td>
@@ -72,7 +76,7 @@
           @else
           <tr>
             <td col-span=8>
-              There was no Report.
+              There was no Agents.
             </td>
           </tr>
 
