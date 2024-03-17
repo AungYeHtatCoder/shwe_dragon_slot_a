@@ -22,9 +22,12 @@ use App\Http\Controllers\Api\V1\Player\WithDrawController;
 use App\Http\Controllers\Api\V1\Player\PlayerTransactionLogController;
 use App\Http\Controllers\Api\V1\Webhook\PlaceBetController;
 use App\Http\Controllers\TestController;
+use App\Models\Admin\Role;
 
 //login route post
 Route::post('/login', [AuthController::class, 'login']);
+// logout 
+Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('promotion', [PromotionController::class, 'index']);
 Route::get('banner', [BannerController::class, 'index']);
 Route::get('bannerText', [BannerController::class, 'bannerText']);
