@@ -77,13 +77,13 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 7,
                 'game_type_id' => 1,
-                'image' => 'play_tech.png',
+                'image' => 'play_tech.jpg',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 7,
                 'game_type_id' => 2,
-                'image' => 'play_tech.png',
+                'image' => 'play_tech.jpg',
                 'rate' => '1.0000'
             ],
             [
@@ -191,13 +191,13 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 22,
                 'game_type_id' => 1,
-                'image' => 'sky_wind.jpg',
+                'image' => 'sky_wind.svg',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 22,
                 'game_type_id' => 2,
-                'image' => 'sky_wind.jpg',
+                'image' => 'sky_wind.svg',
                 'rate' => '1.0000'
             ],
             [
