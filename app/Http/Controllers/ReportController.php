@@ -58,7 +58,7 @@ class ReportController extends Controller
             ->where('users.id',$userId)
             ->where('users.agent_id', Auth::id())
             ->where('wagers.status','101')
-            ->groupBy('products.name','game_types.name','users.user_name','users.id','gametypes.id','products.id')
+            ->groupBy('products.name','game_types.name','users.user_name','users.id','game_types.id','products.id')
             ->get();
 
         return view('report.show', compact('report'));
