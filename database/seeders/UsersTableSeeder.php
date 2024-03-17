@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin = $this->createUser(UserType::Admin, "Owner", "SDG898787", "09123456789");
+        $admin = $this->createUser(UserType::Admin, "Owner", "SENIOR_MASTER_AGENT", "09123456789"); // Woner
         (new WalletService())->deposit($admin, 2000 * 100000, TransactionName::CapitalDeposit);
 
         $master = $this->createUser(UserType::Master, "Master 1", "SDG898437", "09112345678", $admin->id);
