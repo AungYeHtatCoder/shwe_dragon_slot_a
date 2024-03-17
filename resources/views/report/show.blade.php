@@ -74,7 +74,7 @@
             <td>{{$rep->total_transaction_amount}}</td>
             <td>
                 <a href="{{route('admin.report.detail',
-                    ['user_name' => $rep->user_id , 'product' => $rep->product_id , 'game_type' => $rep->game_type_id])}}">Detail</a>
+                    ['user_id' => $rep->user_id , 'product' => $rep->product_id , 'game_type' => $rep->game_type_id])}}">Detail</a>
             </td>
           </tr>
           @endforeach
