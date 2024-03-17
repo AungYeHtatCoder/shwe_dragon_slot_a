@@ -40,7 +40,9 @@ class ReportController extends Controller
         $report = DB::table('seamless_transactions')
         ->select(
             'products.name as product_name',
+            'products.id as product_id',
             'game_types.name as game_type_name',
+            'game_types.id as game_type_id',
             'users.user_name',
             'users.id as user_id',
             DB::raw('SUM(seamless_transactions.bet_amount) as total_bet_amount'),
@@ -56,7 +58,7 @@ class ReportController extends Controller
             ->where('users.id',$userId)
             ->where('users.agent_id', Auth::id())
             ->where('wagers.status','101')
-            ->groupBy('products.name','game_types.name','users.user_name','users.id')
+            ->groupBy('products.name','game_types.name','users.user_name','users.id','gametypes.id','products.id')
             ->get();
 
         return view('report.show', compact('report'));
