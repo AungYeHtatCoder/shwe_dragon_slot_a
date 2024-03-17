@@ -67,7 +67,7 @@
           <tr>
             <td>{{$rep->user_name}}</td>
             <td>{{$rep->product_name}}</td>
-            <td>{{$res->game_type_name}}</td>
+            <td>{{$rep->game_type_name}}</td>
             <td>{{$rep->total_bet_amount}}</td>
             <td>{{$rep->total_valid_amount}}</td>
             <td>{{$rep->total_transaction_amount}}</td>
