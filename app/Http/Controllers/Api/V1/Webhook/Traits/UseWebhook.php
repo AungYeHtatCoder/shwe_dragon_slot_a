@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Webhook\Traits;
 
 use App\Enums\TransactionName;
 use App\Enums\TransactionStatus;
+use App\Enums\WagerStatus;
 use App\Http\Requests\Slot\SlotWebhookRequest;
 use App\Models\Admin\GameType;
 use App\Models\Admin\GameTypeProduct;
@@ -20,7 +21,7 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 trait UseWebhook
 {
     public function createEvent(
-        SlotWebhookRequest $request
+        SlotWebhookRequest $request,
     ): SeamlessEvent {
         return SeamlessEvent::create([
             "user_id" => $request->getMember()->id,
@@ -41,17 +42,28 @@ trait UseWebhook
     public function createWagerTransactions(
         $requestTransactions,
         SeamlessEvent $event,
+        bool $refund = false
     ) {
         $seamless_transactions = [];
 
         foreach ($requestTransactions as $requestTransaction) {
-            $wager = Wager::firstOrCreate([
-                "seamless_wager_id" => $requestTransaction->WagerID
-            ]);
+            $wager = Wager::firstOrCreate(
+                ["seamless_wager_id" => $requestTransaction->WagerID],
+                [
+                    "user_id" => $event->user->id,
+                    "seamless_wager_id" => $requestTransaction->WagerID
+                ]
+            );
 
-            $wager->update([
-                "status" => $requestTransaction->Status
-            ]);
+            if ($refund) {
+                $wager->update([
+                    "status" => WagerStatus::Refund
+                ]);
+            } else if (!$wager->wasRecentlyCreated) {
+                $wager->update([
+                    "status" => $requestTransaction->TransactionAmount < 0 ? WagerStatus::Lose : WagerStatus::Win
+                ]);
+            }
 
             $game_type = GameType::where("code", $requestTransaction->GameType)->first();
             $product = Product::where("code", $requestTransaction->ProductID)->first();

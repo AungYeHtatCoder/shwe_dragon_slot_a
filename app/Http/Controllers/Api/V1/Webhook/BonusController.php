@@ -42,7 +42,7 @@ class BonusController extends Controller
                 $seamless_transaction->rate,
                 [
                     "event_id" => $request->getMessageID(),
-                    "seamless_transaction_id" => $seamless_transaction->TransactionID,
+                    "seamless_transaction_id" => $seamless_transaction->id,
                 ]
             );
         }

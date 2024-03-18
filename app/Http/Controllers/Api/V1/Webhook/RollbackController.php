@@ -33,7 +33,7 @@ class RollbackController extends Controller
 
         $event = $this->createEvent($request);
 
-        $seamless_transactions = $this->createWagerTransactions($validator->getRequestTransactions(), $event);
+        $seamless_transactions = $this->createWagerTransactions($validator->getRequestTransactions(), $event, true);
 
         foreach ($seamless_transactions as $seamless_transaction) {
             if ($seamless_transaction->transaction_amount < 0) {
@@ -52,7 +52,7 @@ class RollbackController extends Controller
                 $seamless_transaction->rate,
                 [
                     "event_id" => $request->getMessageID(),
-                    "seamless_transaction_id" => $seamless_transaction->TransactionID,
+                    "seamless_transaction_id" => $seamless_transaction->id,
                 ]
             );
         }

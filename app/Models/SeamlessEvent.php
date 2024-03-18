@@ -24,4 +24,8 @@ class SeamlessEvent extends Model
     public function transactions(){
         return $this->hasMany(SeamlessTransaction::class);
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

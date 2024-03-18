@@ -32,7 +32,7 @@ class CancelBetController extends Controller
 
         $event = $this->createEvent($request);
 
-        $seamless_transactions = $this->createWagerTransactions($validator->getRequestTransactions(), $event);
+        $seamless_transactions = $this->createWagerTransactions($validator->getRequestTransactions(), $event, true);
 
         foreach ($seamless_transactions as $seamless_transaction) {
             $this->processTransfer(
@@ -43,7 +43,7 @@ class CancelBetController extends Controller
                 $seamless_transaction->rate,
                 [
                     "event_id" => $request->getMessageID(),
-                    "seamless_transaction_id" => $seamless_transaction->TransactionID,
+                    "seamless_transaction_id" => $seamless_transaction->id,
                 ]
             );
         }

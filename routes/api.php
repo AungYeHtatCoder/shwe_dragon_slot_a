@@ -20,6 +20,8 @@ use App\Http\Controllers\Api\V1\Webhook\MobileLoginController;
 use App\Http\Controllers\Api\V1\Webhook\PushBetController;
 use App\Http\Controllers\Api\V1\Player\WithDrawController;
 use App\Http\Controllers\Api\V1\Player\PlayerTransactionLogController;
+use App\Http\Controllers\Api\V1\Player\TransactionController;
+use App\Http\Controllers\Api\V1\Player\WagerController;
 use App\Http\Controllers\Api\V1\Webhook\PlaceBetController;
 use App\Http\Controllers\TestController;
 use App\Models\Admin\Role;
@@ -57,6 +59,9 @@ Route::group(["prefix" => "Seamless", "middleware" => ["webhook_log"]], function
 });
 
 Route::group(["middleware" => ['auth:sanctum']], function () {
+    Route::get('wager-logs', [WagerController::class, 'index']);
+    Route::get('transactions', [TransactionController::class, 'index']);
+
     //logout
     Route::get('user', [AuthController::class, 'getUser']);
     Route::post('logout', [AuthController::class, 'logout']);
