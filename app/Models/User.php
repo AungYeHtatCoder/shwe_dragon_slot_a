@@ -124,4 +124,8 @@ class User extends Authenticatable implements Wallet
         return $this->hasMany(SeamlessTransaction::class, 'user_id');
     }
 
+    public function wagers()
+    {
+        return $this->hasMany(Wager::class);
+    }
 }

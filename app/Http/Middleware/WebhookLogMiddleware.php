@@ -15,11 +15,11 @@ class WebhookLogMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        logger("----------------------------------------------------");
+        logger("-----------------START---------------------");
         logger($request->url());
         logger($request->header());
         logger($request->all());
-        logger("----------------------------------------------------");
+        logger("-----------------END---------------------");
         return $next($request);
     }
 }
