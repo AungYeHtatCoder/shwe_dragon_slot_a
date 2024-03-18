@@ -24,7 +24,6 @@ use App\Http\Controllers\Api\V1\Player\TransactionController;
 use App\Http\Controllers\Api\V1\Player\WagerController;
 use App\Http\Controllers\Api\V1\Webhook\PlaceBetController;
 use App\Http\Controllers\TestController;
-use App\Models\Admin\Role;
 
 //login route post
 Route::post('/login', [AuthController::class, 'login']);

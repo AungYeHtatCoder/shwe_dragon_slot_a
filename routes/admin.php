@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\BannerTextController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\Agent\AgentController;
+use App\Http\Controllers\Admin\GameTypeProductController;
 use App\Http\Controllers\Admin\GetBetDetailController;
 use App\Http\Controllers\Admin\Master\MasterController;
 use App\Http\Controllers\Admin\Player\PlayerController;
@@ -62,6 +63,9 @@ Route::group([
     Route::resource('text', BannerTextController::class);
     Route::resource('/promotions', PromotionController::class);
     Route::resource('/payments', PaymentController::class);
+    Route::get('gametypes', [GameTypeProductController::class,'index'])->name('gametypes.index');
+    Route::get('gametypes/{game_type_id}/product/{product_id}', [GameTypeProductController::class,'edit'])->name('gametypes.edit');
+    Route::post('gametypes/{game_type_id}/product/{product_id}', [GameTypeProductController::class,'update'])->name('gametypes.update');
 
     Route::resource('agent', AgentController::class);
     Route::get('agent-cash-in/{id}', [AgentController::class, 'getCashIn'])->name('agent.getCashIn');
