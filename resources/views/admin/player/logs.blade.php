@@ -42,10 +42,9 @@
               <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>
-                  <span class="d-block">{{ $log->user->name }}</span>
+                  <span class="d-block">{{ $log->user->user_name }}</span>
                 </td>
-                <td>{{$log->user->player_name}}</td>
-                <td class="text-sm text-danger font-weight-bold">{{ $log->ip_address }}</td>
+                <td class="text-sm text-info font-weight-bold">{{ $log->ip_address }}</td>
                 <td>{{ $log->created_at}}</td>
               </tr>
               @endforeach
