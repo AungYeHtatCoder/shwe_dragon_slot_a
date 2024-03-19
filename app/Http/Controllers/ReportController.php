@@ -28,7 +28,7 @@ class ReportController extends Controller
             ->join('game_types', 'seamless_transactions.game_type_id', '=', 'game_types.id')
             ->join('wagers', 'seamless_transactions.wager_id', '=', 'wagers.id')
             ->where('users.agent_id', Auth::id())
-            ->where('wagers.status','101')
+            ->where('seamless_transactions.status','101')
             ->groupBy('users.user_name')
             ->get();
 
@@ -57,7 +57,7 @@ class ReportController extends Controller
             ->join('wagers', 'seamless_transactions.wager_id', '=', 'wagers.id')
             ->where('users.id',$userId)
             ->where('users.agent_id', Auth::id())
-            ->where('wagers.status','101')
+            ->where('seamless_transactions.status','101')
             ->groupBy('products.name','game_types.name','users.user_name','users.id','game_types.id','products.id')
             ->get();
 
@@ -86,7 +86,7 @@ class ReportController extends Controller
             ->where('products.id',$request->product_id)
             ->where('game_types.id',$request->game_type_id)
             ->where('users.agent_id', Auth::id())
-            ->where('wagers.status','101')
+            ->where('seamless_transactions.status','101')
             ->get();
         $product = Product::find($request->product_id);
         $player = User::find($request->user_id);
