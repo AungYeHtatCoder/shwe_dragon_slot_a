@@ -54,7 +54,6 @@ class HomeController extends Controller
 
             return view('admin.dashboard', compact(
                 'userCount',
-                'lastUserCount',
                 'user'
             ));
         }
