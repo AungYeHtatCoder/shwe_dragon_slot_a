@@ -12,6 +12,7 @@ use Bavix\Wallet\Traits\HasWalletFloat;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable implements Wallet
 {
@@ -128,4 +129,12 @@ class User extends Authenticatable implements Wallet
     {
         return $this->hasMany(Wager::class);
     }
+
+    public function scopeRoleLimited($query)
+{
+    if (!Auth::user()->hasRole('Admin')) {
+        return $query->where('agent_id', Auth::id());
+    }
+    return $query;
+}
 }

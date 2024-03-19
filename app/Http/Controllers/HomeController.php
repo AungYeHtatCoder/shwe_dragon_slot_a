@@ -34,29 +34,29 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $isAdmin = $user->hasRole('Admin');
 
-        if ($user->hasRole('Admin')) {
+        $getUserCounts = function ($roleTitle) use ($isAdmin, $user) {
+            return User::whereHas('roles', function ($query) use ($roleTitle) {
+                $query->where('title', '=', $roleTitle);
+            })->when(!$isAdmin, function ($query) use ($user) {
+                $query->where('agent_id', $user->id);
+            })->count();
+        };
 
-            $userCount = User::where('agent_id', null)->count();
-            
-            $provider_balance = (new AppSetting())->provider_initial_balance + SeamlessTransaction::sum("transaction_amount");
-            
-            
-            return view('admin.dashboard', compact(
-                'provider_balance',
-                'userCount',
-                'user'
-            ));
+        $master_count = $getUserCounts('Master');
+        $agent_count = $getUserCounts('Agent');
+        $player_count = $getUserCounts('Player');
 
-        }elseif ($user->hasRole('Master') || $user->hasRole('Agent')) {
+        $provider_balance = (new AppSetting())->provider_initial_balance + SeamlessTransaction::sum("transaction_amount");
 
-            $userCount = User::where('agent_id', $user->id)->count();
-
-            return view('admin.dashboard', compact(
-                'userCount',
-                'user'
-            ));
-        }
+        return view('admin.dashboard', compact(
+            'provider_balance',
+            'master_count',
+            'agent_count',
+            'player_count',
+            'user'
+        ));
     }
 
     public function balanceUp(Request $request)

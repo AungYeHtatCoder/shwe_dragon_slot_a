@@ -2,27 +2,6 @@
 
 @section('content')
     <div class="row">
-        <div class="col-sm-3">
-            <div class="card">
-                <div class="card-body p-3 position-relative">
-                    <div class="row">
-                        <div class="col text-start">
-                            @if ($user->hasRole('Admin'))
-                                <p class="text-sm mb-1 text-capitalize font-weight-bold">Master</p>
-                            @elseif($user->hasRole('Master'))
-                                <p class="text-sm mb-1 text-capitalize font-weight-bold">Agent</p>
-                            @endif
-                            <h5 class="font-weight-bolder mb-0">
-                                {{ $userCount }}
-                            </h5>
-                            <span class="text-sm text-end text-success font-weight-bolder mt-auto mb-0"> <span
-                                    class="font-weight-normal text-secondary"></span></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @if ($user->hasRole('Admin'))
             <div class="col-sm-3">
                 <div class="card">
                     <div class="card-body p-3 position-relative">
@@ -32,25 +11,24 @@
                                 <h5 class="font-weight-bolder mb-0">
                                     {{ number_format($provider_balance, 2) }}MMK
                                 </h5>
-                                <span class="text-sm text-end text-success font-weight-bolder mt-auto mb-0">+55%
-                                    <span class="font-weight-normal text-secondary">since yesterday</span></span>
+                                <span class="text-sm text-end text-success font-weight-bolder mt-auto mb-0">
+                                    <span class="font-weight-normal text-secondary">last Up</span></span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        @endif
-        <div class="col-sm-3">
+            <div class="col-sm-3">
             <div class="card">
                 <div class="card-body p-3 position-relative">
                     <div class="row">
                         <div class="col text-start">
-                            <p class="text-sm mb-1 text-capitalize font-weight-bold">Total Today Deposit</p>
+                                <p class="text-sm mb-1 text-capitalize font-weight-bold">Master</p>
                             <h5 class="font-weight-bolder mb-0">
-                               
+                                {{ $master_count }}
                             </h5>
-                            <span class="text-sm text-end text-success font-weight-bolder mt-auto mb-0">+55%
-                                <span class="font-weight-normal text-secondary">since yesterday</span></span>
+                            <span class="text-sm text-end text-success font-weight-bolder mt-auto mb-0"> <span
+                                    class="font-weight-normal text-secondary">last Update</span></span>
                         </div>
                     </div>
                 </div>
@@ -61,13 +39,29 @@
                 <div class="card-body p-3 position-relative">
                     <div class="row">
                         <div class="col text-start">
-                            <p class="text-sm mb-1 text-capitalize font-weight-bold">Total Today WithDraw</p>
+                                <p class="text-sm mb-1 text-capitalize font-weight-bold">Agent</p>
                             <h5 class="font-weight-bolder mb-0">
-                                
+                                {{ $agent_count }}
                             </h5>
+                            <span class="text-sm text-end text-success font-weight-bolder mt-auto mb-0"> <span
+                                    class="font-weight-normal text-secondary">last Update</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body p-3 position-relative">
+                    <div class="row">
+                        <div class="col text-start">
+                                <p class="text-sm mb-1 text-capitalize font-weight-bold">Player</p>
 
-                            <span class="text-sm text-end text-success font-weight-bolder mt-auto mb-0">+55%
-                                <span class="font-weight-normal text-secondary">since yesterday</span></span>
+                            <h5 class="font-weight-bolder mb-0">
+                                {{ $player_count }}
+                            </h5>
+                            <span class="text-sm text-end text-success font-weight-bolder mt-auto mb-0"> <span
+                                    class="font-weight-normal text-secondary">last Update</span></span>
                         </div>
                     </div>
                 </div>
@@ -75,56 +69,6 @@
         </div>
 
     </div>
-
-
-
-    </div>
-    <div class="row mt-4">
-        <div class="col-lg-4 col-sm-6">
-            <div class="card h-100">
-                <div class="card-header pb-0 p-3">
-                    <div class="d-flex justify-content-between">
-                        <h6 class="mb-0">Last 10 Days Transaction Report</h6>
-                        <button type="button"
-                            class="btn btn-icon-only btn-rounded btn-outline-secondary mb-0 ms-2 btn-sm d-flex align-items-center justify-content-center"
-                            data-bs-toggle="tooltip" data-bs-placement="bottom" title
-                            data-bs-original-title="See traffic channels">
-                            <i class="material-icons text-sm">priority_high</i>
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body pb-0 p-3 mt-4">
-                    <div class="row">
-                        <div class="col-7 text-start">
-                            <div class="chart">
-                                <canvas id="chart-pie" class="chart-canvas" height="200"></canvas>
-                            </div>
-                        </div>
-                        <div class="col-5 my-auto">
-                            <span class="badge badge-md badge-dot me-4 d-block text-start">
-                                <i class="bg-info"></i>
-                                <span class="text-dark text-xs">Deposit</span>
-                            </span>
-                            <span class="badge badge-md badge-dot me-4 d-block text-start">
-                                <i class="bg-primary"></i>
-                                <span class="text-dark text-xs">Withdraw</span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer pt-0 pb-0 p-3 d-flex align-items-center">
-                    <div class="w-60">
-                        <p class="text-sm">
-                            More than <b>1,200,000</b> sales are made using referral marketing, and <b>700,000</b> are from
-                            social media.
-                        </p>
-                    </div>
-                    <div class="w-40 text-end">
-                        <a class="btn bg-light mb-0 text-end" href="javascript:;">Read more</a>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     @can('admin_access')
         <div class="row gx-4 mt-4">
