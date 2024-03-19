@@ -7,16 +7,16 @@
                 <div class="card-body p-3 position-relative">
                     <div class="row">
                         <div class="col text-start">
-                            @if ($user->hasRole('Owner'))
+                            @if ($user->hasRole('Admin'))
+                                <p class="text-sm mb-1 text-capitalize font-weight-bold">Master</p>
+                            @elseif($user->hasRole('Master'))
                                 <p class="text-sm mb-1 text-capitalize font-weight-bold">Agent</p>
-                            @elseif($user->hasRole('Agent'))
-                                <p class="text-sm mb-1 text-capitalize font-weight-bold">Player</p>
                             @endif
                             <h5 class="font-weight-bolder mb-0">
                                 {{ $userCount }}
                             </h5>
-                            <span class="text-sm text-end text-success font-weight-bolder mt-auto mb-0">+55% <span
-                                    class="font-weight-normal text-secondary">since last month</span></span>
+                            <span class="text-sm text-end text-success font-weight-bolder mt-auto mb-0"> <span
+                                    class="font-weight-normal text-secondary"></span></span>
                         </div>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                         <div class="col text-start">
                             <p class="text-sm mb-1 text-capitalize font-weight-bold">Total Today Deposit</p>
                             <h5 class="font-weight-bolder mb-0">
-                                1000.00
+                               
                             </h5>
                             <span class="text-sm text-end text-success font-weight-bolder mt-auto mb-0">+55%
                                 <span class="font-weight-normal text-secondary">since yesterday</span></span>
@@ -63,7 +63,7 @@
                         <div class="col text-start">
                             <p class="text-sm mb-1 text-capitalize font-weight-bold">Total Today WithDraw</p>
                             <h5 class="font-weight-bolder mb-0">
-                                2000.00
+                                
                             </h5>
 
                             <span class="text-sm text-end text-success font-weight-bolder mt-auto mb-0">+55%

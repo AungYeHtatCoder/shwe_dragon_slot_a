@@ -107,7 +107,7 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 10,
                 'game_type_id' => 2,
-                'image' => 'yee_bet.jpeg',
+                'image' => 'Yee_bet.png',
                 'rate' => '1.0000'
             ],
             [
@@ -119,7 +119,7 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 12,
                 'game_type_id' => 2,
-                'image' => 'sexy_gaming.jpeg',
+                'image' => 'AWC_logo.png',
                 'rate' => '1.0000'
             ],
             [
@@ -131,13 +131,13 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 14,
                 'game_type_id' => 1,
-                'image' => 'ygdrasil.png',
+                'image' => 'YGG.png',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 14,
                 'game_type_id' => 2,
-                'image' => 'yggdrasil.svg',
+                'image' => 'YGG.png',
                 'rate' => '1.0000'
             ],
             [
@@ -155,7 +155,7 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 16,
                 'game_type_id' => 3,
-                'image' => 'ug_sport.jpeg',
+                'image' => 'UG.png',
                 'rate' => '1.0000'
             ],
             [
@@ -173,7 +173,7 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 19,
                 'game_type_id' => 3,
-                'image' => 'IBC.png',
+                'image' => 'ibc.png',
                 'rate' => '1000.0000'
             ],
             [
@@ -209,19 +209,19 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 24,
                 'game_type_id' => 1,
-                'image' => 'advant_play.jpeg',
+                'image' => 'advant_play.png',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 25,
                 'game_type_id' => 1,
-                'image' => 'jdb.png',
+                'image' => 'JDB.png',
                 'rate' => '100.0000'
             ],
             [
                 'product_id' => 26,
                 'game_type_id' => 1,
-                'image' => 'genius.jpeg',
+                'image' => 'GenesisLogo_black.png',
                 'rate' => '1.0000'
             ],
             [
@@ -251,7 +251,7 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 30,
                 'game_type_id' => 1,
-                'image' => 'royal_slot.png',
+                'image' => 'RSG_logo.png',
                 'rate' => '1.0000'
             ],
             [

@@ -37,53 +37,26 @@ class HomeController extends Controller
 
         if ($user->hasRole('Admin')) {
 
-            $startLastMonth = now()->subMonth()->startOfMonth();
-            $endLastMonth = now()->subMonth()->endOfMonth();
-
             $userCount = User::where('agent_id', null)->count();
-            $lastUserCount = User::where('agent_id', null)->whereBetween('created_at', [$startLastMonth, $endLastMonth])
-                ->count();
-
+            
             $provider_balance = (new AppSetting())->provider_initial_balance + SeamlessTransaction::sum("transaction_amount");
-
+            
+            
             return view('admin.dashboard', compact(
                 'provider_balance',
                 'userCount',
-                'lastUserCount',
                 'user'
             ));
-        }elseif ($user->hasRole('Master')) {
 
-            $startLastMonth = now()->subMonth()->startOfMonth();
-            $endLastMonth = now()->subMonth()->endOfMonth();
+        }elseif ($user->hasRole('Master') || $user->hasRole('Agent')) {
 
             $userCount = User::where('agent_id', $user->id)->count();
-
-            $lastUserCount = User::where('agent_id', null)->whereBetween('created_at', [$startLastMonth, $endLastMonth])
-                ->count();
 
             return view('admin.dashboard', compact(
                 'userCount',
                 'lastUserCount',
                 'user'
             ));
-        }elseif ($user->hasRole('Agent')) {
-
-            $startLastMonth = now()->subMonth()->startOfMonth();
-            $endLastMonth = now()->subMonth()->endOfMonth();
-
-            $userCount = User::where('agent_id', $user->id)->count();
-
-            $lastUserCount = User::where('agent_id', null)->whereBetween('created_at', [$startLastMonth, $endLastMonth])
-                ->count();
-
-            return view('admin.dashboard', compact(
-                'userCount',
-                'lastUserCount',
-                'user'
-            ));
-        } else {
-            return redirect('/');
         }
     }
 

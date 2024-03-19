@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin\GameType;
 use App\Models\Admin\Product;
-use App\Models\Report;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
