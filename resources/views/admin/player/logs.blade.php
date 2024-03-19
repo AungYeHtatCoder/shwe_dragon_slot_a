@@ -44,7 +44,7 @@
                 <td>
                   <span class="d-block">{{ $log->user->user_name }}</span>
                 </td>
-                <td class="text-sm text-info font-weight-bold">{{ $log->ip_address }}</td>
+                <td class="text-sm  font-weight-bold">{{ $log->ip_address }}</td>
                 <td>{{ $log->created_at}}</td>
               </tr>
               @endforeach
