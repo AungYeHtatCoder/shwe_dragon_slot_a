@@ -24,9 +24,7 @@ class WagerController extends Controller
 
         $user = auth()->user();
 
-        $wagers = $user->wagers()->with(["latestTransaction.transactions" => function($q) use($user){
-            $q->where("payable_id", $user->id);
-        }])->whereBetween("created_at", [$from, $to])
+        $wagers = $user->wagers()->with(["transactions"])->whereBetween("created_at", [$from, $to])
         ->latest()
         ->get();
 
