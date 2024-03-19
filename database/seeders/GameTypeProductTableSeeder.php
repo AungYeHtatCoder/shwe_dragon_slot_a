@@ -77,13 +77,13 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 7,
                 'game_type_id' => 1,
-                'image' => 'play_tech.jpg',
+                'image' => 'play_tech.png',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 7,
                 'game_type_id' => 2,
-                'image' => 'play_tech.jpg',
+                'image' => 'play_tech.png',
                 'rate' => '1.0000'
             ],
             [
@@ -143,13 +143,13 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 15,
                 'game_type_id' => 1,
-                'image' => 'vivo_gaming.png',
+                'image' => 'Vivo_Gaming.png',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 15,
                 'game_type_id' => 2,
-                'image' => 'vivo_gaming.png',
+                'image' => 'Vivo_Gaming.png',
                 'rate' => '1.0000'
             ],
             [
