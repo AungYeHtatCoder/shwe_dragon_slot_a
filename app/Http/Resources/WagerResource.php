@@ -19,7 +19,7 @@ class WagerResource extends JsonResource
 
         return [
             "id" => $this->id,
-            "status" => $amount < 0 ? WagerStatus::Win : WagerStatus::Lose,
+            "status" => $amount > 0 ? WagerStatus::Win : WagerStatus::Lose,
             "amount" => $this->transactions->sum("transaction_amount"),
             "datetime" => $this->created_at->format("Y-m-d H:i:s")
         ];
