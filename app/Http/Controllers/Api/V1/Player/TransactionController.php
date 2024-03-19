@@ -25,7 +25,7 @@ class TransactionController extends Controller
         $user = auth()->user();
 
         $transactions = $user->transactions()->whereBetween("created_at", [$from, $to])
-        ->latest()
+        ->orderBy("id", "DESC")
         ->get();
 
         return $this->success(TransactionResource::collection($transactions));
