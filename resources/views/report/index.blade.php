@@ -31,7 +31,7 @@
       <div class="card-header pb-0">
         <div class="d-lg-flex">
           <div>
-            <h5 class="mb-0">Winlose Report</h5>
+            <h5 class="mb-0">Win/lose Report</h5>
           </div>
           <div class="ms-auto my-auto mt-lg-0 mt-4">
             <div class="ms-auto my-auto">
@@ -90,9 +90,9 @@
                 <td>{{ $res->total_bet_amount}}</td>
                 <td>{{ $res->total_valid_amount}}</td>
                   @if($res->total_transaction_amount > 0)
-                    <td class="text-sm text-success font-weight-normal">{{$res->total_transaction_amount}}</td>
+                    <td class="text-sm text-success font-weight-bold">{{$res->total_transaction_amount}}</td>
                     @else
-                    <td class="text-sm text-danger font-weight-normal">{{$res->total_transaction_amount}}</td>
+                    <td class="text-sm text-danger font-weight-bold">{{$res->total_transaction_amount}}</td>
                     @endif
                     <td>
                 <a href="{{ route('admin.report.show', $res->user_id) }}" data-bs-toggle="tooltip" data-bs-original-title="View Report" class="btn btn-info btn-sm">

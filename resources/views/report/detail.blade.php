@@ -35,7 +35,7 @@
           <div class="card">
 
             <div class="card-header">
-              <h5 class="mb-0">WinLost Detail Report</h5>
+              <h5 class="mb-0">Win/Lose Detail Report</h5>
               <form action="{{route('admin.report.detail')}}" method="GET">
                 <input type="hidden" name="product_id" value="{{$product->id}}">
                 <input type="hidden" name="game_type_id" value="{{$gameType->id}}">
@@ -89,9 +89,9 @@
                     <td class="text-sm font-weight-normal">{{$detail->bet_amount}}</td>
                     <td class="text-sm font-weight-normal">{{$detail->valid_amount}}</td>
                     @if($detail->transaction_amount > 0)
-                    <td class="text-sm text-success font-weight-normal">{{$detail->transaction_amount}}</td>
+                    <td class="text-sm text-success font-weight-bold">{{$detail->transaction_amount}}</td>
                     @else
-                    <td class="text-sm text-danger font-weight-normal">{{$detail->transaction_amount}}</td>
+                    <td class="text-sm text-danger font-weight-bold">{{$detail->transaction_amount}}</td>
                     @endif
                   </tr>
                   @endforeach
