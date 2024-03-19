@@ -61,7 +61,7 @@ trait UseWebhook
                 ]);
             } else if (!$wager->wasRecentlyCreated) {
                 $wager->update([
-                    "status" => $requestTransaction->TransactionAmount < 0 ? WagerStatus::Lose : WagerStatus::Win
+                    "status" => $requestTransaction->TransactionAmount > 0 ? WagerStatus::Win : WagerStatus::Lose
                 ]);
             }
 
@@ -98,7 +98,7 @@ trait UseWebhook
             ->transfer(
                 $from,
                 $to,
-                abs($amount * $rate),
+                abs($amount),
                 $transactionName,
                 $meta
             );
