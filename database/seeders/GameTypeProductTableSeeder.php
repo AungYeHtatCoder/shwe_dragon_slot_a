@@ -125,7 +125,7 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 13,
                 'game_type_id' => 1,
-                'image' => 'real_time_gaming.jpeg',
+                'image' => 'real_time_gaming.png',
                 'rate' => '1000.0000'
             ],
             [
@@ -137,19 +137,19 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 14,
                 'game_type_id' => 2,
-                'image' => 'ygdrasil.png',
+                'image' => 'yggdrasil.svg',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 15,
                 'game_type_id' => 1,
-                'image' => 'vivo_gaming.jpeg',
+                'image' => 'vivo_gaming.png',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 15,
                 'game_type_id' => 2,
-                'image' => 'vivo_gaming.jpeg',
+                'image' => 'vivo_gaming.png',
                 'rate' => '1.0000'
             ],
             [
@@ -215,7 +215,7 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 25,
                 'game_type_id' => 1,
-                'image' => 'jdb.jpeg',
+                'image' => 'jdb.png',
                 'rate' => '100.0000'
             ],
             [
@@ -245,7 +245,7 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 29,
                 'game_type_id' => 3,
-                'image' => 'ssport.jpeg',
+                'image' => 'ssport.png',
                 'rate' => '1.0000'
             ],
             [
@@ -257,7 +257,7 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 31,
                 'game_type_id' => 1,
-                'image' => 'yes_get_rich.png',
+                'image' => 'yet_get_rich.png',
                 'rate' => '1.0000'
             ]
             ];

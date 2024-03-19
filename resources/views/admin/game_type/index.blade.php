@@ -39,25 +39,22 @@
     <table class="table table-flush" id="users-search">
     <thead class="thead-light">
         <tr>
-        <th class="bg-primary text-white">GameTypeID</th>
         <th class="bg-success text-white">GameTypeCode</th>
-        <th class="bg-info text-white">GameTypeDesc</th>
-        <th class="bg-warning text-white">ProviderID</th>
         <th class="bg-danger text-white">ProviderCode</th>
-        <th class="bg-secondary text-white">ProviderDesc</th>
+        <th class="bg-info text-white">Image</th>
+        <th class="bg-warning text-white">Action</th>
         </tr>
     </thead>
     <tbody>
         @foreach($gameTypes as $gameType)
-            @foreach($gameType->providers as $provider)
+            @foreach($gameType->products as $product)
                 <tr>
-                    {{-- <td>{{ $loop->parent->iteration }}</td> --}}
-                    <td>{{ $gameType->id }}</td>
-                    <td>{{ $gameType->code }}</td>
-                    <td>{{ $gameType->description }}</td>
-                    <td>{{ $provider->id }}</td>
-                    <td>{{ $provider->p_code }}</td>
-                    <td>{{ $provider->description }}</td>
+                    <td>{{ $gameType->name }}</td>
+                    <td>{{ $product->name }}</td>
+                    <td><img src="{{$product->getImgUrlAttribute()}}" alt="" width="100px"></td>
+                    <td>
+                        <a href="{{route('admin.gametypes.edit',[$gameType->id,$product->id])}}" class="btn btn-info btn-sm">Edit</a>
+                    </td>
                 </tr>
             @endforeach
         @endforeach
