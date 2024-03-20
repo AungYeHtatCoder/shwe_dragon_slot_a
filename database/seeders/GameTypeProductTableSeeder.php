@@ -155,7 +155,7 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 16,
                 'game_type_id' => 3,
-                'image' => 'up_sport.jpeg',
+                'image' => 'ug_sport.jpeg',
                 'rate' => '1.0000'
             ],
             [
@@ -251,7 +251,7 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 30,
                 'game_type_id' => 1,
-                'image' => 'royal_slot_gaming.png',
+                'image' => 'royal_slot_gaming.jpeg',
                 'rate' => '1.0000'
             ],
             [
@@ -269,13 +269,13 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 33,
                 'game_type_id' => 1,
-                'image' => 'simple_play.png',
+                'image' => 'simple_play.jpeg',
                 'rate' => '1000.0000'
             ],
             [
                 'product_id' => 33,
                 'game_type_id' => 4,
-                'image' => 'simple_play_fishing.png',
+                'image' => 'simple_play_fishing.jpeg',
                 'rate' => '1000.0000'
             ],
             [
