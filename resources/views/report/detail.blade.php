@@ -90,7 +90,7 @@
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                     Payout Amount
                                 </th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Profit
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Win/Lose
                                 </th>
                             </tr>
                             </thead>

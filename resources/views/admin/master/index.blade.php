@@ -89,7 +89,7 @@
                 <a href="{{ route('admin.master.getCashIn', $user->id) }}" data-bs-toggle="tooltip" data-bs-original-title="Deposit To Master" class="btn btn-info btn-sm">
                 <i class="fas fa-plus text-white me-1"></i>Dep
                 </a>
-                <a href="{{ route('admin.master.getCashOut', $user->id) }}" data-bs-toggle="tooltip" data-bs-original-title="WithDraw To Master" class="btn btn-info btn-sm">
+                <a href="{{ route('admin.master.getChangePassword', $user->id) }}" data-bs-toggle="tooltip" data-bs-original-title="WithDraw To Master" class="btn btn-info btn-sm">
                 <i class="fas fa-minus text-white me-1"></i>
                   WDL
                 </a>

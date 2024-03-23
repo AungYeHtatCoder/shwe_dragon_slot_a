@@ -62,7 +62,7 @@
 <div class="row">
   <div class="col-12">
     <div class="container mb-3">
-      <a class="btn btn-icon btn-2 btn-primary float-end me-5" href="{{ route('admin.payments.index') }}">
+      <a class="btn btn-icon btn-2 btn-primary float-end me-5" href="{{ route('admin.gametypes.index') }}">
         <span class="btn-inner--icon mt-1"><i class="material-icons">arrow_back</i>Back</span>
       </a>
     </div>
