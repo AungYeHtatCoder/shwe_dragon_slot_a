@@ -87,7 +87,7 @@ class PlayerController extends Controller
                 // Set 'max_score' to request value or default to '0.00' if not present
                 //'max_score' => $request->has('max_score') ? $request->max_score : '0.00',
                 'max_score' => $request->max_score ?? '0.00',
-                'type' => 'agent'
+                'type' => 'player'
                 ]
             );
             Log::info('User prepared: ' . json_encode($userPrepare));
@@ -101,7 +101,7 @@ class PlayerController extends Controller
                 ->with('success', 'Player created successfully')
                 ->with('url', env('APP_URL'))
                 ->with('password', $request->password)
-                ->with('username', $user->name);
+                ->with('username', $user->user_name);
         } catch (Exception $e) {
             Log::error('Error creating user: ' . $e->getMessage());
             return redirect()->back()->with('error', $e->getMessage());
@@ -279,7 +279,7 @@ class PlayerController extends Controller
     private function generateRandomString()
     {
         $randomNumber = mt_rand(10000000, 99999999);
-        return 'DC' . $randomNumber;
+        return 'MW' . $randomNumber;
     }
 
     private function getRefrenceId($prefix = 'REF')
