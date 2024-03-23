@@ -65,6 +65,12 @@ class ReportController extends Controller
 
     public function detail(Request $request)
     {
+        $request->validate([
+            "product_id" => ["required"],
+            "user_id" => ["required"],
+            "game_type_id" => ["required"],
+        ]);
+
         $report =$this->makeJoinTable()
             ->select(
                 'products.name as product_name',
@@ -87,7 +93,7 @@ class ReportController extends Controller
         $product = Product::find($request->product_id);
         $player = User::find($request->user_id);
         $gameType =  GameType::find($request->game_type_id);
-     
+
         return view('report.detail', compact('report', 'product', 'player','gameType'));
     }
 
@@ -98,7 +104,7 @@ class ReportController extends Controller
               ->join('products', 'seamless_transactions.product_id', '=', 'products.id')
               ->join('game_types', 'seamless_transactions.game_type_id', '=', 'game_types.id')
               ->where('seamless_transactions.status', '101');
-        
+
         return $query;
     }
 
