@@ -2,17 +2,6 @@
 
   <ul class="navbar-nav">
     {{-- kzt --}}
-    <li class="nav-item">
-      <a class="nav-link text-warning " style="font-weight:1000;" href="#">
-        <span class="sidenav-mini-icon">
-          <h3 class=" text-warning"> <i class="fas fa-coins" aria-hidden="true"></i></h3>
-        </span>
-        <span class="sidenav-normal  ms-2  ps-1 ">
-          <h3 class=" text-warning"> {{auth()->user()->balanceFloat}}</h3>
-        </span>
-      </a>
-    </li>
-    {{-- kzt --}}
     <li class="nav-item active">
       <a class="nav-link text-white " href="{{ route('home') }}" style="font-szie:large;">
         <span class="sidenav-mini-icon"> <i class="material-icons-round opacity-10">dashboard</i> </span>
@@ -137,7 +126,7 @@
       </div>
     </li>
     @endcan
-    
+
     <li class="nav-item">
       <a href="{{ route('logout') }}" onclick="event.preventDefault();
       document.getElementById('logout-form').submit();" class="nav-link text-white">
