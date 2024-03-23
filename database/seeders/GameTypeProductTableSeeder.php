@@ -107,7 +107,7 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 10,
                 'game_type_id' => 2,
-                'image' => 'yee_bet.png',
+                'image' => 'yeebet.png',
                 'rate' => '1.0000'
             ],
             [
@@ -215,7 +215,7 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 25,
                 'game_type_id' => 1,
-                'image' => 'jdb.png',
+                'image' => 'j_d_b.png',
                 'rate' => '100.0000'
             ],
             [
