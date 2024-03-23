@@ -20,20 +20,23 @@ class AuthController extends Controller
     use HttpResponses;
     public function login(LoginRequest $request)
     {
-        $request->validated($request->all());
         $credentials = $request->only('user_name', 'password');
-        if (Auth::attempt($credentials)) {
-            $user = User::where('user_name', $request->user_name)->first();
 
-            UserLog::create([
-                'ip_address' => $request->ip(),
-                'user_id' => $user->id
-            ]);
-            
-            return $this->success(new UserResource($user), 'User Login Successfully');
-        } else {
+        if (!Auth::attempt($credentials)) {
             return $this->error("", "Credentials do not match!", 401);
         }
+
+        $user = User::where('user_name', $request->user_name)->first();
+        if (!$user->hasRole('Player')) {
+            return $this->error("", "You are not a player!", 401);
+        }
+
+        UserLog::create([
+            'ip_address' => $request->ip(),
+            'user_id' => $user->id,
+        ]);
+        
+        return $this->success(new UserResource($user), 'User login successfully.');
     }
 
     public function logout()
@@ -46,32 +49,31 @@ class AuthController extends Controller
 
     public function getUser()
     {
-        return $this->success(new PlayerResource(Auth::user()),'User Success');
+        return $this->success(new PlayerResource(Auth::user()), 'User Success');
     }
 
     public function changePassword(ChangePasswordRequest $request)
     {
         $player = Auth::user();
-        if(Hash::check($request->current_password, $player->password)) {
-             $player->update([
+        if (Hash::check($request->current_password, $player->password)) {
+            $player->update([
                 'password' => $request->password
-             ]);
-        }else{
-             return $this->error('','Old Passowrd is incorrect',401);
+            ]);
+        } else {
+            return $this->error('', 'Old Passowrd is incorrect', 401);
         }
-        return $this->success($player,'Password has been changed successfully.');
+        return $this->success($player, 'Password has been changed successfully.');
     }
 
     public function profile(ProfileRequest $request)
     {
-        
+
         $player = Auth::user();
         $player->update([
             'name' => $request->name,
             'phone' => $request->phone
         ]);
-     
-        return $this->success(new PlayerResource($player),'Update profile');
+
+        return $this->success(new PlayerResource($player), 'Update profile');
     }
-    
 }

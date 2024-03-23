@@ -21,7 +21,7 @@
       <div class="card-header pb-0">
         <div class="d-lg-flex">
           <div>
-            <h5 class="mb-0">User Logs</h5>
+            <h5 class="mb-0">User Last login</h5>
 
           </div>
           
@@ -32,7 +32,6 @@
           <thead class="thead-light">
             <th>#</th>
             <th>PlayerName</th>
-            <th>Name</th>
             <th>IP Address</th>
             <th>Login Time</th>
           </thead>
@@ -43,11 +42,9 @@
               <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>
-                  <span class="d-block">{{ $log->user->name }}</span>
-                    
+                  <span class="d-block">{{ $log->user->user_name }}</span>
                 </td>
-                <td>{{$log->user->player_name}}</td>
-                <td>{{ $log->ip_address }}</td>
+                <td class="text-sm  font-weight-bold">{{ $log->ip_address }}</td>
                 <td>{{ $log->created_at}}</td>
               </tr>
               @endforeach

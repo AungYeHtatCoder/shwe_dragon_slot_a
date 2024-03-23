@@ -17,43 +17,43 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 1,
                 'game_type_id' => 1,
-                'image' => 'asia_gaming.png',
+                'image' => 'asia_gaming.jpeg',
                 'rate' => '100.0000',
             ],
             [
                 'product_id' => 1,
                 'game_type_id' => 2,
-                'image' => 'asia_gaming.png',
+                'image' => 'asia_gaming_casino.jpeg',
                 'rate' => '100.0000',
             ],
             [
                 'product_id' => 2,
                 'game_type_id' => 2,
-                'image' => 'all_bet.png',
+                'image' => 'all_bet.jpeg',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 3,
                 'game_type_id' => 1,
-                'image' => 'big_gaming.png',
+                'image' => 'big_gaming.jpeg',
                 'rate' => '1000.0000'
             ],
             [
                 'product_id' => 3,
                 'game_type_id' => 2,
-                'image' => 'big_gaming.png',
+                'image' => 'big_gaming_casino.jpeg',
                 'rate' => '1000.0000'
             ],
             [
                 'product_id' => 4,
                 'game_type_id' => 1,
-                'image' => 'pragmatic_play.png',
+                'image' => 'pragmatic_play.jpeg',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 4,
                 'game_type_id' => 2,
-                'image' => 'pragmatic_play.png',
+                'image' => 'pragmatic_casino.png',
                 'rate' => '1.0000'
             ],
             [
@@ -65,91 +65,91 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 6,
                 'game_type_id' => 1,
-                'image' => 'cq_9.png',
+                'image' => 'cq_9.jpeg',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 6,
                 'game_type_id' => 4,
-                'image' => 'cq_9.png',
+                'image' => 'cq_9_fishing.jpeg',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 7,
                 'game_type_id' => 1,
-                'image' => 'play_tech.jpg',
+                'image' => 'play_tech.jpeg',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 7,
                 'game_type_id' => 2,
-                'image' => 'play_tech.jpg',
+                'image' => 'play_tech_casino.jpeg',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 8,
                 'game_type_id' => 3,
-                'image' => 'sbo.png',
+                'image' => 'sbo_sport.jpeg',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 9,
                 'game_type_id' => 1,
-                'image' => 'joker.png',
+                'image' => 'joker.jpeg',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 9,
                 'game_type_id' => 4,
-                'image' => 'joker.png',
+                'image' => 'joker_fishing.jpeg',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 10,
                 'game_type_id' => 2,
-                'image' => 'yee_bet.jpeg',
+                'image' => 'yee_bet.png',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 11,
                 'game_type_id' => 2,
-                'image' => 'wm_casino.png',
+                'image' => 'wm_casino.jpeg',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 12,
                 'game_type_id' => 2,
-                'image' => 'sexy_gaming.jpeg',
+                'image' => 'sexy_gaming.png',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 13,
                 'game_type_id' => 1,
-                'image' => 'real_time_gaming.png',
+                'image' => 'real_time_gaming.jpeg',
                 'rate' => '1000.0000'
             ],
             [
                 'product_id' => 14,
                 'game_type_id' => 1,
-                'image' => 'ygdrasil.png',
+                'image' => 'yggdrasil.png',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 14,
                 'game_type_id' => 2,
-                'image' => 'yggdrasil.svg',
+                'image' => 'yggdrasil.png',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 15,
                 'game_type_id' => 1,
-                'image' => 'vivo_gaming.png',
+                'image' => 'vivo_gaming.jpeg',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 15,
                 'game_type_id' => 2,
-                'image' => 'vivo_gaming.png',
+                'image' => 'vivo_gaming.jpeg',
                 'rate' => '1.0000'
             ],
             [
@@ -167,13 +167,13 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 18,
                 'game_type_id' => 1,
-                'image' => 'habanero.png',
+                'image' => 'habanero.jpeg',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 19,
                 'game_type_id' => 3,
-                'image' => 'IBC.png',
+                'image' => 'ibc.jpeg',
                 'rate' => '1000.0000'
             ],
             [
@@ -191,25 +191,25 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 22,
                 'game_type_id' => 1,
-                'image' => 'sky_wind.svg',
+                'image' => 'skywind_group.png',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 22,
                 'game_type_id' => 2,
-                'image' => 'sky_wind.svg',
+                'image' => 'skywind_group.png',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 23,
                 'game_type_id' => 1,
-                'image' => 'venus.jpeg',
+                'image' => 'venus.png',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 24,
                 'game_type_id' => 1,
-                'image' => 'advant_play.jpeg',
+                'image' => 'advant_play.png',
                 'rate' => '1.0000'
             ],
             [
@@ -221,43 +221,67 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 26,
                 'game_type_id' => 1,
-                'image' => 'genius.jpeg',
+                'image' => 'genesis.jpeg',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 27,
                 'game_type_id' => 1,
-                'image' => 'ebet.png',
+                'image' => 'e_bet.jpeg',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 27,
                 'game_type_id' => 2,
-                'image' => 'ebet.png',
+                'image' => 'e_bet_casino.jpeg',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 28,
                 'game_type_id' => 2,
-                'image' => 'n2_live.png',
+                'image' => 'n2_live.jpeg',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 29,
                 'game_type_id' => 3,
-                'image' => 'ssport.png',
+                'image' => 'ssport.jpeg',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 30,
                 'game_type_id' => 1,
-                'image' => 'royal_slot.png',
+                'image' => 'royal_slot_gaming.jpeg',
                 'rate' => '1.0000'
             ],
             [
                 'product_id' => 31,
                 'game_type_id' => 1,
-                'image' => 'yet_get_rich.png',
+                'image' => 'yes_get_rich.png',
+                'rate' => '1.0000'
+            ],
+            [
+                'product_id' => 32,
+                'game_type_id' => 1,
+                'image' => 'evoplay.png',
+                'rate' => '1.0000'
+            ],
+            [
+                'product_id' => 33,
+                'game_type_id' => 1,
+                'image' => 'simple_play.jpeg',
+                'rate' => '1000.0000'
+            ],
+            [
+                'product_id' => 33,
+                'game_type_id' => 4,
+                'image' => 'simple_play_fishing.jpeg',
+                'rate' => '1000.0000'
+            ],
+            [
+                'product_id' => 34,
+                'game_type_id' => 1,
+                'image' => 'jili.png',
                 'rate' => '1.0000'
             ]
             ];

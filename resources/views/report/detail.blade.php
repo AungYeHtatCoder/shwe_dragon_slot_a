@@ -35,8 +35,11 @@
           <div class="card">
 
             <div class="card-header">
-              <h5 class="mb-0">WinLost Detail Report</h5>
-              <form action="" method="GET">
+              <h5 class="mb-0">Win/Lose Detail Report</h5>
+              <form action="{{route('admin.report.detail')}}" method="GET">
+                <input type="hidden" name="product_id" value="{{$product->id}}">
+                <input type="hidden" name="game_type_id" value="{{$gameType->id}}">
+                <input type="hidden" name="user_id"  value="{{$player->id}}">
                 <div class="row">
                   <div class="col-md-3">
                     <div class="input-group input-group-static my-3">
@@ -63,7 +66,7 @@
                     </div>
                   </div>
                   <div class="col-md-3">
-                    <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-sm btn-primary">Search</button>
                   </div>
               </form>
             </div>
@@ -74,7 +77,7 @@
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Result Time</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Bet Amount</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Valid Amount</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Transaction Amount</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Win/Lose</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -85,7 +88,11 @@
                     <td class="text-sm font-weight-normal">{{$detail->created_at}}</td>
                     <td class="text-sm font-weight-normal">{{$detail->bet_amount}}</td>
                     <td class="text-sm font-weight-normal">{{$detail->valid_amount}}</td>
-                    <td class="text-sm font-weight-normal">{{$detail->transaction_amount}}</td>
+                    @if($detail->transaction_amount > 0)
+                    <td class="text-sm text-success font-weight-bold">{{$detail->transaction_amount}}</td>
+                    @else
+                    <td class="text-sm text-danger font-weight-bold">{{$detail->transaction_amount}}</td>
+                    @endif
                   </tr>
                   @endforeach
                   @endif

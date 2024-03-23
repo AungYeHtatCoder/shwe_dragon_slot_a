@@ -69,7 +69,6 @@ class AgentController extends Controller
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
 
-
         $inputs = $request->validated();
         $userPrepare  = array_merge(
             $inputs,

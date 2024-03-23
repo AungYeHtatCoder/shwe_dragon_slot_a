@@ -34,57 +34,29 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $isAdmin = $user->hasRole('Admin');
 
-        if ($user->hasRole('Admin')) {
+        $getUserCounts = function ($roleTitle) use ($isAdmin, $user) {
+            return User::whereHas('roles', function ($query) use ($roleTitle) {
+                $query->where('title', '=', $roleTitle);
+            })->when(!$isAdmin, function ($query) use ($user) {
+                $query->where('agent_id', $user->id);
+            })->count();
+        };
 
-            $startLastMonth = now()->subMonth()->startOfMonth();
-            $endLastMonth = now()->subMonth()->endOfMonth();
+        $master_count = $getUserCounts('Master');
+        $agent_count = $getUserCounts('Agent');
+        $player_count = $getUserCounts('Player');
 
-            $userCount = User::where('agent_id', null)->count();
-            $lastUserCount = User::where('agent_id', null)->whereBetween('created_at', [$startLastMonth, $endLastMonth])
-                ->count();
+        $provider_balance = (new AppSetting())->provider_initial_balance + SeamlessTransaction::sum("transaction_amount");
 
-            $provider_balance = (new AppSetting())->provider_initial_balance + SeamlessTransaction::sum("transaction_amount");
-
-            return view('admin.dashboard', compact(
-                'provider_balance',
-                'userCount',
-                'lastUserCount',
-                'user'
-            ));
-        }elseif ($user->hasRole('Master')) {
-
-            $startLastMonth = now()->subMonth()->startOfMonth();
-            $endLastMonth = now()->subMonth()->endOfMonth();
-
-            $userCount = User::where('agent_id', $user->id)->count();
-
-            $lastUserCount = User::where('agent_id', null)->whereBetween('created_at', [$startLastMonth, $endLastMonth])
-                ->count();
-
-            return view('admin.dashboard', compact(
-                'userCount',
-                'lastUserCount',
-                'user'
-            ));
-        }elseif ($user->hasRole('Agent')) {
-
-            $startLastMonth = now()->subMonth()->startOfMonth();
-            $endLastMonth = now()->subMonth()->endOfMonth();
-
-            $userCount = User::where('agent_id', $user->id)->count();
-
-            $lastUserCount = User::where('agent_id', null)->whereBetween('created_at', [$startLastMonth, $endLastMonth])
-                ->count();
-
-            return view('admin.dashboard', compact(
-                'userCount',
-                'lastUserCount',
-                'user'
-            ));
-        } else {
-            return redirect('/');
-        }
+        return view('admin.dashboard', compact(
+            'provider_balance',
+            'master_count',
+            'agent_count',
+            'player_count',
+            'user'
+        ));
     }
 
     public function balanceUp(Request $request)
