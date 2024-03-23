@@ -88,9 +88,9 @@
                                     Amount
                                 </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Win
+                                    Payout Amount
                                 </th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Lose
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Profit
                                 </th>
                             </tr>
                             </thead>
@@ -101,16 +101,50 @@
                                         <td class="text-sm font-weight-normal">{{$detail->created_at}}</td>
                                         <td class="text-sm font-weight-normal">{{$detail->bet_amount}}</td>
                                         <td class="text-sm font-weight-normal">{{$detail->valid_amount}}</td>
-                                        @if($detail->transaction_amount > 0)
-                                            <td class="text-sm text-success font-weight-bold">{{$detail->transaction_amount}}</td>
-                                        @else
-                                            <td class="text-sm text-danger font-weight-bold">{{$detail->transaction_amount}}</td>
-                                        @endif
-                                        <td class="text-sm font-weight-normal">
+                                        @php
+                                            if($detail->transaction_amount > 0){
+                                                $value = $detail->transaction_amount;
+                                            }else{
+                                                $value = $detail->bet_amount + $detail->transaction_amount;
+                                            }
+
+                                            $value = number_format($value, 2);
+                                        @endphp
+                                        @if($value > 0)
+                                            <td class="text-sm font-weight-normal">
                                             <span
-                                                class="text-danger font-weight-bold">-
-                                                    {{$detail->bet_amount - $detail->transaction_amount}}
+                                                class="text-success font-weight-bold">
+                                                    {{$value}}
                                         </span></td>
+                                        @else
+                                            <td class="text-sm font-weight-normal">
+                                            <span
+                                                class="text-danger font-weight-bold">
+                                                    {{$value}}
+                                        </span></td>
+                                        @endif
+                                        @php
+                                            if($detail->transaction_amount <= 0){
+                                                $value = $detail->transaction_amount;
+                                            }else{
+                                                $value = $detail->transaction_amount - $detail->bet_amount;
+                                            }
+
+                                            $value = number_format($value, 2);
+                                        @endphp
+                                        @if($value >= 0)
+                                            <td class="text-sm font-weight-normal">
+                                            <span
+                                                class="text-success font-weight-bold">
+                                                    {{$value}}
+                                        </span></td>
+                                        @else
+                                            <td class="text-sm font-weight-normal">
+                                            <span
+                                                class="text-danger font-weight-bold">
+                                                    {{$value}}
+                                        </span></td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             @endif
