@@ -87,7 +87,7 @@ class MasterController extends Controller
         return redirect()->back()
             ->with('success', 'Master created successfully')
             ->with('password', $request->password)
-            ->with('username', $user->name);
+            ->with('username', $user->user_name);
     }
 
     /**
@@ -262,7 +262,7 @@ class MasterController extends Controller
     private function generateRandomString()
     {
         $randomNumber = mt_rand(10000000, 99999999);
-        return 'DC' . $randomNumber;
+        return 'MW' . $randomNumber;
     }
 
 

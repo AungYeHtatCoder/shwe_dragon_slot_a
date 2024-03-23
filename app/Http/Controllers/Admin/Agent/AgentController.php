@@ -86,7 +86,7 @@ class AgentController extends Controller
         return redirect()->back()
             ->with('success', 'Agent created successfully')
             ->with('password', $request->password)
-            ->with('username', $user->name);
+            ->with('username', $user->user_name);
     }
 
     /**
@@ -261,7 +261,7 @@ class AgentController extends Controller
     private function generateRandomString()
     {
         $randomNumber = mt_rand(10000000, 99999999);
-        return 'DC' . $randomNumber;
+        return 'MW' . $randomNumber;
     }
 
 
