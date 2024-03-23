@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('code')->index();
             $table->string('name');
             $table->integer('order')->default(0);
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }
