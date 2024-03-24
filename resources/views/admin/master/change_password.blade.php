@@ -79,7 +79,7 @@
           </div>
         </div>
         <div class="card-body">
-          <form role="form" method="POST" class="text-start" action="{{ route('admin.master.makeChangePassword',$agent->id) }}">
+          <form role="form" method="POST" class="text-start" action="{{ route('admin.master.makeChangePassword',$master->id) }}">
             @csrf
             <div class="custom-form-group">
               <label for="title">New Password <span class="text-danger">*</span></label>

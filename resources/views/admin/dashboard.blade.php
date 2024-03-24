@@ -1,5 +1,4 @@
 @extends('admin_layouts.app')
-
 @section('content')
     <div class="row">
         @if ($user->hasRole('Admin'))
@@ -81,7 +80,6 @@
                 </div>
             </div>
         </div>
-
     </div>
     </div>
     @can('admin_access')
