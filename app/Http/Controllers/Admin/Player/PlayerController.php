@@ -154,7 +154,7 @@ class PlayerController extends Controller
     public function destroy(User $player)
     {
         abort_if(
-            Gate::denies('user_delete'),
+            Gate::denies('user_delete') || !$this->ifChildOfParent(request()->user()->id, $player->id),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -173,6 +173,12 @@ class PlayerController extends Controller
 
     public function banUser($id)
     {
+        abort_if(
+            !$this->ifChildOfParent(request()->user()->id, $id),
+            Response::HTTP_FORBIDDEN,
+            '403 Forbidden |You cannot  Access this page because you do not have permission'
+        );
+
         $user = User::find($id);
         $user->update(['status' => $user->status == 1 ? 0 : 1]);
 
@@ -191,11 +197,11 @@ class PlayerController extends Controller
         );
         return view('admin.player.cash_in', compact('player'));
     }
-    
+
     public function makeCashIn(TransferLogRequest $request, User $player)
     {
         abort_if(
-            Gate::denies('make_transfer'),
+            Gate::denies('make_transfer') || !$this->ifChildOfParent(request()->user()->id, $player->id),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -224,7 +230,7 @@ class PlayerController extends Controller
     public function getCashOut(User $player)
     {
         abort_if(
-            Gate::denies('make_transfer'),
+            Gate::denies('make_transfer') || !$this->ifChildOfParent(request()->user()->id, $player->id),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -233,7 +239,7 @@ class PlayerController extends Controller
     public function makeCashOut(TransferLogRequest $request, User $player)
     {
         abort_if(
-            Gate::denies('make_transfer'),
+            Gate::denies('make_transfer') || !$this->ifChildOfParent(request()->user()->id, $player->id),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -262,10 +268,16 @@ class PlayerController extends Controller
 
     public function getTransferDetail($id)
     {
+        abort_if(
+            !$this->ifChildOfParent(request()->user()->id, $id),
+            Response::HTTP_FORBIDDEN,
+            '403 Forbidden |You cannot  Access this page because you do not have permission'
+        );
+
         $transfer_detail = Transfer::where('from_id', $id)
             ->orWhere('to_id', $id)
             ->get();
-        
+
         return view('admin.player.transfer_detail', compact('transfer_detail'));
     }
 
