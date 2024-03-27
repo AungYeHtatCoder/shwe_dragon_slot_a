@@ -10,7 +10,7 @@ class UserLog extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id','lastupdate','ip_address','func_access'];
+    protected $fillable = ['user_id','lastupdate','ip_address','func_access', 'user_agent'];
     
     public function user()
     {

@@ -34,6 +34,7 @@ class AuthController extends Controller
         UserLog::create([
             'ip_address' => $request->ip(),
             'user_id' => $user->id,
+            'user_agent' => $request->userAgent()
         ]);
         
         return $this->success(new UserResource($user), 'User login successfully.');
