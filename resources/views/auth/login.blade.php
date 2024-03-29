@@ -14,8 +14,8 @@
             <form action="{{ route('login') }}" method="post" class="p-5">
               @csrf
               <div class="mb-3">
-                <label for="login" class="form-label text-white">Email or Phone</label>
-                <input type="text" name="phone" id="login" class="form-control" placeholder="Enter your email or phone">
+                <label for="login" class="form-label text-white">User Name</label>
+                <input type="text" name="user_name" id="login" class="form-control" placeholder="Enter your user name ">
                 @error('phone')
                 <div class="alert alert-danger">{{ "The phone field is required." }}</div>
                 @enderror

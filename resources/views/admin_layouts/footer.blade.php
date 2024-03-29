@@ -7,7 +7,7 @@
                   document.write(new Date().getFullYear())
                 </script>,
                 by
-                <a href="https://delightmyanmar.pro" target="_blank" class="font-weight-bold" target="_blank">Delight Myanmar</a>
+                <a href="https://delightmyanmar.pro" target="_blank" class="font-weight-bold" target="_blank">Max Win Slot</a>
               </div>
             </div>
             {{-- <div class="col-lg-6">
