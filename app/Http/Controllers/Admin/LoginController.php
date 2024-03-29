@@ -18,11 +18,10 @@ class LoginController extends Controller
 
     public function login(LoginRequest $request)
     {
-        if($request->user()->hasRole('Player')){
-            abort(403);
-        }
-        
         if (Auth::attempt($request->validated())) {
+            if($request->user()->hasRole('Player')){
+                abort(403);
+            }
 
             return redirect()->route('home');
         } else {
