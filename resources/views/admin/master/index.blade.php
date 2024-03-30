@@ -37,8 +37,8 @@
         <table class="table table-flush" id="users-search">
           <thead class="thead-light">
             <th>#</th>
-            <th>MasterName</th>
-            <th>Name</th>
+            <th>Master Name</th>
+            <th>Master Id</th>
             <th>Phone</th>
             <th>Status</th>
             <th>Balance</th>
@@ -93,7 +93,7 @@
                 <i class="fas fa-minus text-white me-1"></i>
                   WDL
                 </a>
-                <a href="{{ route('admin.master.getTransferDetail', $user->id) }}" data-bs-toggle="tooltip" data-bs-original-title="Transfer Logs" class="btn btn-info btn-sm">
+                <a href="{{ route('admin.logs', $user->id) }}" data-bs-toggle="tooltip" data-bs-original-title="Transfer Logs" class="btn btn-info btn-sm">
                   <i class="fas fa-right-left text-white me-1"></i>
                   Logs
                 </a>

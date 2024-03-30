@@ -24,7 +24,7 @@ class AgentRequest extends FormRequest
         return [
             'user_name' => 'required', 'string', 'unique:users,user_name',
             'name' => 'required|min:3|string',
-            'phone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'unique:users,phone'],
+            'phone' => ['nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'unique:users,phone'],
             'password' => 'required|min:6',
         ];
     }

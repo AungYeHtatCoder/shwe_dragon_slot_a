@@ -266,32 +266,10 @@ class PlayerController extends Controller
         }
     }
 
-    public function getTransferDetail($id)
-    {
-        abort_if(
-            !$this->ifChildOfParent(request()->user()->id, $id),
-            Response::HTTP_FORBIDDEN,
-            '403 Forbidden |You cannot  Access this page because you do not have permission'
-        );
-
-        $transfer_detail = Transfer::where('from_id', $id)
-            ->orWhere('to_id', $id)
-            ->get();
-
-        return view('admin.player.transfer_detail', compact('transfer_detail'));
-    }
-
-    public function logs($id)
-    {
-        $logs = UserLog::with('user')->where('user_id', $id)->get();
-
-        return view('admin.player.logs', compact('logs'));
-    }
-
     private function generateRandomString()
     {
         $randomNumber = mt_rand(10000000, 99999999);
-        return 'MW' . $randomNumber;
+        return 'W' . $randomNumber;
     }
 
     private function getRefrenceId($prefix = 'REF')

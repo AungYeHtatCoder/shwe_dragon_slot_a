@@ -134,8 +134,7 @@ class AgentController extends Controller
         $request->validate([
             'name' => 'required|min:3|unique:users,name,' . $id,
             'player_name' => 'required|string',
-            'phone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'unique:users,phone,' . $id],
-            'password' => 'nullable|min:6|confirmed',
+            'phone' => ['sometimes', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'unique:users,phone,' . $id],
         ]);
 
         $user = User::find($id);
@@ -260,7 +259,7 @@ class AgentController extends Controller
     private function generateRandomString()
     {
         $randomNumber = mt_rand(10000000, 99999999);
-        return 'MW' . $randomNumber;
+        return 'M' . $randomNumber;
     }
 
 
@@ -285,6 +284,13 @@ class AgentController extends Controller
 
     public function getChangePassword($id)
     {
+        abort_if(
+            Gate::denies('master_access') || !$this->ifChildOfParent(request()->user()->id, $id),
+            Response::HTTP_FORBIDDEN,
+            '403 Forbidden |You cannot  Access this page because you do not have permission'
+        );
+
+
         $agent = User::find($id);
         return view('admin.agent.change_password', compact('agent'));
     }
@@ -292,7 +298,7 @@ class AgentController extends Controller
     public function makeChangePassword($id, Request $request)
     {
         abort_if(
-            Gate::denies('agent_access') || !$this->ifChildOfParent(request()->user()->id, $id),
+            Gate::denies('master_access') || !$this->ifChildOfParent(request()->user()->id, $id),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
