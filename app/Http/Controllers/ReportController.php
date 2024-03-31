@@ -14,7 +14,10 @@ use Illuminate\Support\Facades\DB;
 class ReportController extends Controller
 {
     public function indexV2(Request $request){
-        $user = User::where("type", UserType::Admin)->first();
+        // TODO: check valid tree
+        $username = $request->get("user_name", auth()->user()->user_name);
+
+        $user = User::where("user_name", $username)->first();
 
         $child_user_type = UserType::childUserType($user->type);
 
@@ -27,7 +30,7 @@ class ReportController extends Controller
             ->where("date", $date)
             ->paginate();
 
-        return view("report.index", [
+        return view("report.index_v2", [
             "reports" => $reports, 
             "parent_user_type" => $user->type, 
             "child_user_type" => $child_user_type

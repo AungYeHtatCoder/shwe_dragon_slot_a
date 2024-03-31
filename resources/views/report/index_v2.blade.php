@@ -46,30 +46,40 @@
                 <tr>
                     <th rowspan="2">Username</th>
                     <th rowspan="2">Valid Amount</th>
-                    <th colspan="3" class="text-center">{{ $child_user_type->name }}</th>
-                    <th colspan="3" class="text-center">{{ $parent_user_type->name }}<br> </th>
+                    <th colspan="2" class="text-center">{{ $child_user_type->name }}</th>
+                    <th colspan="2" class="text-center">{{ $parent_user_type->name }}<br> </th>
                 </tr>
                 <tr>
                     <td>Win/Lose</td>
-                    <td>Com</td>
+                    {{-- <td>Com</td> --}}
                     <td>Total</td>
                     <td>Win/Lose</td>
-                    <td>Com</td>
+                    {{-- <td>Com</td> --}}
                     <td>Total</td>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($reports as $report)
                     <tr>
-                        <td>{{ $report->user->user_name }}</td>
-                        <td>{{ $report->turnover / 100 }}</td>
-                        <td>{{ $report->win_lose / 100 }}</td>
-                        <td>{{ $report->commission / 100 }}</td>
-                        <td>{{ ($report->turnover + $report->commission) / 100 }}</td>
-                        <td>{{ $report->win_lose / 100 }}</td>
-                        <td>{{ $report->commission / 100 }}</td>
-                        <td>{{ ($report->turnover + $report->parent_commission) / 100 }}</td>
-                    </tr>
+                        <td>
+                            @if ($child_user_type->value == 40)
+                                <a class="text-primary" href="#">
+                                    {{ $report->user->user_name }}</a>
+                        </td>
+                    @else
+                        <td><a class="text-primary"
+                                href="{{ route('admin.report.indexV2', ['user_name' => $report->user->user_name]) }}">
+                                {{ $report->user->user_name }}</a>
+                        </td>
+                @endif
+                <td>{{ $report->turnover / 100 }}</td>
+                <td>{{ $report->win_lose / 100 }}</td>
+                {{-- <td>{{ $report->commission / 100 }}</td> --}}
+                <td>{{ ($report->turnover + $report->commission) / 100 }}</td>
+                <td>{{ $report->win_lose / 100 }}</td>
+                {{-- <td>{{ $report->commission / 100 }}</td> --}}
+                <td>{{ ($report->turnover + $report->parent_commission) / 100 }}</td>
+                </tr>
                 @endforeach
             </tbody>
         </table>
