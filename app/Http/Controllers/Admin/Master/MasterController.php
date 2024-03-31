@@ -55,11 +55,13 @@ class MasterController extends Controller
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
 
+        $user_name = session()->get("user_name");
 
         $inputs = $request->validated();
         $userPrepare = array_merge(
             $inputs,
             [
+                'user_name' => $user_name,
                 'password' => Hash::make($inputs['password']),
                 'agent_id' => Auth()->user()->id,
                 'max_score' => $request->max_score ?? '0.00',
@@ -68,6 +70,8 @@ class MasterController extends Controller
         );
         $user = User::create($userPrepare);
         $user->roles()->sync(self::MASTER_ROLE);
+
+        session()->forget("user_name");
 
         return redirect()->back()
             ->with('success', 'Master created successfully')
@@ -85,9 +89,11 @@ class MasterController extends Controller
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
-        $agent_name = $this->generateRandomString();
+        $user_name = $this->generateRandomString();
 
-        return view('admin.master.create', compact('agent_name'));
+        session()->put("user_name", $user_name);
+
+        return view('admin.master.create', compact('user_name' , 'user_name'));
     }
 
     private function generateRandomString()

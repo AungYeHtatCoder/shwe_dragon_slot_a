@@ -108,7 +108,7 @@
             @csrf
             <div class="custom-form-group">
               <label for="title">Master ID <span class="text-danger">*</span></label>
-              <input type="text"  name="user_name" class="form-control" value="{{$agent_name}}" readonly>
+              <input type="text"  name="user_name" class="form-control" value="{{$user_name}}" readonly>
               @error('name')
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
