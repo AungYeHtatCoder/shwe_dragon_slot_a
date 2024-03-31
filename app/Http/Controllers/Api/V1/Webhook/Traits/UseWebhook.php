@@ -16,6 +16,7 @@ use App\Models\Wager;
 use Illuminate\Database\Eloquent\MassAssignmentException;
 use App\Services\Slot\Dto\RequestTransaction;
 use App\Services\WalletService;
+use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
 
 trait UseWebhook
@@ -66,7 +67,15 @@ trait UseWebhook
             }
 
             $game_type = GameType::where("code", $requestTransaction->GameType)->first();
+            
+            if (!$game_type) {
+                throw new Exception("Game type not found for {$requestTransaction->GameType}");
+            }
             $product = Product::where("code", $requestTransaction->ProductID)->first();
+
+            if (!$product) {
+                throw new Exception("Product not found for {$requestTransaction->ProductID}");
+            }
 
             $game_type_product = GameTypeProduct::where("game_type_id", $game_type->id)
                 ->where("product_id", $product->id)
