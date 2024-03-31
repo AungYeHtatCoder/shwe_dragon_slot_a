@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Agent;
 
 use App\Enums\TransactionName;
+use App\Enums\UserType;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -76,7 +77,7 @@ class AgentController extends Controller
                 'password' => Hash::make($inputs['password']),
                 'agent_id' => Auth()->user()->id,
                 'max_score' => $request->max_score ?? '0.00',
-                'type' => 'agent'
+                'type' => UserType::Agent
             ]
         );
         $user = User::create($userPrepare);
