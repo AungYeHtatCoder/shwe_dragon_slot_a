@@ -27,6 +27,8 @@ use App\Http\Controllers\TestController;
 
 //login route post
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/player-change-password', [AuthController::class, 'playerChangePassword']);
+
 // logout 
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('promotion', [PromotionController::class, 'index']);

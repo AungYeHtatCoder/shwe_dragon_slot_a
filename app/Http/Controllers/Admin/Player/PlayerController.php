@@ -84,7 +84,6 @@ class PlayerController extends Controller
                  [
                 'password' => Hash::make($inputs['password']),
                 'agent_id' => Auth()->user()->id,
-                'status' => 0,
                 // Set 'max_score' to request value or default to '0.00' if not present
                 //'max_score' => $request->has('max_score') ? $request->max_score : '0.00',
                 'max_score' => $request->max_score ?? '0.00',
