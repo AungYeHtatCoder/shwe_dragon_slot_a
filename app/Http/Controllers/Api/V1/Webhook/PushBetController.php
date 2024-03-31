@@ -13,6 +13,7 @@ use App\Services\Slot\SlotWebhookService;
 use App\Services\Slot\SlotWebhookValidator;
 use App\Services\WalletService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PushBetController extends Controller
 {
@@ -20,26 +21,37 @@ class PushBetController extends Controller
 
     public function pushBet(SlotWebhookRequest $request)
     {
-        $validator = $request->check();
+        DB::beginTransaction();
+        try {
+            $validator = $request->check();
 
-        if ($validator->fails()) {
-            return $validator->getResponse();
+            if ($validator->fails()) {
+                return $validator->getResponse();
+            }
+
+            $before_balance = $request->getMember()->balanceFloat;
+
+            $event = $this->createEvent($request);
+
+            $this->createWagerTransactions($validator->getRequestTransactions(), $event);
+
+            $request->getMember()->wallet->refreshBalance();
+
+            $after_balance = $request->getMember()->balanceFloat;
+
+            DB::commit();
+
+            return SlotWebhookService::buildResponse(
+                SlotWebhookResponseCode::Success,
+                $after_balance,
+                $before_balance
+            );
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                "message" => $e->getMessage()
+            ]);
         }
-
-        $before_balance = $request->getMember()->balanceFloat;
-
-        $event = $this->createEvent($request);
-
-        $this->createWagerTransactions($validator->getRequestTransactions(), $event);
-
-        $request->getMember()->wallet->refreshBalance();
-
-        $after_balance = $request->getMember()->balanceFloat;
-
-        return SlotWebhookService::buildResponse(
-            SlotWebhookResponseCode::Success,
-            $after_balance,
-            $before_balance
-        );
     }
 }

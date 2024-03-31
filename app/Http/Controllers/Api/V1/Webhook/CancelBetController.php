@@ -22,40 +22,51 @@ class CancelBetController extends Controller
 
     public function cancelBet(SlotWebhookRequest $request)
     {
-        $validator = $request->check();
+        DB::beginTransaction();
+        try {
+            $validator = $request->check();
 
-        if ($validator->fails()) {
-            return $validator->getResponse();
-        }
+            if ($validator->fails()) {
+                return $validator->getResponse();
+            }
 
-        $before_balance = $request->getMember()->balanceFloat;
+            $before_balance = $request->getMember()->balanceFloat;
 
-        $event = $this->createEvent($request);
+            $event = $this->createEvent($request);
 
-        $seamless_transactions = $this->createWagerTransactions($validator->getRequestTransactions(), $event, true);
+            $seamless_transactions = $this->createWagerTransactions($validator->getRequestTransactions(), $event, true);
 
-        foreach ($seamless_transactions as $seamless_transaction) {
-            $this->processTransfer(
-                User::adminUser(),
-                $request->getMember(),
-                TransactionName::Cancel,
-                $seamless_transaction->transaction_amount,
-                $seamless_transaction->rate,
-                [
-                    "event_id" => $request->getMessageID(),
-                    "seamless_transaction_id" => $seamless_transaction->id,
-                ]
+            foreach ($seamless_transactions as $seamless_transaction) {
+                $this->processTransfer(
+                    User::adminUser(),
+                    $request->getMember(),
+                    TransactionName::Cancel,
+                    $seamless_transaction->transaction_amount,
+                    $seamless_transaction->rate,
+                    [
+                        "event_id" => $request->getMessageID(),
+                        "seamless_transaction_id" => $seamless_transaction->id,
+                    ]
+                );
+            }
+
+            $request->getMember()->wallet->refreshBalance();
+
+            $after_balance = $request->getMember()->balanceFloat;
+
+            DB::commit();
+
+            return SlotWebhookService::buildResponse(
+                SlotWebhookResponseCode::Success,
+                $after_balance,
+                $before_balance
             );
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                "message" => $e->getMessage()
+            ]);
         }
-
-        $request->getMember()->wallet->refreshBalance();
-
-        $after_balance = $request->getMember()->balanceFloat;
-
-        return SlotWebhookService::buildResponse(
-            SlotWebhookResponseCode::Success,
-            $after_balance,
-            $before_balance
-        );
     }
 }
