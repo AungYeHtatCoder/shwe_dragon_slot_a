@@ -82,6 +82,7 @@ class UpdateFinicalReportJob implements ShouldBeUnique, ShouldQueue
                                 'payout' => 0,
                                 'win_lose' => 0,
                                 'commission' => 0,
+                                'parent_commission' => 0,
                             ];
                         }
 

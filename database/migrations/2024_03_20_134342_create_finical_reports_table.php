@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('payout');
             $table->integer('win_lose');
             $table->integer('commission');
+            $table->integer('parent_commission');
         });
 
         Schema::table('finical_reports', function (Blueprint $table) {

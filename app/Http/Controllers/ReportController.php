@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserType;
 use App\Models\Admin\GameType;
 use App\Models\Admin\Product;
+use App\Models\FinicalReport;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +13,27 @@ use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
+    public function indexV2(Request $request){
+        $user = User::where("type", UserType::Admin)->first();
+
+        $child_user_type = UserType::childUserType($user->type);
+
+        $date = $request->get("date", now()->setTimezone("Asia/Yangon")->format("Y-m-d"));
+
+        $reports = FinicalReport::with("user")->whereIn(
+            "user_id",
+            User::where("type", $child_user_type)->where("agent_id", $user->id)->select("id")
+        )
+            ->where("date", $date)
+            ->paginate();
+
+        return view("report.index", [
+            "reports" => $reports, 
+            "parent_user_type" => $user->type, 
+            "child_user_type" => $child_user_type
+        ]);
+    }
+
     public function index(Request $request)
     {
         $query = $this->makeJoinTable()->select(

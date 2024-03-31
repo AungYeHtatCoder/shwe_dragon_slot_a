@@ -18,6 +18,7 @@ class FinicalReport extends Model
         'payout',
         'win_lose',
         'commission',
+        'parent_commission'
     ];
     protected $casts = [
         'user_type' => UserType::class,
