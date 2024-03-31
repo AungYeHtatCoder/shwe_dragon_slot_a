@@ -3,11 +3,8 @@
 namespace App\Services\Slot;
 
 use App\Enums\SlotWebhookResponseCode;
-use App\Enums\TransactionStatus;
 use App\Http\Requests\Slot\SlotWebhookRequest;
 use App\Models\SeamlessTransaction;
-use App\Models\Transaction;
-use App\Models\User;
 use App\Models\Wager;
 use App\Services\Slot\Dto\RequestTransaction;
 
@@ -55,14 +52,6 @@ class SlotWebhookValidator
             if ($requestTransaction->TransactionID && !$this->isNewTransaction($requestTransaction)) {
                 return $this->response(SlotWebhookResponseCode::DuplicateTransaction);
             }
-
-            // dd($this->getExistingWager($requestTransaction)->toArray());
-
-            // dd($this->isNewWager($requestTransaction));
-
-            // if (in_array($this->request->getMethodName(), ["pushbet"]) && !$this->isNewWager($requestTransaction)) {
-            //     return $this->response(SlotWebhookResponseCode::DuplicateTransaction);
-            // }
 
             if (!in_array($this->request->getMethodName(), ["placebet", "bonus", "jackpot", "buyin", "buyout", "pushbet"]) && $this->isNewWager($requestTransaction)) {
                 return $this->response(SlotWebhookResponseCode::BetNotExist);

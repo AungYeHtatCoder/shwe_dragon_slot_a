@@ -43,12 +43,9 @@ Route::get("/test", TestController::class);
 
 Route::group(["prefix" => "Seamless"], function () {
     Route::post('GetBalance', [GetBalanceController::class, 'getBalance']);
-});
 
-
-Route::group(["prefix" => "Seamless", "middleware" => ["webhook_log"]], function () {
+    // Route::group(["middleware" => ["webhook_log"]], function(){
     Route::post('GetGameList', [LaunchGameController::class, 'getGameList']);
-    // Route::post('GetBalance', [GetBalanceController::class, 'getBalance']);
     Route::post('GameResult', [GameResultController::class, 'gameResult']);
     Route::post('Rollback', [RollbackController::class, 'rollback']);
     Route::post('PlaceBet', [PlaceBetController::class, 'placeBet']);
@@ -59,6 +56,7 @@ Route::group(["prefix" => "Seamless", "middleware" => ["webhook_log"]], function
     Route::post('Bonus', [BonusController::class, 'bonus']);
     Route::post('Jackpot', [JackPotController::class, 'jackPot']);
     Route::post('MobileLogin', [MobileLoginController::class, 'MobileLogin']);
+    // });
 });
 
 Route::group(["middleware" => ['auth:sanctum']], function () {

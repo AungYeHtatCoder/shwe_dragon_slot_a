@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\UserType;
+use App\Events\UserCreatedEvent;
 use App\Models\Admin\Role;
 use App\Models\Admin\Permission;
 use Laravel\Sanctum\HasApiTokens;
@@ -23,7 +24,7 @@ class User extends Authenticatable implements Wallet
      *
      * @var array<int, string>
      */
-     protected $fillable = [
+    protected $fillable = [
         'user_name',
         'name',
         'profile',
@@ -37,6 +38,11 @@ class User extends Authenticatable implements Wallet
         'status',
         'type'
     ];
+
+    protected $dispatchesEvents = [
+        'created' => UserCreatedEvent::class,
+    ];
+
     protected $dates = ['created_at', 'updated_at'];
     /**
      * The attributes that should be hidden for serialization.
@@ -59,7 +65,7 @@ class User extends Authenticatable implements Wallet
         "type" => UserType::class
     ];
 
-   
+
     public function getIsAdminAttribute()
     {
         return $this->roles()->where('id', 1)->exists();
@@ -88,12 +94,12 @@ class User extends Authenticatable implements Wallet
     {
         return $this->belongsToMany(Permission::class);
     }
-    
+
     public function hasRole($role)
     {
         return $this->roles->contains('title', $role);
     }
-    
+
     public function hasPermission($permission)
     {
         return $this->roles->flatMap->permissions->pluck('title')->contains($permission);
@@ -116,7 +122,8 @@ class User extends Authenticatable implements Wallet
         return $this->belongsTo(User::class, 'agent_id');
     }
 
-    public static function adminUser(){
+    public static function adminUser()
+    {
         return self::where("type", UserType::Admin)->first();
     }
 
@@ -130,11 +137,15 @@ class User extends Authenticatable implements Wallet
         return $this->hasMany(Wager::class);
     }
 
-    public function scopeRoleLimited($query)
-{
-    if (!Auth::user()->hasRole('Admin')) {
-        return $query->where('agent_id', Auth::id());
+    public function parent(){
+        return $this->belongsTo(User::class, "agent_id");
     }
-    return $query;
-}
+
+    public function scopeRoleLimited($query)
+    {
+        if (!Auth::user()->hasRole('Admin')) {
+            return $query->where('agent_id', Auth::id());
+        }
+        return $query;
+    }
 }

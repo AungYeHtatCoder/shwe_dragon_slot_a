@@ -27,6 +27,11 @@ class Transaction extends ModelsTransaction
         return $this->belongsTo(User::class);
     }
 
+    public function wager()
+    {
+        return $this->belongsTo(Wager::class);
+    }
+
     public function placeBets()
     {
         return $this->hasMany(PlaceBet::class, 'transaction_id', 'id');

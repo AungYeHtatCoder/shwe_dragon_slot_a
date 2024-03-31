@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\UserCreatedEvent;
+use App\Listeners\CreateUserTreeListener;
+use App\Listeners\UpdateFinicalReportListener;
+use Bavix\Wallet\Internal\Events\TransactionCreatedEvent;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -17,6 +21,14 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+
+        UserCreatedEvent::class => [
+            CreateUserTreeListener::class
+        ],
+
+        TransactionCreatedEvent::class => [
+            UpdateFinicalReportListener::class
         ],
     ];
 
