@@ -44,6 +44,7 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th rowspan="2">Date</th>
                     <th rowspan="2">Username</th>
                     <th rowspan="2">Valid Amount</th>
                     <th colspan="2" class="text-center">{{ $child_user_type->name }}</th>
@@ -61,6 +62,7 @@
             <tbody>
                 @foreach ($reports as $report)
                     <tr>
+                        <td>{{$report->date}}</td>
                         <td>
                             @if ($child_user_type->value == 40)
                                 <a class="text-primary" href="#">
