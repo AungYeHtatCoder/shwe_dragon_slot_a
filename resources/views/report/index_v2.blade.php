@@ -61,7 +61,7 @@
             <tbody>
                 @foreach ($reports as $report)
                     <tr>
-                        <td>{{ $report->user->user_name }}</td>
+                        <td><a class="text-primary" href="{{route("admin.report.indexV2", ["user_name" => $report->user->user_name])}}"> {{ $report->user->user_name }}</a></td>
                         <td>{{ $report->turnover / 100 }}</td>
                         <td>{{ $report->win_lose / 100 }}</td>
                         <td>{{ $report->commission / 100 }}</td>
