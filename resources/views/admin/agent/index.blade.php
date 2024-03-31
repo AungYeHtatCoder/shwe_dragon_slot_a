@@ -99,7 +99,7 @@
                 <i class="fas fa-minus text-white me-1"></i>
                   WDL
                 </a>
-                <a href="{{ route('admin.agent.getTransferDetail', $user->id) }}" data-bs-toggle="tooltip" data-bs-original-title="Transfer logs" class="btn btn-info btn-sm">
+                <a href="{{ route('admin.logs', $user->id) }}" data-bs-toggle="tooltip" data-bs-original-title="Agent logs" class="btn btn-info btn-sm">
                   <i class="fas fa-right-left text-white me-1"></i>
                   Logs
                 </a>

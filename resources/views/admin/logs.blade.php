@@ -21,7 +21,7 @@
       <div class="card-header pb-0">
         <div class="d-lg-flex">
           <div>
-            <h5 class="mb-0">User Last login</h5>
+            <h5 class="mb-0">Last login</h5>
 
           </div>
           
@@ -31,7 +31,7 @@
         <table class="table table-flush" id="users-search">
           <thead class="thead-light">
             <th>#</th>
-            <th>PlayerName</th>
+            <th>User Id</th>
             <th>IP Address</th>
             <th>Login Time</th>
           </thead>

@@ -11,12 +11,20 @@
     appearance: none;
     /* For some browsers */
   }
+
   .active-button {
-  background-color: #e91e63; /* or any color you prefer */
-  color: white; /* optional: change text color if needed */
+    background-color: #e91e63;
+    /* or any color you prefer */
+    color: white;
+    /* optional: change text color if needed */
   }
+
   #search {
     margin-top: 40px;
+  }
+  #product {
+    background-color: #CCDDEB;
+    color: #e91e63;
   }
   #clear {
     margin-top: 40px;
@@ -26,7 +34,7 @@
 @section('content')
 <div class="row mt-4">
   <div class="col-12">
-  <div class="card">
+    <div class="card">
       <!-- Card header -->
       <div class="card-header pb-0">
         <div class="d-lg-flex">
@@ -65,56 +73,51 @@
             <div class="col-md-3">
               <button type="submit" class="btn btn-sm btn-primary" id="search">Search</button>
             </div>
+            <div class="col">
+              <label for="" class="font-weight-bold">Game Type</label>
+              <br>
+              <button type="button" class="btn btn-sm btn-primary">All</button>
+              @foreach ($gameTypes as $type)
+                <button type="button" class="btn btn-sm" id="product">{{$type->name}}</button>
+              @endforeach
+            </div>
         </form>
-        
       </div>
     </div>
-     
-      
-      <div class="table-responsive">
-        <table class="table table-flush" id="users-search">
-          <thead class="thead-light">
-            <th>PlayerName</th>
-            <th>Total Bet</th>
-            <th>Total Valid</th>
-            <th>Win/Lose</th>
-            <th>Action</th>
-          </thead>
-          <tbody>\
-            {{-- kzt --}}
-            @if(isset($report))
-            @if(count($report)>0)
-            @foreach ($report as $res)
-              <tr>
-                <td>{{$res->user_name}}</td>
-                <td>{{ $res->total_bet_amount}}</td>
-                <td>{{ $res->total_valid_amount}}</td>
-                  @if($res->total_transaction_amount > 0)
-                    <td class="text-sm text-success font-weight-bold">{{$res->total_transaction_amount}}</td>
-                    @else
-                    <td class="text-sm text-danger font-weight-bold">{{$res->total_transaction_amount}}</td>
-                    @endif
-                    <td>
-                <a href="{{ route('admin.report.show', $res->user_id) }}" data-bs-toggle="tooltip" data-bs-original-title="View Report" class="btn btn-info btn-sm">
-                  <i class="fas fa-right-left text-white me-1"></i>
-                  View
-                </a>
-                </td>
-              </tr>
-            @endforeach
-            @else
-            <tr>
-              <td col-span=8>
-                There was no Agents.
-              </td>
-            </tr>
-            @endif
-            @endif
-          </tbody>
-        </table>
-      </div>
+
+
+    <div class="table-responsive">
+      <table class="table table-flush" id="users-search">
+        <thead class="thead-light bg-gradient-info  ">
+          <tr>
+            <th rowspan="2" class="text-white">PlayerName</th>
+            <th rowspan="2" class="text-white">Total Bet</th>
+            <th rowspan="2" class="text-white">Total Valid</th>
+            <th colspan="3" class="text-white">Member</th>
+            <th colspan="3" class="text-white">Agent</th>
+            <th rowspan="2" class="text-white">Win/Lose</th>
+            <th rowspan="2" class="text-white">Action</th>
+          </tr>
+          <tr>
+            <th class="text-white">Win/Lose</th>
+            <th class="text-white">Com</th>
+            <th class="text-white">Total</th>
+            <th class="text-white">Win/Lose</th>
+            <th class="text-white">Com</th>
+            <th class="text-white">Total</th>
+          </tr>
+        </thead>
+        <tbody>\
+          <tr>
+            <td>
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
+</div>
 </div>
 @endsection
 @section('scripts')

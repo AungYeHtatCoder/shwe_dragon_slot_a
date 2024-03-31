@@ -36,7 +36,8 @@ class User extends Authenticatable implements Wallet
         'max_score',
         'agent_id',
         'status',
-        'type'
+        'type',
+        'is_changed_password'
     ];
 
     protected $dispatchesEvents = [

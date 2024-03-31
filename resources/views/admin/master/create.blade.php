@@ -87,15 +87,7 @@
     <div class="col-12 col-md-8 mx-auto">
       <div class="card">
         <!-- Card header -->
-        <div class="card-header pb-0">
-          <div class="d-lg-flex">
-              <h5>
-                Master ID : 
-                <span>{{ Auth::user()->user_name }}</span>
-
-              </h5>
-            </div>
-        </div>
+          
         <div class="card-header pb-0">
           <div class="d-lg-flex">
             <div>
@@ -121,13 +113,7 @@
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
             </div>
-            <div class="custom-form-group">
-              <label for="title">Password <span class="text-danger">*</span></label>
-              <input type="text"  name="password" class="form-control" value="{{old('password')}}" placeholder="6-20 characters without spacing">
-              @error('password')
-              <span class="text-danger d-block">*{{ $message }}</span>
-              @enderror
-            </div>
+            
             <div class="custom-form-group">
               <label for="title">Master Name <span class="text-danger">*</span></label>
               <input type="text"  name="name" class="form-control" value="{{old('name')}}" placeholder="6-20 characters without spacing">
@@ -136,7 +122,14 @@
               @enderror
             </div>
             <div class="custom-form-group">
-              <label for="title">Phone No <span class="text-danger">*</span></label>
+              <label for="title">Password <span class="text-danger">*</span></label>
+              <input type="text"  name="password" class="form-control" value="{{old('password')}}" placeholder="6-20 characters without spacing">
+              @error('password')
+              <span class="text-danger d-block">*{{ $message }}</span>
+              @enderror
+            </div>
+            <div class="custom-form-group">
+              <label for="title">Phone No</label>
               <input type="text"  name="phone" class="form-control" value="{{old('phone')}}">
               @error('phone')
               <span class="text-danger d-block">*{{ $message }}</span>
@@ -144,17 +137,17 @@
             </div>
 
             <div class="custom-form-group">
-              <p>Max Score : </p>
-              <p class="badge badge-dark">1.00</p>
+              <label>Max Score : </label>
+              <span class="badge badge-sm bg-gradient-success">{{auth()->user()->balanceFloat}}</span>
             </div>
             <div class="custom-form-group">
-              <label for="title">Max Score <span class="text-danger">*</span></label>
+              <label for="title">Score</label>
               <input type="text"  name="max_score" class="form-control" value="{{old('max_score')}}" placeholder="0.00">
               @error('max_score')
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
             </div>
-            {{-- active and inactive with dropdown --}} 
+            {{-- active and inactive with dropdown --}}
             <div class="custom-form-group">
             <label for="title">Status <span class="text-danger">*</span></label>
             <div class="custom-select-wrapper">
@@ -170,7 +163,7 @@
 
            
             <div class="custom-form-group">
-              <button class="btn btn-info" type="button" id="resetFormButton">Reset</button>
+              <button class="btn btn-info" type="button" id="resetFormButton">Cancel</button>
 
               <button type="submit" class="btn btn-primary" type="button">Submit</button>
             </div>

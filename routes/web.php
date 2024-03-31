@@ -20,3 +20,5 @@ Route::get('/profile', [HomeController::class, 'profile'])->name('profile');
 Route::get('/login', [LoginController::class, 'showLogin'])->name('showLogin');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('logout',[LoginController::class,'logout'])->name('logout');
+Route::get('get-change-password', [LoginController::class, 'changePassword'])->name('getChangePassword');
+Route::post('update-password/{user}', [LoginController::class, 'updatePassword'])->name('updatePassword');

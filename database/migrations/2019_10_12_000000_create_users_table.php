@@ -15,14 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('user_name')->unique();
             $table->string('name');
-            $table->string('phone')->unique();
+            $table->string('phone')->nullable();
             $table->string('email')->nullable()->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('profile', 2000)->nullable();
             $table->integer('balance')->default(0);
             $table->decimal('max_score')->default(0.00);
-            $table->integer('status')->default(1);
+            $table->integer('status')->default(0);
             $table->unsignedBigInteger('agent_id')->nullable();
             $table->rememberToken();
             $table->timestamps();

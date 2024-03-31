@@ -83,7 +83,7 @@ class PlayerController extends Controller
                  [
                 'password' => Hash::make($inputs['password']),
                 'agent_id' => Auth()->user()->id,
-                'status' => 1,
+                'status' => 0,
                 // Set 'max_score' to request value or default to '0.00' if not present
                 //'max_score' => $request->has('max_score') ? $request->max_score : '0.00',
                 'max_score' => $request->max_score ?? '0.00',
@@ -264,28 +264,6 @@ class PlayerController extends Controller
 
             return redirect()->back()->with('error', $e->getMessage());
         }
-    }
-
-    public function getTransferDetail($id)
-    {
-        abort_if(
-            !$this->ifChildOfParent(request()->user()->id, $id),
-            Response::HTTP_FORBIDDEN,
-            '403 Forbidden |You cannot  Access this page because you do not have permission'
-        );
-
-        $transfer_detail = Transfer::where('from_id', $id)
-            ->orWhere('to_id', $id)
-            ->get();
-
-        return view('admin.player.transfer_detail', compact('transfer_detail'));
-    }
-
-    public function logs($id)
-    {
-        $logs = UserLog::with('user')->where('user_id', $id)->get();
-
-        return view('admin.player.logs', compact('logs'));
     }
 
     private function generateRandomString()

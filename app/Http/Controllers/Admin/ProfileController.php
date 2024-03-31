@@ -118,14 +118,11 @@ class ProfileController extends Controller
     public function updatePassword(Request $request, User $user)
     {
         try {
-
             $request->validate([
                 'password' => 'required|min:6|confirmed',
-
             ]);
-
             $user->update([
-                'password' => Hash::make($request->password)
+                'password' => Hash::make($request->password),
             ]);
             return redirect()->back()->with('success', "Password has been Updated.");
         } catch (Exception $e) {

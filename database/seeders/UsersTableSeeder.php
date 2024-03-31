@@ -17,13 +17,13 @@ class UsersTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin = $this->createUser(UserType::Admin, "Owner", "MW898787", "09123456789");
+        $admin = $this->createUser(UserType::Admin, "Owner", "Owner898787", "09123456789");
         (new WalletService())->deposit($admin, 10 * 100_000, TransactionName::CapitalDeposit);
 
-        $master = $this->createUser(UserType::Master, "Master 1", "MW898437", "09112345678", $admin->id);
+        $master = $this->createUser(UserType::Master, "Master 1", "M898437", "09112345678", $admin->id);
         (new WalletService())->transfer($admin, $master, 8 * 100_000, TransactionName::CreditTransfer);
 
-        $agent_1 = $this->createUser(UserType::Agent, "Agent 1", "MW898737", "09112345674", $master->id);
+        $agent_1 = $this->createUser(UserType::Agent, "Agent 1", "A898737", "09112345674", $master->id);
         (new WalletService())->transfer($master, $agent_1, 5 * 100_000, TransactionName::CreditTransfer);
 
         $player_1 = $this->createUser(UserType::Player, "Player 1", "MW111111", "09111111111", $agent_1->id);
@@ -38,10 +38,10 @@ class UsersTableSeeder extends Seeder
         $player_4 = $this->createUser(UserType::Player, "Player 4", "MW444444", "09444444444", $agent_1->id);
         (new WalletService())->transfer($agent_1, $player_4, 30000, TransactionName::CreditTransfer);
 
-        $player_5 = $this->createUser(UserType::Player, "Player 5", "MW555555", "09555555555", $agent_1->id);
+        $player_5 = $this->createUser(UserType::Player, "Player 5", "W555555", "09555555555", $agent_1->id);
         (new WalletService())->transfer($agent_1, $player_5, 30000, TransactionName::CreditTransfer);
 
-        $player_6 = $this->createUser(UserType::Player, "Player 6", "MW666666", "09666666666", $agent_1->id);
+        $player_6 = $this->createUser(UserType::Player, "Player 6", "W666666", "09666666666", $agent_1->id);
         (new WalletService())->transfer($agent_1, $player_6, 30000, TransactionName::CreditTransfer);
 
         $player_7 = $this->createUser(UserType::Player, "Player 7", "MW7777777", "09777777777", $agent_1->id);
@@ -63,6 +63,7 @@ class UsersTableSeeder extends Seeder
             'password'       => Hash::make('password'),
             'agent_id'      => $parent_id,
             'status'         => 1,
+            'is_changed_password' => 1,
             'type' => $type->value
         ]);
     }

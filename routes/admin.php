@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReportController;
-use App\Http\Controllers\Admin\GameController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\PaymentController;
@@ -14,6 +13,7 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\Agent\AgentController;
 use App\Http\Controllers\Admin\GameTypeProductController;
 use App\Http\Controllers\Admin\GetBetDetailController;
+use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\Master\MasterController;
 use App\Http\Controllers\Admin\Player\PlayerController;
 use App\Http\Controllers\Admin\TransferLog\TransferLogController;
@@ -23,9 +23,13 @@ Route::group([
     'prefix' => 'admin', 'as' => 'admin.',
     'middleware' => ['auth', 'checkBanned']
 ], function () {
+    Route::post('test', function () {
+        dd('here');
+    })->name('test');
 
     Route::post('balance-up', [HomeController::class, 'balanceUp'])->name('balanceUp');
-
+    Route::get('logs/{id}', [HomeController::class, 'logs'])
+        ->name('logs');
     // Permissions
     Route::resource('permissions', PermissionController::class);
     // Roles
@@ -41,16 +45,11 @@ Route::group([
     Route::get('player/cash-out/{player}', [PlayerController::class, 'getCashOut'])->name('player.getCashOut');
     Route::post('player/cash-out/update/{player}', [PlayerController::class, 'makeCashOut'])
         ->name('player.makeCashOut');
-    Route::get('player/transer-detail/{player}', [PlayerController::class, 'getTransferDetail'])
-        ->name('player.getTransferDetail');
-    Route::get('player/logs/{id}', [PlayerController::class, 'logs'])
-        ->name('player.logs');
 
 
     Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::post('profile/change-password/{user}', [ProfileController::class, 'updatePassword'])
         ->name('profile.updatePassword');
-
 
 
     // user profile route get method
@@ -63,9 +62,9 @@ Route::group([
     Route::resource('text', BannerTextController::class);
     Route::resource('/promotions', PromotionController::class);
     Route::resource('/payments', PaymentController::class);
-    Route::get('gametypes', [GameTypeProductController::class,'index'])->name('gametypes.index');
-    Route::get('gametypes/{game_type_id}/product/{product_id}', [GameTypeProductController::class,'edit'])->name('gametypes.edit');
-    Route::post('gametypes/{game_type_id}/product/{product_id}', [GameTypeProductController::class,'update'])->name('gametypes.update');
+    Route::get('gametypes', [GameTypeProductController::class, 'index'])->name('gametypes.index');
+    Route::get('gametypes/{game_type_id}/product/{product_id}', [GameTypeProductController::class, 'edit'])->name('gametypes.edit');
+    Route::post('gametypes/{game_type_id}/product/{product_id}', [GameTypeProductController::class, 'update'])->name('gametypes.update');
 
     Route::resource('agent', AgentController::class);
     Route::get('agent-cash-in/{id}', [AgentController::class, 'getCashIn'])->name('agent.getCashIn');
@@ -73,8 +72,6 @@ Route::group([
     Route::get('agent/cash-out/{id}', [AgentController::class, 'getCashOut'])->name('agent.getCashOut');
     Route::post('agent/cash-out/update/{id}', [AgentController::class, 'makeCashOut'])
         ->name('agent.makeCashOut');
-    Route::get('agent/transer-detail/{id}', [AgentController::class, 'getTransferDetail'])
-        ->name('agent.getTransferDetail');
     Route::put('agent/{id}/ban', [AgentController::class, 'banAgent'])->name('agent.ban');
     Route::get('agent-changepassword/{id}', [AgentController::class, 'getChangePassword'])->name('agent.getChangePassword');
     Route::post('agent-changepassword/{id}', [AgentController::class, 'makeChangePassword'])->name('agent.makeChangePassword');
@@ -85,8 +82,6 @@ Route::group([
     Route::get('master/cash-out/{id}', [MasterController::class, 'getCashOut'])->name('master.getCashOut');
     Route::post('master/cash-out/update/{id}', [MasterController::class, 'makeCashOut'])
         ->name('master.makeCashOut');
-    Route::get('master/transer-detail/{id}', [MasterController::class, 'getTransferDetail'])
-        ->name('master.getTransferDetail');
     Route::put('master/{id}/ban', [MasterController::class, 'banMaster'])->name('master.ban');
     Route::get('master-changepassword/{id}', [MasterController::class, 'getChangePassword'])->name('master.getChangePassword');
     Route::post('master-changepassword/{id}', [MasterController::class, 'makeChangePassword'])->name('master.makeChangePassword');
@@ -102,8 +97,7 @@ Route::group([
         Route::get('index', [ReportController::class, 'index'])->name('report.index');
         Route::get('show/{user_id}', [ReportController::class, 'show'])->name('report.show');
         Route::get('detail', [ReportController::class, 'detail'])->name('report.detail');
-
-        });
+    });
 
     // get bet deatil 
     Route::get('get-bet-detail', [GetBetDetailController::class, 'index'])->name('getBetDetail');
