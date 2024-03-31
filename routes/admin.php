@@ -98,6 +98,7 @@ Route::group([
     Route::get('transer-log', [TransferLogController::class, 'index'])->name('transferLog');
     Route::group(['prefix' => 'report'], function () {
         Route::get('index', [ReportController::class, 'index'])->name('report.index');
+        Route::get('index-v2', [ReportController::class, 'indexV2'])->name('report.indexV2');
         Route::get('show/{user_id}', [ReportController::class, 'show'])->name('report.show');
         Route::get('detail', [ReportController::class, 'detail'])->name('report.detail');
     });
