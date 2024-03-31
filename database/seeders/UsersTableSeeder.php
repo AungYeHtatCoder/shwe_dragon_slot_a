@@ -17,16 +17,16 @@ class UsersTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin = $this->createUser(UserType::Admin, "Owner", "MW898787", "09123456789");
+        $admin = $this->createUser(UserType::Admin, "Owner", "Owner898787", "09123456789");
         (new WalletService())->deposit($admin, 10 * 100_000, TransactionName::CapitalDeposit);
 
-        $master = $this->createUser(UserType::Master, "Master 1", "MW898437", "09112345678", $admin->id);
+        $master = $this->createUser(UserType::Master, "Master 1", "M898437", "09112345678", $admin->id);
         (new WalletService())->transfer($admin, $master, 8 * 100_000, TransactionName::CreditTransfer);
 
-        $agent_1 = $this->createUser(UserType::Agent, "Agent 1", "M898737", "09112345674", $master->id);
+        $agent_1 = $this->createUser(UserType::Agent, "Agent 1", "A898737", "09112345674", $master->id);
         (new WalletService())->transfer($master, $agent_1, 5 * 100_000, TransactionName::CreditTransfer);
 
-        $player_1 = $this->createUser(UserType::Player, "Player 1", "W111111", "09111111111", $agent_1->id);
+        $player_1 = $this->createUser(UserType::Player, "Player 1", "MW111111", "09111111111", $agent_1->id);
         (new WalletService())->transfer($agent_1, $player_1, 30000, TransactionName::CreditTransfer);
         
         $player_2 = $this->createUser(UserType::Player, "Player 2", "W222222", "09222222222", $agent_1->id);
