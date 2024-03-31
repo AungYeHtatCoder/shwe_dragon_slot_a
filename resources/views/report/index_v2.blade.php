@@ -65,11 +65,10 @@
                             @if ($child_user_type->value == 40)
                                 <a class="text-primary" href="#">
                                     {{ $report->user->user_name }}</a>
-                        </td>
-                    @else
-                        <td><a class="text-primary"
-                                href="{{ route('admin.report.indexV2', ['user_name' => $report->user->user_name]) }}">
-                                {{ $report->user->user_name }}</a>
+                            @else
+                                <a class="text-primary"
+                                    href="{{ route('admin.report.indexV2', ['user_name' => $report->user->user_name]) }}">
+                                    {{ $report->user->user_name }}</a>
                         </td>
                 @endif
                 <td>{{ $report->turnover / 100 }}</td>
