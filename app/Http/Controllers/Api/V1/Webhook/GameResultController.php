@@ -55,6 +55,7 @@ class GameResultController extends Controller
                     $seamless_transaction->transaction_amount,
                     $seamless_transaction->rate,
                     [
+                        "wager_id" => $seamless_transaction->wager_id,
                         "event_id" => $request->getMessageID(),
                         "seamless_transaction_id" => $seamless_transaction->id,
                     ]
