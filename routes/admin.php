@@ -45,7 +45,10 @@ Route::group([
     Route::get('player/cash-out/{player}', [PlayerController::class, 'getCashOut'])->name('player.getCashOut');
     Route::post('player/cash-out/update/{player}', [PlayerController::class, 'makeCashOut'])
         ->name('player.makeCashOut');
-
+    Route::get('player-changepassword/{id}', [PlayerController::class, 'getChangePassword'])->name('player.getChangePassword');
+    Route::post('player-changepassword/{id}', [PlayerController::class, 'makeChangePassword'])->name('player.makeChangePassword');
+    
+    
 
     Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::post('profile/change-password/{user}', [ProfileController::class, 'updatePassword'])
