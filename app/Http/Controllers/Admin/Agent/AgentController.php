@@ -75,7 +75,7 @@ class AgentController extends Controller
             [
                 'password' => Hash::make($inputs['password']),
                 'agent_id' => Auth()->user()->id,
-                'status' => 1,
+                'status' => 0,
                 'max_score' => $request->max_score ?? '0.00',
                 'type' => 'agent'
             ]
@@ -309,7 +309,8 @@ class AgentController extends Controller
 
         $agent = User::find($id);
         $agent->update([
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'status' => 1
         ]);
 
         return redirect()->back()
