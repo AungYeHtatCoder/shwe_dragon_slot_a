@@ -2,20 +2,30 @@
 
 namespace App\Enums;
 
-enum UserType: string
+enum UserType: int
 {
-    case Admin = "admin";
-    case Master = "master";
-    case Agent = "agent";
-    case Player = "player";
+    case Admin = 10;
+    case Master = 20;
+    case Agent = 30;
+    case Player = 40;
 
-    public function rankPoint(): string
+    public static function usernameLength(UserType $type)
     {
-        return match ($this) {
-            self::Admin => 10,
-            self::Master => 20,
-            self::Agent => 30,
-            self::Player => 40,
+        return match ($type) {
+            self::Admin => 1,
+            self::Master => 2,
+            self::Agent => 3,
+            self::Player => 4,
+        };
+    }
+
+    public static function childUserType(UserType $type)
+    {
+        return match ($type) {
+            self::Admin => self::Master,
+            self::Master => self::Agent,
+            self::Agent => self::Player,
+            self::Player => self::Player
         };
     }
 }
