@@ -61,8 +61,7 @@ class MasterController extends Controller
             [
                 'password' => Hash::make($inputs['password']),
                 'agent_id' => Auth()->user()->id,
-                'status' => 0,
-                'max_score' => $request->max_score ?? '0.00',
+               'max_score' => $request->max_score ?? '0.00',
                 'type' => 'master'
             ]
         );
@@ -303,12 +302,11 @@ class MasterController extends Controller
         $master = User::find($id);
         $master->update([
             'password' => Hash::make($request->password),
-            'status' => 1
         ]);
 
         return redirect()->back()
             ->with('success', 'Master Change Password successfully')
             ->with('password', $request->password)
-            ->with('username', $master->name);
+            ->with('username', $master->user_name);
     }
 }

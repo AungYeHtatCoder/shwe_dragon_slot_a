@@ -75,7 +75,6 @@ class AgentController extends Controller
             [
                 'password' => Hash::make($inputs['password']),
                 'agent_id' => Auth()->user()->id,
-                'status' => 0,
                 'max_score' => $request->max_score ?? '0.00',
                 'type' => 'agent'
             ]
@@ -290,7 +289,6 @@ class AgentController extends Controller
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
 
-
         $agent = User::find($id);
         return view('admin.agent.change_password', compact('agent'));
     }
@@ -310,12 +308,11 @@ class AgentController extends Controller
         $agent = User::find($id);
         $agent->update([
             'password' => Hash::make($request->password),
-            'status' => 1
         ]);
 
         return redirect()->back()
             ->with('success', 'Agent Change Password successfully')
             ->with('password', $request->password)
-            ->with('username', $agent->name);
+            ->with('username', $agent->user_name);
     }
 }

@@ -98,13 +98,13 @@
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
             </div>
-            <div class="custom-form-group">
+            <!-- <div class="custom-form-group">
               <label for="title">Phone No <span class="text-danger">*</span></label>
               <input type="text"  name="phone" class="form-control" value="{{$player->phone}}">
               @error('phone')
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
-            </div>
+            </div> -->
       <div class="custom-form-group">
        <button class="btn btn-primary" type="submit">Update</button>
       </div>

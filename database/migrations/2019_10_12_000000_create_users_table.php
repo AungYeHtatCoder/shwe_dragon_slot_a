@@ -22,7 +22,8 @@ return new class extends Migration
             $table->string('profile', 2000)->nullable();
             $table->integer('balance')->default(0);
             $table->decimal('max_score')->default(0.00);
-            $table->integer('status')->default(0);
+            $table->integer('status')->default(1);
+            $table->integer("is_changed_password")->default(0);
             $table->unsignedBigInteger('agent_id')->nullable();
             $table->rememberToken();
             $table->timestamps();

@@ -266,6 +266,29 @@ class PlayerController extends Controller
         }
     }
 
+    public function getChangePassword($id)
+    {
+        $player = User::find($id);
+        return view('admin.player.change_password', compact('player'));
+    }
+
+    public function makeChangePassword($id, Request $request)
+    {
+        $request->validate([
+            'password' => 'required|min:6|confirmed'
+        ]);
+
+        $player = User::find($id);
+        $player->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->back()
+            ->with('success', 'Player Change Password successfully')
+            ->with('password', $request->password)
+            ->with('username', $player->user_name);
+    }
+
     private function generateRandomString()
     {
         $randomNumber = mt_rand(10000000, 99999999);

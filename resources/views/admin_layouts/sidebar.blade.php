@@ -73,12 +73,12 @@
               <span class="sidenav-normal  ms-2  ps-1"> Banner Text </span>
             </a>
           </li>
-          <li class="nav-item ">
+          <!-- <li class="nav-item ">
             <a class="nav-link text-white " href="">
               <span class="sidenav-mini-icon"> <i class="fa-solid fa-gamepad"></i> </span>
               <span class="sidenav-normal  ms-2  ps-1"> Bonus </span>
             </a>
-          </li>
+          </li> -->
           <li class="nav-item ">
             <a class="nav-link text-white " href="{{ route('admin.promotions.index') }}">
               <span class="sidenav-mini-icon"> <i class="fas fa-gift"></i> </span>
@@ -95,7 +95,7 @@
       </div>
     </li>
     @endcan
-    @can('admin_access')
+    <!-- @can('admin_access')
     <li class="nav-item">
       <a data-bs-toggle="collapse" href="#profileExample" class="nav-link text-white" aria-controls="pagesExamples" role="button" aria-expanded="false">
         <i class="material-icons-round {% if page.brand == 'RTL' %}ms-2{% else %} me-2{% endif %}">content_paste</i>
@@ -125,7 +125,7 @@
         </ul>
       </div>
     </li>
-    @endcan
+    @endcan -->
 
     <li class="nav-item">
       <a href="{{ route('logout') }}" onclick="event.preventDefault();

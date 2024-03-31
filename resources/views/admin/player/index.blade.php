@@ -75,7 +75,9 @@
                   @csrf
                   @method('PUT')
                 </form>
-
+                <a class="me-1" href="{{ route('admin.player.getChangePassword', $user->id) }}" data-bs-toggle="tooltip" data-bs-original-title="Change Password">
+                  <i class="fas fa-lock text-info" style="font-size: 20px;"></i>
+                </a>
                 <a class="me-1" href="{{ route('admin.player.edit', $user->id) }}" data-bs-toggle="tooltip" data-bs-original-title="Edit Player">
                   <i class="fas fa-pen-to-square text-info" style="font-size: 20px;"></i>
                 </a>

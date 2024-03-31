@@ -137,13 +137,13 @@
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
             </div>
-            <div class="custom-form-group">
+            <!-- <div class="custom-form-group">
               <label for="title">Phone No <span class="text-danger">*</span></label>
               <input type="text"  name="phone" class="form-control" value="{{old('phone')}}">
               @error('phone')
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
-            </div>
+            </div> -->
 
             <div class="custom-form-group">
               <p>Max Score : </p>
@@ -199,7 +199,7 @@
 <script>
   var errorMessage = @json(session('error'));
   var successMessage = @json(session('success'));
-  var url = 'https://maxwinmyanmar.com/';
+  var url = 'https://maxwinmyanmar.com/login';
   var name = @json(session('username'));
   var pw = @json(session('password'));
 
