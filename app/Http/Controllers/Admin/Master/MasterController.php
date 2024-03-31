@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Master;
 
 use App\Enums\TransactionName;
+use App\Enums\UserType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MasterRequest;
 use App\Http\Requests\TransferLogRequest;
@@ -61,8 +62,8 @@ class MasterController extends Controller
             [
                 'password' => Hash::make($inputs['password']),
                 'agent_id' => Auth()->user()->id,
-               'max_score' => $request->max_score ?? '0.00',
-                'type' => 'master'
+                'max_score' => $request->max_score ?? '0.00',
+                'type' => UserType::Master
             ]
         );
         $user = User::create($userPrepare);

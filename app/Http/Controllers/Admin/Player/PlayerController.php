@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Player;
 
 use App\Enums\TransactionName;
+use App\Enums\UserType;
 use Exception;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -87,7 +88,7 @@ class PlayerController extends Controller
                 // Set 'max_score' to request value or default to '0.00' if not present
                 //'max_score' => $request->has('max_score') ? $request->max_score : '0.00',
                 'max_score' => $request->max_score ?? '0.00',
-                'type' => 'player'
+                'type' => UserType::Player
                 ]
             );
             Log::info('User prepared: ' . json_encode($userPrepare));
