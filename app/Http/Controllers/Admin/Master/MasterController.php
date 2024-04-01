@@ -56,6 +56,9 @@ class MasterController extends Controller
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
         $admin = Auth::user();
+
+        $user_name = session()->get("user_name");
+
         $inputs = $request->validated();
         if (isset($inputs['amount']) && $inputs['amount'] > $admin->balanceFloat) {
             throw ValidationException::withMessages([
@@ -66,6 +69,7 @@ class MasterController extends Controller
         $userPrepare = array_merge(
             $inputs,
             [
+                'user_name' => $user_name,
                 'password' => Hash::make($inputs['password']),
                 'agent_id' => Auth()->user()->id,
                 'type' => UserType::Master
@@ -78,6 +82,7 @@ class MasterController extends Controller
         if (isset($inputs['amount'])) {
             app(WalletService::class)->transfer($admin, $user, $inputs['amount'], TransactionName::CreditTransfer);
         }
+        session()->forget("user_name");
 
         return redirect()->back()
             ->with('success', 'Master created successfully')
@@ -95,9 +100,11 @@ class MasterController extends Controller
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
-        $agent_name = $this->generateRandomString();
+        $user_name = $this->generateRandomString();
 
-        return view('admin.master.create', compact('agent_name'));
+        session()->put("user_name", $user_name);
+
+        return view('admin.master.create', compact('user_name' , 'user_name'));
     }
 
     private function generateRandomString()

@@ -26,7 +26,7 @@ class WagerController extends Controller
 
         $wagers = $user->wagers()->with(["transactions"])->whereBetween("created_at", [$from, $to])
         ->latest()
-        ->get();
+        ->paginate();
 
         return $this->success(WagerResource::collection($wagers));
     }

@@ -20,6 +20,12 @@
         <span class="sidenav-normal  ms-2  ps-1"> Win/lose Report </span>
       </a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link text-white " href="{{ route('admin.report.indexV2')}}">
+        <span class="sidenav-mini-icon"> <i class="fa-solid fa-chart-column"></i> </span>
+        <span class="sidenav-normal  ms-2  ps-1"> Win/lose Report v2</span>
+      </a>
+    </li>
     @can('master_index')
     <li class="nav-item">
       <a class="nav-link text-white " href="{{ route('admin.master.index')}}">

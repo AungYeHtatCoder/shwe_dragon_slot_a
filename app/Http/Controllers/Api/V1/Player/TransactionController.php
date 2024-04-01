@@ -26,7 +26,7 @@ class TransactionController extends Controller
 
         $transactions = $user->transactions()->whereBetween("created_at", [$from, $to])
         ->orderBy("id", "DESC")
-        ->get();
+        ->paginate();
 
         return $this->success(TransactionResource::collection($transactions));
     }
