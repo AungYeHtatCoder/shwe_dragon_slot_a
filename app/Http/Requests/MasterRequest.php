@@ -26,6 +26,8 @@ class MasterRequest extends FormRequest
             'name' => 'required|min:3|string',
             'phone' => ['nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'unique:users,phone'],
             'password' => 'required|min:6',
+            'amount' => 'nullable|numeric',
+
         ];
     }
 }

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Hash;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
 class AgentController extends Controller
@@ -69,24 +70,34 @@ class AgentController extends Controller
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
-
+        $master = Auth::user();
         $inputs = $request->validated();
-        $userPrepare  = array_merge(
+        if (isset($inputs['amount']) && $inputs['amount'] > $master->balanceFloat) {
+            throw ValidationException::withMessages([
+                'amount' => 'Insufficient balance for transfer.',
+            ]);
+        }
+
+        $userPrepare = array_merge(
             $inputs,
             [
                 'password' => Hash::make($inputs['password']),
                 'agent_id' => Auth()->user()->id,
-                'max_score' => $request->max_score ?? '0.00',
-                'type' => UserType::Agent
+                'type' => UserType::Master
             ]
         );
-        $user = User::create($userPrepare);
-        $user->roles()->sync(self::AGENT_ROLE);
+        
+        $agent = User::create($userPrepare);
+        $agent->roles()->sync(self::AGENT_ROLE);
 
+        if (isset($inputs['amount'])) {
+            app(WalletService::class)->transfer($master, $agent, $inputs['amount'], TransactionName::CreditTransfer);
+        }
+        
         return redirect()->back()
             ->with('success', 'Agent created successfully')
             ->with('password', $request->password)
-            ->with('username', $user->user_name);
+            ->with('username', $agent->user_name);
     }
 
     /**

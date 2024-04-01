@@ -20,12 +20,14 @@ use App\Models\Admin\UserLog;
 use App\Models\Transfer;
 use App\Services\WalletService;
 use Illuminate\Http\Client\Request as ClientRequest;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
 
 class PlayerController extends Controller
 {
 
+    private const PLAYER_ROLE = 4;
     /**
      * Display a listing of the resource.
      */
@@ -74,34 +76,38 @@ class PlayerController extends Controller
 
         try {
             // Validate input
+            $agent = Auth::user();
             $inputs = $request->validated();
+
+            if (isset($inputs['amount']) && $inputs['amount'] > $agent->balanceFloat) {
+                throw ValidationException::withMessages([
+                    'amount' => 'Insufficient balance for transfer.',
+                ]);
+            }
+
             $userPrepare = array_merge(
                 $inputs,
-                // [
-                //     'password' => Hash::make($inputs['password']),
-                //     'agent_id' => Auth()->user()->id
-                // ]
-                 [
-                'password' => Hash::make($inputs['password']),
-                'agent_id' => Auth()->user()->id,
-                // Set 'max_score' to request value or default to '0.00' if not present
-                //'max_score' => $request->has('max_score') ? $request->max_score : '0.00',
-                'max_score' => $request->max_score ?? '0.00',
-                'type' => UserType::Player
+                [
+                    'password' => Hash::make($inputs['password']),
+                    'agent_id' => Auth()->user()->id,
+                    'type' => UserType::Player
                 ]
             );
             Log::info('User prepared: ' . json_encode($userPrepare));
 
+            $player = User::create($userPrepare);
+            $player->roles()->sync(self::PLAYER_ROLE);
 
-            // Create user in local database
-            $user = User::create($userPrepare);
-            $user->roles()->sync('4');
+            if (isset($inputs['amount'])) {
+                app(WalletService::class)->transfer($agent, $player, $inputs['amount'], TransactionName::CreditTransfer);
+            }
 
             return redirect()->back()
                 ->with('success', 'Player created successfully')
                 ->with('url', env('APP_URL'))
                 ->with('password', $request->password)
-                ->with('username', $user->user_name);
+                ->with('username', $player->user_name);
+                
         } catch (Exception $e) {
             Log::error('Error creating user: ' . $e->getMessage());
             return redirect()->back()->with('error', $e->getMessage());

@@ -137,13 +137,13 @@
             </div>
 
             <div class="custom-form-group">
-              <label>Max Score : </label>
+              <label>Max Balance : </label>
               <span class="badge badge-sm bg-gradient-success">{{auth()->user()->balanceFloat}}</span>
             </div>
             <div class="custom-form-group">
-              <label for="title">Score</label>
-              <input type="text"  name="max_score" class="form-control" value="{{old('max_score')}}" placeholder="0.00">
-              @error('max_score')
+              <label for="title">Amount</label>
+              <input type="text"  name="amount" class="form-control" value="{{old('amount')}}" placeholder="0.00">
+              @error('amount')
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
             </div>

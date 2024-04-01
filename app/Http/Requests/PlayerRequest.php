@@ -25,6 +25,7 @@ class PlayerRequest extends FormRequest
             'user_name' => 'required', 'string', 'unique:users,user_name',
             'name' => 'required|min:3|string',
             'password' => 'required|min:6',
+            'amount' => 'nullable|numeric',
         ];
     }
 }

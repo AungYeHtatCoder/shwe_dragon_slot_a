@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
 class MasterController extends Controller
@@ -54,20 +55,29 @@ class MasterController extends Controller
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
-
-
+        $admin = Auth::user();
         $inputs = $request->validated();
+        if (isset($inputs['amount']) && $inputs['amount'] > $admin->balanceFloat) {
+            throw ValidationException::withMessages([
+                'amount' => 'Insufficient balance for transfer.',
+            ]);
+        }
+
         $userPrepare = array_merge(
             $inputs,
             [
                 'password' => Hash::make($inputs['password']),
                 'agent_id' => Auth()->user()->id,
-                'max_score' => $request->max_score ?? '0.00',
                 'type' => UserType::Master
             ]
         );
+        
         $user = User::create($userPrepare);
         $user->roles()->sync(self::MASTER_ROLE);
+
+        if (isset($inputs['amount'])) {
+            app(WalletService::class)->transfer($admin, $user, $inputs['amount'], TransactionName::CreditTransfer);
+        }
 
         return redirect()->back()
             ->with('success', 'Master created successfully')
