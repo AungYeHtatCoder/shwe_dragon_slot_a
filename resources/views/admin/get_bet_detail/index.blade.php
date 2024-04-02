@@ -11,10 +11,14 @@
     appearance: none;
     /* For some browsers */
   }
-   .active-button {
-  background-color: #4CAF50; /* or any color you prefer */
-  color: white; /* optional: change text color if needed */
+
+  .active-button {
+    background-color: #4CAF50;
+    /* or any color you prefer */
+    color: white;
+    /* optional: change text color if needed */
   }
+
   #search {
     margin-top: 40px;
   }
@@ -39,69 +43,71 @@
         </div>
       </div>
       <div class="container">
-      <form action="{{ route('admin.getBetDetail') }}" method="GET">
-  <div class="row">
-    <div class="col-md-4">
-      <div class="input-group input-group-static my-3">
-        <label for="fromDate">From</label>
-        <input type="date" class="form-control" id="fromDate" name="fromDate" value="{{ request()->fromDate }}">
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="input-group input-group-static my-3">
-        <label for="toDate">To</label>
-        <input type="date" class="form-control" id="toDate" name="toDate" value="{{ request()->toDate }}">
-      </div>
-    </div>
-    <div class="col-md-4">
-      <button type="submit" class="btn btn-warning">Search</button>
-    </div>
-  </div>
-</form>
+        <form action="{{ route('admin.getBetDetail') }}" method="GET">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="input-group input-group-static my-3">
+                <label for="fromDate">From</label>
+                <input type="date" class="form-control" id="fromDate" name="fromDate" value="{{ request()->fromDate }}">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="input-group input-group-static my-3">
+                <label for="toDate">To</label>
+                <input type="date" class="form-control" id="toDate" name="toDate" value="{{ request()->toDate }}">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <button type="submit" class="btn btn-warning">Search</button>
+            </div>
+          </div>
+        </form>
         <div class="col-md-6">
-        <button type="button" class="btn btn-sm date-range-button " id="today">Today</button>
-        <button type="button" class="btn btn-sm date-range-button" id="yesterday">Yesterday</button>
-        <button type="button" class="btn btn-sm date-range-button" id="thisWeek">ThisWeek</button>
-        <button type="button" class="btn btn-sm date-range-button" id="thisMonth">ThisMonth</button>
+          <button type="button" class="btn btn-sm date-range-button " id="today">Today</button>
+          <button type="button" class="btn btn-sm date-range-button" id="yesterday">Yesterday</button>
+          <button type="button" class="btn btn-sm date-range-button" id="thisWeek">ThisWeek</button>
+          <button type="button" class="btn btn-sm date-range-button" id="thisMonth">ThisMonth</button>
+        </div>
       </div>
-      </div>
-    
+
       <div class="table-responsive">
         <table class="table table-flush" id="users-search">
           <thead class="thead-light">
-             <tr>
-                <th>ID</th>
-                <th>User</th>
-                <th>Event ID</th>
-                <th>Transaction ID</th>
-                <th>Transaction Amount</th>
-                <th>Bet Amount</th>
-                <th>Valid Amount</th>
-                <th>Status</th>
-                <th>Created At</th>
-                <th>Action</th>
+            <tr>
+              <th>ID</th>
+              <th>User</th>
+              <th>Event ID</th>
+              <th>Transaction ID</th>
+              <th>Transaction Amount</th>
+              <th>Bet Amount</th>
+              <th>Valid Amount</th>
+              <th>Status</th>
+              <th>Created At</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             @forelse ($transactions as $transaction)
             <tr>
-                <td>{{ $transaction->id }}</td>
-                <td>{{ $transaction->user->name ?? 'N/A' }}</td> {{-- Assuming the User model has a name field --}}
-                <td>{{ $transaction->seamless_event_id }}</td>
-                <td>{{ $transaction->seamless_transaction_id }}</td>
-                <td>{{ $transaction->transaction_amount }}</td>
-                <td>{{ $transaction->bet_amount }}</td>
-                <td>{{ $transaction->valid_amount }}</td>
-                <td>{{ $transaction->status }}</td>
-                <td>{{ $transaction->created_at->toFormattedDateString() }}</td>
-                 <td>
-                  <a href="{{ route('admin.getBetDetail.show', ['wagerId' => $transaction->wager_id]) }}" class="btn btn-sm btn-primary">View</a>
-                </td>
+              <td>{{ $transaction->id }}</td>
+              <td>{{ $transaction->user->name ?? 'N/A' }}</td> {{-- Assuming the User model has a name field --}}
+              <td>{{ $transaction->seamless_event_id }}</td>
+              <td>{{ $transaction->seamless_transaction_id }}</td>
+              <td>{{ $transaction->transaction_amount }}</td>
+              <td>{{ $transaction->bet_amount }}</td>
+              <td>{{ $transaction->valid_amount }}</td>
+              <td>{{ $transaction->status }}</td>
+              <td>{{ $transaction->created_at->toFormattedDateString() }}</td>
+              <td>
+                <a href="{{ route('admin.getBetDetail.show', ['wagerId' => $transaction->wager_id]) }}" class="btn btn-sm btn-primary">View</a>
+              </td>
             </tr>
             @empty
-            <tr><td colspan="9">No get bet detail found.</td></tr>
+            <tr>
+              <td colspan="9">No get bet detail found.</td>
+            </tr>
             @endforelse
-        </tbody>
+          </tbody>
         </table>
       </div>
     </div>
