@@ -20,20 +20,12 @@
         <span class="sidenav-normal  ms-2  ps-1"> Win/lose Report </span>
       </a>
     </li>
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <a class="nav-link text-white " href="{{ route('admin.report.indexV2')}}">
         <span class="sidenav-mini-icon"> <i class="fa-solid fa-chart-column"></i> </span>
         <span class="sidenav-normal  ms-2  ps-1"> Win/lose Report v2</span>
       </a>
-    </li>
-    @can('master_index')
-    <li class="nav-item">
-      <a class="nav-link text-white " href="{{ route('admin.master.index')}}">
-        <span class="sidenav-mini-icon"> <i class="fa-solid fa-user"></i> </span>
-        <span class="sidenav-normal  ms-2  ps-1">Master List</span>
-      </a>
-    </li>
-    @endcan
+    </li> -->
     @can('agent_index')
     <li class="nav-item">
       <a class="nav-link text-white " href="{{ route('admin.agent.index')}}">
@@ -79,12 +71,7 @@
               <span class="sidenav-normal  ms-2  ps-1"> Banner Text </span>
             </a>
           </li>
-          <!-- <li class="nav-item ">
-            <a class="nav-link text-white " href="">
-              <span class="sidenav-mini-icon"> <i class="fa-solid fa-gamepad"></i> </span>
-              <span class="sidenav-normal  ms-2  ps-1"> Bonus </span>
-            </a>
-          </li> -->
+         
           <li class="nav-item ">
             <a class="nav-link text-white " href="{{ route('admin.promotions.index') }}">
               <span class="sidenav-mini-icon"> <i class="fas fa-gift"></i> </span>

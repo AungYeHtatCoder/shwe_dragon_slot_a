@@ -25,11 +25,6 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'title'      => 'master_access',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
                 'title'      => 'permission_index',
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -150,42 +145,12 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'title'      => 'agent_change_password_access',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
                 'title'      => 'transfer_log',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'title'      => 'master_index',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'title'      => 'master_create',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'title'      => 'master_store',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'title'      => 'master_edit',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'title'      => 'master_update',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'title'      => 'master_show',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'title'      => 'master_delete',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

@@ -24,7 +24,7 @@ class AgentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    private const AGENT_ROLE = 3;
+    private const AGENT_ROLE = 2;
 
     public function index()
     {
@@ -36,7 +36,7 @@ class AgentController extends Controller
         //kzt
         $users = User::with('roles')
             ->whereHas('roles', function ($query) {
-                $query->where('role_id', 3);
+                $query->where('role_id', self::AGENT_ROLE);
             })
             ->where('agent_id', auth()->id())
             ->orderBy('id', 'desc')
@@ -83,7 +83,7 @@ class AgentController extends Controller
             [
                 'password' => Hash::make($inputs['password']),
                 'agent_id' => Auth()->user()->id,
-                'type' => UserType::Master
+                'type' => UserType::Admin
             ]
         );
         
@@ -145,7 +145,7 @@ class AgentController extends Controller
         $request->validate([
             'name' => 'required|min:3|unique:users,name,' . $id,
             'player_name' => 'required|string',
-            'phone' => ['sometimes', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'unique:users,phone,' . $id],
+            'phone' => ['nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'unique:users,phone,' . $id],
         ]);
 
         $user = User::find($id);
@@ -296,7 +296,7 @@ class AgentController extends Controller
     public function getChangePassword($id)
     {
         abort_if(
-            Gate::denies('master_access') || !$this->ifChildOfParent(request()->user()->id, $id),
+            Gate::denies('agent_access') || !$this->ifChildOfParent(request()->user()->id, $id),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );

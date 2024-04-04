@@ -7,8 +7,6 @@ use App\Enums\UserType;
 use Exception;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\Admin\TransferLog;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -16,10 +14,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\TransferLogRequest;
 use App\Http\Requests\PlayerRequest;
-use App\Models\Admin\UserLog;
-use App\Models\Transfer;
 use App\Services\WalletService;
-use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -27,7 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 class PlayerController extends Controller
 {
 
-    private const PLAYER_ROLE = 4;
+    private const PLAYER_ROLE = 3;
     /**
      * Display a listing of the resource.
      */
@@ -41,11 +36,12 @@ class PlayerController extends Controller
         //kzt
         $users = User::with('roles')
             ->whereHas('roles', function ($query) {
-                $query->where('role_id', 4);
+                $query->where('role_id', self::PLAYER_ROLE);
             })
             ->where('agent_id', auth()->id())
             ->orderBy('id', 'desc')
             ->get();
+            
         return view('admin.player.index', compact('users'));
     }
 
