@@ -22,10 +22,12 @@
   #search {
     margin-top: 40px;
   }
+
   #product {
     background-color: #CCDDEB;
     color: #e91e63;
   }
+
   #clear {
     margin-top: 40px;
   }
@@ -76,9 +78,9 @@
             <div class="col">
               <label for="" class="font-weight-bold">Game Type</label>
               <br>
-              <button type="button" class="btn btn-sm btn-primary">All</button>
+              <button type="button" class="btn btn-sm game-type-btn btn-primary">All</button>
               @foreach ($gameTypes as $type)
-                <button type="button" class="btn btn-sm" id="product">{{$type->name}}</button>
+              <button type="button" class="btn btn-sm game-type-btn" data-id="{{ $type->id }}">{{ $type->name }}</button>
               @endforeach
             </div>
         </form>
@@ -107,7 +109,7 @@
             <th class="text-white">Total</th>
           </tr>
         </thead>
-        <tbody>\
+        <tbody>
           <tr>
             <td>
 
@@ -129,6 +131,15 @@
       fixedHeight: true
     });
   </script> --}}
+
+<script>
+  $('.game-type-btn').on('click', function() {
+    $('.game-type-btn').removeClass('btn-primary');
+    $(this).addClass('btn-primary');
+    var gameTypeId = $(this).data('id');
+    console.log(gameTypeId);
+  });
+</script>
 <script>
   if (document.getElementById('users-search')) {
     const dataTableSearch = new simpleDatatables.DataTable("#users-search", {
