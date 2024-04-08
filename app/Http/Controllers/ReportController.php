@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
-    public function indexV2(Request $request){
+    public function indexV2(Request $request)
+    {
         // TODO: check valid tree
         $username = $request->get("user_name", auth()->user()->user_name);
 
@@ -31,8 +32,8 @@ class ReportController extends Controller
             ->paginate();
 
         return view("report.index_v2", [
-            "reports" => $reports, 
-            "parent_user_type" => $user->type, 
+            "reports" => $reports,
+            "parent_user_type" => $user->type,
             "child_user_type" => $child_user_type
         ]);
     }
@@ -46,13 +47,13 @@ class ReportController extends Controller
             DB::raw('SUM(seamless_transactions.valid_amount) as total_valid_amount'),
             DB::raw('SUM(seamless_transactions.transaction_amount) as total_transaction_amount')
         )
-        ->when(isset($request->fromDate) && isset($request->toDate), function ($query) use ($request) {
-            $query->whereBetween('seamless_transactions.created_at', [$request->fromDate, $request->toDate]);
-        })
-        ->when(isset($request->player_name), function ($query) use ($request) {
-            $query->where('users.user_name', $request->player_name);
-        })
-        ->groupBy('users.user_name');
+            ->when(isset($request->fromDate) && isset($request->toDate), function ($query) use ($request) {
+                $query->whereBetween('seamless_transactions.created_at', [$request->fromDate, $request->toDate]);
+            })
+            ->when(isset($request->player_name), function ($query) use ($request) {
+                $query->where('users.user_name', $request->player_name);
+            })
+            ->groupBy('users.id', 'users.user_name');
 
         $report = $query->get();
 
@@ -88,7 +89,7 @@ class ReportController extends Controller
             ->get();
         $products = Product::all();
 
-        return view('report.show', compact('report','userId','products'));
+        return view('report.show', compact('report', 'userId', 'products'));
     }
 
     public function detail(Request $request)
@@ -99,7 +100,7 @@ class ReportController extends Controller
             "game_type_id" => ["required"],
         ]);
 
-        $report =$this->makeJoinTable()
+        $report = $this->makeJoinTable()
             ->select(
                 'products.name as product_name',
                 'game_types.name as game_type_name',
@@ -122,18 +123,17 @@ class ReportController extends Controller
         $player = User::find($request->user_id);
         $gameType =  GameType::find($request->game_type_id);
 
-        return view('report.detail', compact('report', 'product', 'player','gameType'));
+        return view('report.detail', compact('report', 'product', 'player', 'gameType'));
     }
 
     private function makeJoinTable()
     {
         $query = User::query()->roleLimited();
         $query->join('seamless_transactions', 'users.id', '=', 'seamless_transactions.user_id')
-              ->join('products', 'seamless_transactions.product_id', '=', 'products.id')
-              ->join('game_types', 'seamless_transactions.game_type_id', '=', 'game_types.id')
-              ->where('seamless_transactions.status', '101');
+            ->join('products', 'seamless_transactions.product_id', '=', 'products.id')
+            ->join('game_types', 'seamless_transactions.game_type_id', '=', 'game_types.id')
+            ->where('seamless_transactions.status', '101');
 
         return $query;
     }
-
 }
