@@ -86,13 +86,11 @@ class ProductTableSeeder extends Seeder
                 'name'  => 'Vivo Gaming	',
                 'order' => 14,
             ],
-
             [
                 'code'  => '1038',
                 'name'  => 'King 855',
                 'order' => 15,
             ],
-
             [
                 'code'  => '1048',
                 'name'  => 'Reevo',
@@ -180,8 +178,6 @@ class ProductTableSeeder extends Seeder
                 'name'  => 'Jili',
                 'order' => 32,
             ],
-
-
             [
                 'code'  => '1097',
                 'name'  => 'Funta Gaming',
@@ -230,6 +226,7 @@ class ProductTableSeeder extends Seeder
             ],
 
         ];
+
         Product::insert($data);
     }
 }
