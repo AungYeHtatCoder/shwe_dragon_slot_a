@@ -82,7 +82,7 @@ class GameTypeProductTableSeeder extends Seeder
             ],
             [
                 'product_id' => 7,
-                'game_type_id' => 8,
+                'game_type_id' => 4,
                 'image' => 'joker.jpeg',
                 'rate' => '1.0000',
             ],
@@ -160,7 +160,7 @@ class GameTypeProductTableSeeder extends Seeder
             ],
             [
                 'product_id' => 17,
-                'game_type_id' => 8,
+                'game_type_id' => 4,
                 'image' => 'playstart.jpeg',
                 'rate' => '1.0000',
             ],
