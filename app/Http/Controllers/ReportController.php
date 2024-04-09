@@ -40,6 +40,7 @@ class ReportController extends Controller
 
     public function index(Request $request)
     {
+        $gameTypeId = $request->query('game_type_id');
         $query = $this->makeJoinTable()->select(
             'users.id as user_id',
             'users.user_name',

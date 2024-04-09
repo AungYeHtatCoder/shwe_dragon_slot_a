@@ -133,11 +133,42 @@
   </script> --}}
 
 <script>
-  $('.game-type-btn').on('click', function() {
-    $('.game-type-btn').removeClass('btn-primary');
-    $(this).addClass('btn-primary');
-    var gameTypeId = $(this).data('id');
-    console.log(gameTypeId);
+  $(document).ready(function() {
+    $('#search').on('submit', function(event) {
+      event.preventDefault();
+
+      const fromDate = $('#fromDate').val();
+      const toDate = $('#toDate').val();
+      const playerName = $('#player_name').val();
+      const gameTypeId = $('.game-type-btn .btn_primary').data('id');
+      $('.game-type-btn').removeClass('btn_primary');
+      $('.game-type-btn[data-id="' + gameTypeId + '"]').addClass('btn_primary');
+
+      $.ajax({
+        url: "{{ route('admin.report.index') }}",
+        type: "GET",
+        data: {
+          fromDate: fromDate,
+          toDate: toDate,
+          playerName: playerName,
+          gameTypeId: gameTypeId,
+        },
+        success: function(response) {
+          console.log(response);
+        },
+        error: function(xhr, status, error) {
+          console.error(xhr.responseText);
+        },
+      });
+    });
+
+    $('.game-type-btn').on('click', function() {
+      $('.game-type-btn').removeClass('btn-primary');
+      $(this).addClass('btn-primary');
+      var gameTypeId = $(this).data('id');
+      console.log(gameTypeId);
+    });
+
   });
 </script>
 <script>
