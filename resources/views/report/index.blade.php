@@ -52,7 +52,7 @@
         </div>
       </div>
       <div class="container">
-        <form action="{{route('admin.report.index')}}" method="GET">
+        <form action="" >
           <div class="row">
             <div class="col-md-3">
               <div class="input-group input-group-static my-3">
@@ -73,7 +73,7 @@
               </div>
             </div>
             <div class="col-md-3">
-              <button type="submit" class="btn btn-sm btn-primary" id="search">Search</button>
+              <button class="btn btn-sm btn-primary" id="search">Search</button>
             </div>
             <div class="col">
               <label for="" class="font-weight-bold">Game Type</label>
@@ -88,33 +88,28 @@
     </div>
 
 
+   
     <div class="table-responsive">
       <table class="table table-flush" id="users-search">
         <thead class="thead-light bg-gradient-info  ">
-          <tr>
-            <th rowspan="2" class="text-white">PlayerName</th>
-            <th rowspan="2" class="text-white">Total Bet</th>
-            <th rowspan="2" class="text-white">Total Valid</th>
-            <th colspan="3" class="text-white">Member</th>
-            <th colspan="3" class="text-white">Agent</th>
-            <th rowspan="2" class="text-white">Win/Lose</th>
-            <th rowspan="2" class="text-white">Action</th>
-          </tr>
-          <tr>
+            <th class="text-white">PlayerName</th>
+            <th class="text-white">Total Bet</th>
+            <th class="text-white">Total Valid</th>
             <th class="text-white">Win/Lose</th>
-            <th class="text-white">Com</th>
-            <th class="text-white">Total</th>
-            <th class="text-white">Win/Lose</th>
-            <th class="text-white">Com</th>
-            <th class="text-white">Total</th>
-          </tr>
+            <th class="text-white">Action</th>
         </thead>
         <tbody>
-          <tr>
-            <td>
-
-            </td>
+          @foreach ($report as $rep)
+            
+          <tr> 
+            <td>{{ $rep->user_name}}</td>
+            <td>{{ $rep->total_bet_amount}}</td>
+            <td>{{ $rep->total_valid_amount}}</td>
+            <td>{{ $rep->total_transaction_amount}}</td>
+            <td><a href="{{route('admin.report.show',$rep->user_id)}}" class="btn btn-sm btn-info">Detail</a></td>
           </tr>
+          @endforeach
+
         </tbody>
       </table>
     </div>
@@ -125,25 +120,16 @@
 @section('scripts')
 <script src="{{ asset('admin_app/assets/js/plugins/datatables.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-{{-- <script>
-    const dataTableSearch = new simpleDatatables.DataTable("#datatable-search", {
-      searchable: true,
-      fixedHeight: true
-    });
-  </script> --}}
-
 <script>
   $(document).ready(function() {
-    $('#search').on('submit', function(event) {
+    $(document).on('click', '#search', function(event) {
       event.preventDefault();
-
       const fromDate = $('#fromDate').val();
       const toDate = $('#toDate').val();
       const playerName = $('#player_name').val();
-      const gameTypeId = $('.game-type-btn .btn_primary').data('id');
+      const gameTypeId = $('.game-type-btn.active').data('id');
       $('.game-type-btn').removeClass('btn_primary');
       $('.game-type-btn[data-id="' + gameTypeId + '"]').addClass('btn_primary');
-
       $.ajax({
         url: "{{ route('admin.report.index') }}",
         type: "GET",
@@ -164,9 +150,8 @@
 
     $('.game-type-btn').on('click', function() {
       $('.game-type-btn').removeClass('btn-primary');
-      $(this).addClass('btn-primary');
+      $(this).addClass('btn-primary active');
       var gameTypeId = $(this).data('id');
-      console.log(gameTypeId);
     });
 
   });

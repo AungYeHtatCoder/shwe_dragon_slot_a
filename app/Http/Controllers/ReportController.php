@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ReportController extends Controller
 {
@@ -40,7 +41,6 @@ class ReportController extends Controller
 
     public function index(Request $request)
     {
-        $gameTypeId = $request->query('game_type_id');
         $query = $this->makeJoinTable()->select(
             'users.id as user_id',
             'users.user_name',
@@ -48,16 +48,19 @@ class ReportController extends Controller
             DB::raw('SUM(seamless_transactions.valid_amount) as total_valid_amount'),
             DB::raw('SUM(seamless_transactions.transaction_amount) as total_transaction_amount')
         )
-            ->when(isset($request->fromDate) && isset($request->toDate), function ($query) use ($request) {
-                $query->whereBetween('seamless_transactions.created_at', [$request->fromDate, $request->toDate]);
+            ->when(isset($request['fromDate']) && isset($request['toDate']), function ($query) use ($request) {
+                $query->whereBetween('seamless_transactions.created_at', [$request['fromDate'], $request['toDate']]);
             })
-            ->when(isset($request->player_name), function ($query) use ($request) {
-                $query->where('users.user_name', $request->player_name);
+            ->when(isset($request['player_name']), function ($query) use ($request) {
+                $query->where('users.user_name', $request['player_name']);
+            })
+            ->when(isset($request['gameTypeId']), function ($query) use ($request) {
+                $query->whereBetween('seamless_transactions.game_type_id', $request['gameTypeId']);
             })
             ->groupBy('users.id', 'users.user_name');
 
         $report = $query->get();
-
+        
         $gameTypes = GameType::all();
 
         return view('report.index', compact('report', 'gameTypes'));
