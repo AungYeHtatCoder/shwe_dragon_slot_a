@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Admin\Product;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,7 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-            $this->call([
+        $this->call([
             PermissionsTableSeeder::class,
             RolesTableSeeder::class,
             PermissionRoleTableSeeder::class,
@@ -21,8 +22,8 @@ class DatabaseSeeder extends Seeder
             BankTableSeeder::class,
             GameTypeTableSeeder::class,
             ProductTableSeeder::class,
-            GameTypeProductTableSeeder::class
+            GameTypeProductTableSeeder::class,
+            ProductTableSeeder::class,
         ]);
-      
     }
 }

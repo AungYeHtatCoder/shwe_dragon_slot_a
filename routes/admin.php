@@ -47,8 +47,8 @@ Route::group([
         ->name('player.makeCashOut');
     Route::get('player-changepassword/{id}', [PlayerController::class, 'getChangePassword'])->name('player.getChangePassword');
     Route::post('player-changepassword/{id}', [PlayerController::class, 'makeChangePassword'])->name('player.makeChangePassword');
-    
-    
+
+
 
     Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::post('profile/change-password/{user}', [ProfileController::class, 'updatePassword'])
@@ -106,4 +106,6 @@ Route::group([
     // get bet deatil 
     Route::get('get-bet-detail', [GetBetDetailController::class, 'index'])->name('getBetDetail');
     Route::get('get-bet-detail/{wagerId}', [GetBetDetailController::class, 'getBetDetail'])->name('getBetDetail.show');
+
+    Route::resource('/product_code', App\Http\Controllers\Admin\ProductCodeController::class);
 });
