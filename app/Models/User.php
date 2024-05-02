@@ -142,6 +142,10 @@ class User extends Authenticatable implements Wallet
         return $this->belongsTo(User::class, "agent_id");
     }
 
+    public function userTree(){
+        return $this->hasMany(UserTree::class);
+    }
+
     public function scopeRoleLimited($query)
     {
         if (!Auth::user()->hasRole('Admin')) {

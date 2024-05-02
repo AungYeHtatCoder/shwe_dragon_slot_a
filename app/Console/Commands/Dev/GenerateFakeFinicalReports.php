@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Services\UserTreeService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Owenoj\LaravelGetId3\GetId3;
 
 class GenerateFakeFinicalReports extends Command
 {
@@ -30,6 +31,23 @@ class GenerateFakeFinicalReports extends Command
      */
     public function handle()
     {
+        // dd(storage_path("test.mp4"));
+        $track = new GetId3(request()->file('file'));;
+        // dd(file_exists(storage_path('app/test.mp4')));
+        // Use static methods:
+        // $track = GetId3::fromUploadedFile(request()->file('file'));
+        $track = GetId3::fromDiskAndPath('public', 'test.mp4');
+        // $track = GetId3::fromDiskAndPath('s3', '/some/file.mp3'); // even works with S3
+
+        //get all info
+        // $track->extractInfo();
+
+        //get title
+        // $track->getTitle();
+
+        //get playtime
+        $this->info($track->getPlaytime());
+        return;
         // $user = User::where("type", UserType::Admin)->first();
 
         // $child_user = UserType::childUserType($user->type);

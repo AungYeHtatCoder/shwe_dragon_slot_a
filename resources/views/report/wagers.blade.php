@@ -44,45 +44,33 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th rowspan="2">Date</th>
-                    <th rowspan="2">Username</th>
-                    <th rowspan="2">Valid Amount</th>
-                    <th colspan="2" class="text-center">{{ $child_user_type->name }}</th>
-                    <th colspan="2" class="text-center">{{ $parent_user_type->name }}<br> </th>
-                </tr>
-                <tr>
-                    <td>Payout</td>
-                    {{-- <td>Com</td> --}}
-                    <td>Win/Lose</td>
-                    <td>Payout</td>
-                    {{-- <td>Com</td> --}}
-                    <td>Win/Lose</td>
+                    <th>No.</th>
+                    <th>Date</th>
+                    <th>Username</th>
+                    <th>Product<br></th>
+                    <th>Stake<br></th>
+                    <th>Payout</th>
+                    <th>Win/Lose</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($reports as $report)
                     <tr>
-                        <td>{{ $report->date }}</td>
-                        <td>
-                            @if ($child_user_type->value == 40)
-                                <a class="text-primary"
-                                    href="{{ route('admin.report.wagers', ['user_name' => $report->user->user_name, 'date' => $report->date]) }}">
-                                    {{ $report->user->user_name }}</a>
-                            @else
-                                <a class="text-primary"
-                                    href="{{ route('admin.report.indexV2', ['user_name' => $report->user->user_name]) }}">
-                                    {{ $report->user->user_name }}</a>
-                            @endif
-                        </td>
-                        <td>{{ $report->turnover / 100 }}</td>
-                        <td>{{ ($report->payout + $report->commission) / 100 }}</td>
-                        {{-- <td>{{ $report->commission / 100 }}</td> --}}
-                        <td>{{ ($report->payout - $report->turnover) / 100 }}</td>
-                        <td>{{ ($report->payout + $report->parent_commission) / 100 }}</td>
-                        {{-- <td>{{ $report->commission / 100 }}</td> --}}
-                        <td>{{ ($report->payout - $report->turnover) / 100 }}</td>
+                        <th>{{ $report->id }}</th>
+                        <td>{{ $report->created_at->format('Y-m-d H:i:s') }}</td>
+                        <td>{{ $user->user_name }}</td>
+                        <td>{{ $report->product->name }}</td>
+                        <td>{{ $report->bet_amount }}</td>
+                        <td>{{ $report->payout_amount }}</td>
+                        <td>{{ $report->payout_amount - $report->bet_amount }}</td>
                     </tr>
                 @endforeach
+                <tr>
+                    <td colspan="4">Total</td>
+                    <td>{{ $total_bet_amount = $reports->sum('bet_amount') }}</td>
+                    <td>{{ $total_payout_amount = $reports->sum('payout_amount') }}</td>
+                    <td>{{ $total_payout_amount - $total_bet_amount }}</td>
+                </tr>
             </tbody>
         </table>
     </div>

@@ -40,6 +40,20 @@ class GameTypeTableSeeder extends Seeder
                 'order' => '4',
                 'status' => 1,
                 'img'  => 'fishing.png'
+            ],
+            [
+                'name' => 'Test 1',
+                'code' => '11',
+                'order' => '4',
+                'status' => 1,
+                'img'  => 'fishing.png'
+            ],
+            [
+                'name' => 'Test 2',
+                'code' => '12',
+                'order' => '4',
+                'status' => 1,
+                'img'  => 'fishing.png'
             ]
         ];
 

@@ -33,7 +33,9 @@ class UpdateFinicalReportJob implements ShouldBeUnique, ShouldQueue
      */
     public function handle()
     {
-        Transaction::has('wager')->with(['payable', 'wager'])
+        Transaction::whereHas('wager', function($q){
+            // $q->whereNot("status", WagerStatus::Ongoing);
+        })->with(['payable', 'wager'])
             ->where('is_report_generated', false)
             ->whereIn('name', [
                 TransactionName::Stake,
@@ -54,9 +56,9 @@ class UpdateFinicalReportJob implements ShouldBeUnique, ShouldQueue
                 foreach ($transactions as $transaction) {
                     $wager = $transaction->wager;
 
-                    if ($wager->status == WagerStatus::Ongoing) {
-                        continue;
-                    }
+                    // if ($wager->status == WagerStatus::Ongoing) {
+                    //     continue;
+                    // }
 
                     if ($transaction->payable->type == UserType::Admin) {
                         continue;
@@ -120,7 +122,7 @@ class UpdateFinicalReportJob implements ShouldBeUnique, ShouldQueue
                     }
                 }
 
-                // dd($ids);
+                dd($items);
 
                 $report_dates = collect($items)->pluck('date');
 

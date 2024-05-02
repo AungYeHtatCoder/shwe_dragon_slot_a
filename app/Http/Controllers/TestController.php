@@ -17,6 +17,7 @@ class TestController extends Controller
 {
     public function __invoke(Request $request)
     {
+        return (new UpdateFinicalReportJob)->handle();
         // $user = User::where("type", UserType::Admin)->first();
 
         // $child_user = UserType::childUserType($user->type);

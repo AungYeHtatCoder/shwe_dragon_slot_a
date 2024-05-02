@@ -48,40 +48,46 @@ trait UseWebhook
         $seamless_transactions = [];
 
         foreach ($requestTransactions as $requestTransaction) {
-            $wager = Wager::firstOrCreate(
-                ["seamless_wager_id" => $requestTransaction->WagerID],
-                [
-                    "user_id" => $event->user->id,
-                    "seamless_wager_id" => $requestTransaction->WagerID
-                ]
-            );
-
-            if ($refund) {
-                $wager->update([
-                    "status" => WagerStatus::Refund
-                ]);
-            } else if (!$wager->wasRecentlyCreated) {
-                $wager->update([
-                    "status" => $requestTransaction->TransactionAmount > 0 ? WagerStatus::Win : WagerStatus::Lose
-                ]);
-            }
-
             $game_type = GameType::where("code", $requestTransaction->GameType)->first();
-            
             if (!$game_type) {
                 throw new Exception("Game type not found for {$requestTransaction->GameType}");
             }
-            $product = Product::where("code", $requestTransaction->ProductID)->first();
 
+            $product = Product::where("code", $requestTransaction->ProductID)->first();
             if (!$product) {
                 throw new Exception("Product not found for {$requestTransaction->ProductID}");
             }
 
-            $game_type_product = GameTypeProduct::where("game_type_id", $game_type->id)
-                ->where("product_id", $product->id)
-                ->first();
+            $wager = Wager::firstOrCreate(
+                ["seamless_wager_id" => $requestTransaction->WagerID],
+                [
+                    "user_id" => $event->user->id,
+                    'product_id' => $product->id,
+                    'game_type_id' => $game_type->id,
+                    "seamless_wager_id" => $requestTransaction->WagerID,
+                    "bet_amount" => abs($requestTransaction->ValidBetAmount),
+                ]
+            );
 
-            $rate = $game_type_product->rate;
+            if (!$wager->wasRecentlyCreated) {
+                $data = [
+                    "payout_amount" => abs($requestTransaction->TransactionAmount),
+                ];
+
+                if ($refund) {
+                    $data["status"] = WagerStatus::Refund;
+                } else {
+                    $data["status"] = $requestTransaction->TransactionAmount > 0 ? WagerStatus::Win : WagerStatus::Lose;
+                }
+
+                $wager->update($data);
+            }
+
+            // $game_type_product = GameTypeProduct::where("game_type_id", $game_type->id)
+            //     ->where("product_id", $product->id)
+            //     ->first();
+
+            $rate = 0;
 
             $seamless_transactions[] = $event->transactions()->create([
                 "user_id" => $event->user_id,

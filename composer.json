@@ -12,6 +12,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.3",
+        "owen-oj/laravel-getid3": "^2.3",
         "spatie/laravel-data": "^4.1",
         "spatie/laravel-settings": "^3.3"
     },
