@@ -52,12 +52,6 @@ class GameTypeProductTableSeeder extends Seeder
             ],
             [
                 'product_id' => 4,
-                'game_type_id' => 1,
-                'image' => 'pragmatic_play.jpeg',
-                'rate' => '1.0000',
-            ],
-            [
-                'product_id' => 4,
                 'game_type_id' => 2,
                 'image' => 'pragmatic_play.jpeg',
                 'rate' => '1.0000',
