@@ -1,7 +1,7 @@
 @extends('admin_layouts.app')
 @section('content')
     <div class="row">
-        @if ($user->hasRole('Admin'))
+        {{-- @if ($user->hasRole('Admin'))
             <div class="col-sm-3">
                 <div class="card">
                     <div class="card-body p-3 position-relative">
@@ -16,7 +16,7 @@
                     </div>
                 </div>
             </div>
-        @endif
+        @endif --}}
         <div class="col-sm-3">
             <div class="card">
                 <div class="card-body p-3 position-relative">
