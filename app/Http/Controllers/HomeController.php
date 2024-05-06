@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Enums\TransactionName;
-use App\Models\Admin\AdminAddBalance;
 use App\Models\Admin\UserLog;
 use App\Models\SeamlessTransaction;
 use App\Models\User;
@@ -12,6 +11,7 @@ use App\Settings\AppSetting;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,19 +46,28 @@ class HomeController extends Controller
                 $query->where('agent_id', $user->id);
             })->count();
         };
+        $deposit = Auth::user()->transactions()->with("targetUser")
+        ->select(DB::raw('SUM(transactions.amount) as amount')
+        )
+        ->where('transactions.type','deposit')
+        ->first();
 
-        $master_count = $getUserCounts('Master');
+        $withdraw = Auth::user()->transactions()->with("targetUser")->select(
+            DB::raw('SUM(transactions.amount) as amount'),
+        )->where('transactions.type','withdraw')->first();
+      
         $agent_count = $getUserCounts('Agent');
         $player_count = $getUserCounts('Player');
-
+        
         $provider_balance = (new AppSetting())->provider_initial_balance + SeamlessTransaction::sum("transaction_amount");
 
         return view('admin.dashboard', compact(
             'provider_balance',
-            'master_count',
             'agent_count',
             'player_count',
-            'user'
+            'user',
+            'deposit',
+            'withdraw'
         ));
     }
 

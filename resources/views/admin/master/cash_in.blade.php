@@ -127,7 +127,7 @@
     <div class="col-md-6">
       <div class="input-group input-group-outline is-valid my-3">
         <label class="form-label">Current Balance</label>
-        <input type="text" class="form-control" name="blance" value="{{ $master->balanceFloat.'.00'}}" readonly>
+        <input type="text" class="form-control" name="blance" value="{{ $master->balanceFloat}}" readonly>
 
       </div>
       @error('phone')
