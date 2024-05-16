@@ -34,8 +34,8 @@ class LoginController extends Controller
 
         if (Auth::attempt($request->only('user_name', 'password'))) {
             // Check for unauthorized roles
-            if ($request->user()->hasRole('Player')) {
-                abort(403);
+            if ($request->user()->hasRole('Player') || $request->user()->hasRole('Agent')) {
+                return redirect()->back()->with('error', 'You do not have permissions');
             }
 
             // Log user activity (assuming UserLog model)
