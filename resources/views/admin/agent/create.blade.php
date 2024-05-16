@@ -219,7 +219,7 @@
 <script>
   var errorMessage = @json(session('error'));
   var successMessage = @json(session('success'));
-  var url = 'https://maxwinapi.online/login';
+  var url = 'https://maxwinagent.online/login';
   var name = @json(session('username'));
   var pw = @json(session('password'));
 
