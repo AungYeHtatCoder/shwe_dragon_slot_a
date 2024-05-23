@@ -96,6 +96,8 @@ Route::group([
     Route::post('withdraw/{withdraw}', [WithDrawRequestController::class, 'statusChange'])->name('agent.statusChange');
 
     Route::get('transer-log', [TransferLogController::class, 'index'])->name('transferLog');
+    Route::get('transferlog/{id}', [TransferLogController::class, 'transferLog'])->name('transferLogDetail');
+
     Route::group(['prefix' => 'report'], function () {
         Route::get('index', [ReportController::class, 'index'])->name('report.index');
         Route::get('index-v2', [ReportController::class, 'indexV2'])->name('report.indexV2');

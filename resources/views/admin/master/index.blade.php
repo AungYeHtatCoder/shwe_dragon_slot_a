@@ -97,7 +97,7 @@
                   <i class="fas fa-right-left text-white me-1"></i>
                   Logs
                 </a>
-
+             
               </td>
             </tr>
             @endforeach

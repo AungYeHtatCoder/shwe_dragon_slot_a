@@ -21,12 +21,11 @@
    <div class="card-header pb-0">
     <div class="d-lg-flex">
      <div>
-      <h5 class="mb-0">Master TransferLogs Dashboards</h5>
+      <h5 class="mb-0">Transfer Log Detail</h5>
 
      </div>
      <div class="ms-auto my-auto mt-lg-0 mt-4">
       <div class="ms-auto my-auto">
-       <a href="#" class="btn bg-gradient-primary btn-sm mb-0 py-2"></a>
        <button class="btn btn-outline-primary btn-sm export mb-0 mt-sm-0 mt-1 " data-type="csv" type="button"
         name="button">Export</button>
       </div>
@@ -38,46 +37,23 @@
      <thead class="thead-light">
 
         <tr>
-            <th>#</th>
             <th>Date</th>
-            <th>From User</th>
             <th>To User</th>
-            <th>Cash In</th>
-            <th>Cash Out</th>
-            <th>Profit</th>
-            <th>Cash Balance</th>
-            <th>Note</th>
+            <th>Amount</th>
         </tr>
     </thead>
     <tbody>
-        @foreach($transferLogs as $index => $log)
+        @foreach($transferLogs as $log)
             <tr>
-                <td>{{ $index+1 }}</td>
                 <td>
-                  @php
-                    $date = date_create($log->created_at);
-                    echo date_format($date,"d/m/Y");
-                  @endphp
+                  {{ $log->created_at }}
                 </td>
-                <td>{{ $log->fromUser->name }}</td>
-                <td>{{ $log->toUser->name }}</td>
-                <td>{{ $log->cash_in }}</td>
-                <td>{{ $log->cash_out }}</td>
+                <td>{{ $log->targetUser->name }}</td>
                 <td>
-                  @php
-
-                $profit = $log->cash_in - $log->cash_out;
-                  @endphp
-                  @if ($profit < 0)
-                      <span class="text-danger">{{ $profit }}</span>
-                  @else
-                      <span class="text-success">{{ $profit }}</span>
-                  @endif
+                  <div class="d-flex align-items-center text-{{$log->type =='deposit' ? 'success' : 'danger'}} text-gradient text-sm font-weight-bold ms-auto"> {{$log->type == 'deposit' ? '+' : ''}}{{ $log->amountFloat }}</div>
                 </td>
-                <td>{{ $log->cash_balance }}</td>
-                <td>{{ $log->note }}</td>
             </tr>
-    @endforeach
+        @endforeach
     </tbody>
 
     </table>
@@ -88,22 +64,12 @@
 @endsection
 @section('scripts')
 <script src="{{ asset('admin_app/assets/js/plugins/datatables.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    @if(session('SuccessRequest'))
-    Swal.fire({
-      icon: 'success',
-      title: 'Success! သင့်ကံစမ်းမှုအောင်မြင်ပါသည် ! သိန်းထီးဆုကြီးပေါက်ပါစေ',
-      text: '{{ session('
-      SuccessRequest ') }}',
-      timer: 3000,
-      showConfirmButton: false
+{{-- <script>
+    const dataTableSearch = new simpleDatatables.DataTable("#datatable-search", {
+      searchable: true,
+      fixedHeight: true
     });
-    @endif
-  });
-</script>
+  </script> --}}
 <script>
 if (document.getElementById('users-search')) {
  const dataTableSearch = new simpleDatatables.DataTable("#users-search", {
