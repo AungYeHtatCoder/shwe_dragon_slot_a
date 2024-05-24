@@ -61,6 +61,15 @@
                 @endif
               
                 </td>
+
+                <td>
+                @if($log->type == 'deposit')
+                    <p class="text-danger">Withdraw</p>
+                @else
+                    <p class="text-success">Deposit</p>
+                @endif
+            </td>
+                
                 
             </tr>
         @endforeach
