@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers\Admin\Agent;
 
-use App\Enums\TransactionName;
-use App\Enums\UserType;
-use App\Models\User;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\AgentRequest;
-use App\Http\Requests\TransferLogRequest;
-use App\Models\Admin\TransferLog;
-use App\Services\WalletService;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Exception;
+use App\Models\User;
+use App\Enums\UserType;
+use Illuminate\Http\Request;
+use App\Enums\TransactionName;
+use App\Enums\TransactionType;
+use App\Services\WalletService;
+use App\Models\Admin\TransferLog;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\AgentRequest;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\TransferLogRequest;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -190,6 +191,40 @@ class AgentController extends Controller
         return view('admin.agent.cash_out', compact('agent'));
     }
 
+
+
+
+       
+
+// public function makeCashIn(TransferLogRequest $request, $id)
+// {
+//     abort_if(
+//         Gate::denies('make_transfer') || !$this->ifChildOfParent(request()->user()->id, $id),
+//         Response::HTTP_FORBIDDEN,
+//         '403 Forbidden |You cannot Access this page because you do not have permission'
+//     );
+
+//     try {
+//         $inputs = $request->validated();
+//         $agent = User::findOrFail($id);
+//         $admin = Auth::user();
+//         $cashIn = $inputs['amount'];
+//         if ($cashIn > $admin->balanceFloat) {
+//             throw new \Exception('You do not have enough balance to transfer!');
+//         }
+
+//         // Transfer money
+//         app(WalletService::class)->transfer($admin, $agent, $cashIn, TransactionName::CreditTransfer, TransactionType::DEPOSIT());
+
+//         return redirect()->back()->with('success', 'Money fill request submitted successfully!');
+//     } catch (Exception $e) {
+//         session()->flash('error', $e->getMessage());
+//         return redirect()->back()->with('error', $e->getMessage());
+//     }
+// }
+
+
+
     public function makeCashIn(TransferLogRequest $request, $id)
     {
 
@@ -253,6 +288,44 @@ class AgentController extends Controller
         // Redirect back with a success message
         return redirect()->back()->with('success', 'Money fill request submitted successfully!');
     }
+
+//    public function makeCashOut(TransferLogRequest $request, string $id)
+// {
+//     abort_if(
+//         Gate::denies('make_transfer') || !$this->ifChildOfParent(request()->user()->id, $id),
+//         Response::HTTP_FORBIDDEN,
+//         '403 Forbidden | You cannot access this page because you do not have permission'
+//     );
+
+//     try {
+//         $inputs = $request->validated();
+
+//         $agent = User::findOrFail($id);
+//         $admin = Auth::user();
+//         $cashOut = $inputs['amount'];
+
+//         if ($cashOut > $agent->balanceFloat) {
+//             return redirect()->back()->with('error', 'You do not have enough balance to transfer!');
+//         }
+
+//         // Perform the transfer using WalletService
+//         app(WalletService::class)->transfer(
+//             $agent,
+//             $admin,
+//             $cashOut, // Use the validated amount from the request
+//             TransactionName::DebitTransfer,
+//             TransactionType::WITHDRAW() // Assuming a default transaction type
+//         );
+
+//         return redirect()->back()->with('success', 'Money fill request submitted successfully!');
+//     } catch (Exception $e) {
+//         // Handle exceptions
+//         session()->flash('error', $e->getMessage());
+//         return redirect()->back()->with('error', $e->getMessage());
+//     }
+// }
+
+
 
     public function getTransferDetail($id)
     {

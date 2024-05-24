@@ -40,6 +40,7 @@
             <th>Date</th>
             <th>To User</th>
             <th>Amount</th>
+            <th>Type</th>
         </tr>
     </thead>
     <tbody>
@@ -50,7 +51,14 @@
                 </td>
                 <td>{{ $log->targetUser->name }}</td>
                 <td>
-                  <div class="d-flex align-items-center text-{{$log->type =='deposit' ? 'success' : 'danger'}} text-gradient text-sm font-weight-bold ms-auto"> {{$log->type == 'deposit' ? '+' : ''}}{{ $log->amountFloat }}</div>
+                  {{-- <div class="d-flex align-items-center text-{{$log->type =='deposit' ? 'success' : 'danger'}} text-gradient text-sm font-weight-bold ms-auto"> {{$log->type == 'deposit' ? '+' : ''}}{{ $log->amountFloat }}</div> --}}
+                @if($log->type == 'deposit')
+                <p class="text-danger"> - {{ $log->amountFloat }}</p>
+                @elseif($log->type == 'withdraw')
+                <p class="text-success">+ {{ $log->amountFloat }}</p>
+                @else
+                <p>No data Fount</p>
+                @endif
               
                 </td>
                 
