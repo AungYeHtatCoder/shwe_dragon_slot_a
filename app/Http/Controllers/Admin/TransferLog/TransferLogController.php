@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin\TransferLog;
 use App\Models\Transaction;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 
 class TransferLogController extends Controller
 {
@@ -210,5 +212,17 @@ public function AgentToUserMonthlyStatusTransferLog()
 
         return view('admin.trans_log.agent_transfer_log', compact('transferLogs'));
         //return response()->json($transferLogs);
+    }
+
+    public function transferLog($id)
+    {
+        abort_if(
+            Gate::denies('make_transfer') || !$this->ifChildOfParent(request()->user()->id, $id),
+            Response::HTTP_FORBIDDEN,
+            '403 Forbidden |You cannot  Access this page because you do not have permission'
+        );
+        $transferLogs = Auth::user()->transactions()->with("targetUser")->where('target_user_id', $id)->latest()->paginate();
+        
+        return view('admin.trans_log.detail', compact('transferLogs'));
     }
 }
