@@ -78,7 +78,7 @@ class AgentController extends Controller
                 'amount' => 'Insufficient balance for transfer.',
             ]);
         }
-
+        $transfer_amount = $inputs['amount'];
         $userPrepare = array_merge(
             $inputs,
             [
@@ -98,7 +98,8 @@ class AgentController extends Controller
         return redirect()->back()
             ->with('success', 'Agent created successfully')
             ->with('password', $request->password)
-            ->with('username', $agent->user_name);
+            ->with('username', $agent->user_name)
+            ->with('amount', $transfer_amount);
     }
 
     /**
