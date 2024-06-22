@@ -100,9 +100,9 @@ Route::group([
 
     Route::group(['prefix' => 'report'], function () {
         Route::get('index', [ReportController::class, 'index'])->name('report.index');
-        Route::get('index-v2', [ReportController::class, 'indexV2'])->name('report.indexV2');
-        Route::get('show/{user_id}', [ReportController::class, 'show'])->name('report.show');
-        Route::get('detail', [ReportController::class, 'detail'])->name('report.detail');
+        Route::get('view/{user_id}', [ReportController::class, 'view'])->name('report.view');
+        Route::get('show/{proudct_code}', [ReportController::class, 'show'])->name('report.show');
+        Route::get('detail/{user_id}/{product_code}', [ReportController::class, 'detail'])->name('report.detail');
     });
 
     // get bet deatil 

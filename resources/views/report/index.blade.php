@@ -67,22 +67,9 @@
               </div>
             </div>
             <div class="col-md-3">
-              <div class="input-group input-group-static my-3">
-                <label>Player</label>
-                <input type="text" class="form-control" id="player_name" name="player_name" value="{{Request::query('player_name')}}">
-              </div>
-            </div>
-            <div class="col-md-3">
               <button class="btn btn-sm btn-primary" id="search">Search</button>
             </div>
-            <div class="col">
-              <label for="" class="font-weight-bold">Game Type</label>
-              <br>
-              <button type="button" class="btn btn-sm game-type-btn btn-primary">All</button>
-              @foreach ($gameTypes as $type)
-              <button type="button" class="btn btn-sm game-type-btn" data-id="{{ $type->id }}">{{ $type->name }}</button>
-              @endforeach
-            </div>
+            
         </form>
       </div>
     </div>
@@ -92,24 +79,31 @@
     <div class="table-responsive">
       <table class="table table-flush" id="users-search">
         <thead class="thead-light bg-gradient-info  ">
-            <th class="text-white">PlayerName</th>
+            <th class="text-white">Product Name</th>
+            <th class="text-white">Total Valid Bet</th>
             <th class="text-white">Total Bet</th>
-            <th class="text-white">Total Valid</th>
+            <th class="text-white">Total Payout</th>
             <th class="text-white">Win/Lose</th>
             <th class="text-white">Action</th>
         </thead>
         <tbody>
-          @foreach ($report as $rep)
-            
+          @foreach ($reports as $rep)
           <tr> 
-            <td>{{ $rep->user_name}}</td>
+            <td>{{ $rep->product_name}}</td>
+            <td>{{ $rep->total_valid_bet_amount}}</td>
             <td>{{ $rep->total_bet_amount}}</td>
-            <td>{{ $rep->total_valid_amount}}</td>
-            <td>{{ $rep->total_transaction_amount}}</td>
-            <td><a href="{{route('admin.report.show',$rep->user_id)}}" class="btn btn-sm btn-info">Detail</a></td>
+            <td>{{ $rep->total_payout_amount}}</td>
+            @php
+              $result = $rep->total_payout_amount - $rep->total_valid_bet_amount;
+            @endphp
+            @if($result > 0)
+            <td class="text-sm text-success font-weight-bold">{{$result}}</td>
+            @else
+            <td class="text-sm text-danger font-weight-bold">{{$result}}</td>
+            @endif
+            <td><a href="{{route('admin.report.show',$rep->code)}}" class="btn btn-sm btn-info">Show</a></td>
           </tr>
           @endforeach
-
         </tbody>
       </table>
     </div>
