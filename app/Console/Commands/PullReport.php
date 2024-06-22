@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class PullReport extends Command
 {
@@ -48,14 +49,16 @@ class PullReport extends Command
         $requestTime = now()->format('YmdHis');
         $signature = md5($operatorCode . $requestTime . 'pullreport' . $secretKey);
         // Prepare the payload
+        $startDate = now()->subMinutes(2);
+
         $data = [
             'OperatorCode' => $operatorCode,
-            'StartDate' => now()->format('Y-m-d H:i'),
-            'EndDate' => now()->addMinute(5)->format('Y-m-d H:i'),
+            'StartDate' => $startDate->format('Y-m-d H:i'),
+            'EndDate' => $startDate->copy()->addMinutes(5)->format('Y-m-d H:i'),
             'Sign' => $signature,
             'RequestTime' => $requestTime,
         ];
-
+        Log::info($data);
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
@@ -63,34 +66,54 @@ class PullReport extends Command
 
         if ($response->successful()) {
             $data = $response->json();
-            if($data['Wagers'] != null)
-            {
-            $data = $response['Wagers'];
-  
-            foreach($data as $report)
-            {
-                Report::create([
-                    'member_name' => $report['MemberName'],
-                    'wager_id' => $report['WagerID'],
-                    'product_code' => $report['ProductID'],
-                    'game_type_id' => $report['GameType'],
-                    'game_name' => $report['GameID'],
-                    'game_round_id' => $report['GameRoundID'],
-                    'valid_bet_amount' => $report['ValidBetAmount'],
-                    'bet_amount' => $report['BetAmount'],
-                    'payout_amount' => $report['PayoutAmount'],
-                    'commission_amount' => $report['CommissionAmount'],
-                    'jack_pot_amount' => $report['JackpotAmount'],
-                    'jp_bet' => $report['JPBet'],
-                    'status' => $report['Status'],
-                    'created_on' => $report['CreatedOn'],
-                    'modified_on' => $report['ModifiedOn'],
-                    'settlement_date' => $report['SettlementDate']
-                ]);
-            }
-        }
-            $this->line('<fg=green>Pull Report success</>');
+            if ($data['Wagers'] != null) {
+                $data = $response['Wagers'];
+                Log::info($response);
+                foreach ($data as $report) {
+                    $wagerId = Report::where('wager_id', $report['WagerID'])->first();
 
+                    if ($wagerId) {
+                        $wagerId->update([
+                            'member_name' => $report['MemberName'],
+                            'wager_id' => $report['WagerID'],
+                            'product_code' => $report['ProductID'],
+                            'game_type_id' => $report['GameType'],
+                            'game_name' => $report['GameID'],
+                            'game_round_id' => $report['GameRoundID'],
+                            'valid_bet_amount' => $report['ValidBetAmount'],
+                            'bet_amount' => $report['BetAmount'],
+                            'payout_amount' => $report['PayoutAmount'],
+                            'commission_amount' => $report['CommissionAmount'],
+                            'jack_pot_amount' => $report['JackpotAmount'],
+                            'jp_bet' => $report['JPBet'],
+                            'status' => $report['Status'],
+                            'created_on' => $report['CreatedOn'],
+                            'modified_on' => $report['ModifiedOn'],
+                            'settlement_date' => $report['SettlementDate']
+                        ]);
+                    }else{
+                        Report::create([
+                            'member_name' => $report['MemberName'],
+                            'wager_id' => $report['WagerID'],
+                            'product_code' => $report['ProductID'],
+                            'game_type_id' => $report['GameType'],
+                            'game_name' => $report['GameID'],
+                            'game_round_id' => $report['GameRoundID'],
+                            'valid_bet_amount' => $report['ValidBetAmount'],
+                            'bet_amount' => $report['BetAmount'],
+                            'payout_amount' => $report['PayoutAmount'],
+                            'commission_amount' => $report['CommissionAmount'],
+                            'jack_pot_amount' => $report['JackpotAmount'],
+                            'jp_bet' => $report['JPBet'],
+                            'status' => $report['Status'],
+                            'created_on' => $report['CreatedOn'],
+                            'modified_on' => $report['ModifiedOn'],
+                            'settlement_date' => $report['SettlementDate']
+                        ]); 
+                    }
+                }
+            }
+            $this->line('<fg=green>Pull Report success</>');
         } else {
             $this->line('<fg=green>Api Call Error</>');
         }
