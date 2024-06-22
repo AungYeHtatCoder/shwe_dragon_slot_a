@@ -107,6 +107,8 @@
                   <i class="fas fa-right-left text-white me-1"></i>
                   transferLogs
                 </a>
+
+                
               </td>
             </tr>
             @endforeach

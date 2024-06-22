@@ -222,6 +222,7 @@
   var url = 'https://maxwinagent.online/login';
   var name = @json(session('username'));
   var pw = @json(session('password'));
+  var deposit_amount = @json(session('amount'));
 
   @if(session() -> has('success'))
   Swal.fire({
@@ -240,6 +241,11 @@
     <td>pw</td>
     <td id="tpassword"> ${pw}</td>
   </tr>
+  <tr>
+    <td>Transfer Amount</td>
+    <td id="tdeposit">${deposit_amount ?? '0'}</td>
+</tr>
+
   <tr>
     <td>url</td>
     <td id=""> ${url}</td>
@@ -263,7 +269,9 @@
   function copy() {
        var username= $('#tusername').text();
         var password= $('#tpassword').text();
-        var copy = "url : "+url+"\nusername : "+username+"\npw : "+password;
+        var tdeposit= $('#tdeposit').text();
+
+        var copy = "url : "+url+"\nusername : "+username+"\npw : "+password + "\Transfer Amount :" + tdeposit;
         copyToClipboard(copy)
   }
   function copyToClipboard(v) {

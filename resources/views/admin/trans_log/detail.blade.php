@@ -40,21 +40,60 @@
             <th>Date</th>
             <th>To User</th>
             <th>Amount</th>
+            <th>Type</th>
         </tr>
     </thead>
-    <tbody>
-        @foreach($transferLogs as $log)
-            <tr>
-                <td>
-                  {{ $log->created_at }}
-                </td>
-                <td>{{ $log->targetUser->name }}</td>
-                <td>
-                  <div class="d-flex align-items-center text-{{$log->type =='deposit' ? 'success' : 'danger'}} text-gradient text-sm font-weight-bold ms-auto"> {{$log->type == 'deposit' ? '+' : ''}}{{ $log->amountFloat }}</div>
-                </td>
-            </tr>
-        @endforeach
-    </tbody>
+        {{-- <tbody>
+    @foreach($transferLogs as $log)
+        <tr>
+            <td>{{ $log->created_at }}</td>
+            <td>{{ $log->targetUser->name }}</td>
+            <td>
+                <div class="d-flex align-items-center text-{{ $log->type == 'deposit' ? 'danger' : 'success' }} text-gradient text-sm font-weight-bold ms-auto">
+                    {{ $log->type == 'deposit'}}{{ $log->amountFloat }}
+                </div>
+            </td>
+            <td>
+                @if($log->type == 'withdraw')
+                    <p class="text-success">Deposit</p>
+                @else
+                    <p class="text-danger">Withdraw</p>
+                @endif
+            </td>
+        </tr>
+    @endforeach
+</tbody> --}}
+
+        <tbody>
+    @foreach($transferLogs as $log)
+        <tr>
+            <td>{{ $log->created_at }}</td>
+            <td>{{ $log->targetUser->name }}</td>
+            <td>
+                {{-- <div class="d-flex align-items-center text-{{ $log->type == 'deposit' ? 'danger' : 'success' }} text-gradient text-sm font-weight-bold ms-auto">
+                    {{ $log->amountFloat }}
+                </div> --}}
+                @if($log->type == 'deposit')
+                <p class="text-danger"> - {{ $log->amountFloat }}</p>
+                @elseif($log->type == 'withdraw')
+                <p class="text-success">+ {{ $log->amountFloat }}</p>
+                @else
+                <p>No data Fount</p>
+                @endif
+            </td>
+            <td>
+                @if($log->type == 'deposit')
+                    <p class="text-danger">Withdraw</p>
+                @else
+                    <p class="text-success">Deposit</p>
+                @endif
+            </td>
+        </tr>
+    @endforeach
+</tbody>
+
+
+
 
     </table>
    </div>
