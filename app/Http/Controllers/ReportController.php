@@ -6,137 +6,105 @@ use App\Enums\UserType;
 use App\Models\Admin\GameType;
 use App\Models\Admin\Product;
 use App\Models\FinicalReport;
+use App\Models\Report;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class ReportController extends Controller
 {
-    public function indexV2(Request $request)
-    {
-        // TODO: check valid tree
-        $username = $request->get("user_name", auth()->user()->user_name);
-
-        $user = User::where("user_name", $username)->first();
-
-        $child_user_type = UserType::childUserType($user->type);
-
-        $date = $request->get("date", now()->setTimezone("Asia/Yangon")->format("Y-m-d"));
-
-        $reports = FinicalReport::with("user")->whereIn(
-            "user_id",
-            User::where("type", $child_user_type)->where("agent_id", $user->id)->select("id")
-        )
-            ->where("date", $date)
-            ->paginate();
-
-        return view("report.index_v2", [
-            "reports" => $reports,
-            "parent_user_type" => $user->type,
-            "child_user_type" => $child_user_type
-        ]);
-    }
-
     public function index(Request $request)
     {
-        $query = $this->makeJoinTable()->select(
-            'users.id as user_id',
-            'users.user_name',
-            DB::raw('SUM(seamless_transactions.bet_amount) as total_bet_amount'),
-            DB::raw('SUM(seamless_transactions.valid_amount) as total_valid_amount'),
-            DB::raw('SUM(seamless_transactions.transaction_amount) as total_transaction_amount')
-        )
-            ->when(isset($request['fromDate']) && isset($request['toDate']), function ($query) use ($request) {
-                $query->whereBetween('seamless_transactions.created_at', [$request['fromDate'], $request['toDate']]);
-            })
-            ->when(isset($request['player_name']), function ($query) use ($request) {
-                $query->where('users.user_name', $request['player_name']);
-            })
-            ->when(isset($request['gameTypeId']), function ($query) use ($request) {
-                $query->whereBetween('seamless_transactions.game_type_id', $request['gameTypeId']);
-            })
-            ->groupBy('users.id', 'users.user_name');
-
-        $report = $query->get();
-        
-        $gameTypes = GameType::all();
-
-        return view('report.index', compact('report', 'gameTypes'));
-    }
-
-    public function show(Request $request, int $userId)
-    {
-        $report = $this->makeJoinTable()
-            ->select(
-                'products.name as product_name',
-                'products.id as product_id',
-                'game_types.name as game_type_name',
-                'game_types.id as game_type_id',
-                'users.user_name',
-                'users.id as user_id',
-                DB::raw('SUM(seamless_transactions.bet_amount) as total_bet_amount'),
-                DB::raw('SUM(seamless_transactions.valid_amount) as total_valid_amount'),
-                DB::raw(
-                    'SUM(seamless_transactions.transaction_amount) as total_transaction_amount'
-                )
-            )
-            ->where('users.id', $userId)
+        $reports = $this->makeJoinTable()->select(
+            'products.name as product_name',
+            'products.code',
+            DB::raw('SUM(reports.bet_amount) as total_bet_amount'),
+            DB::raw('SUM(reports.valid_bet_amount) as total_valid_bet_amount'),
+            DB::raw('SUM(reports.payout_amount) as total_payout_amount'))
+        ->groupBy('product_name', 'products.code')
             ->when(isset($request->fromDate) && isset($request->toDate), function ($query) use ($request) {
-                $query->whereBetween('seamless_transactions.created_at', [$request->fromDate, $request->toDate]);
+                $query->whereBetween('reports.settlement_date', [$request->fromDate, $request->toDate]);
             })
-            ->when(isset($request->product_id), function ($query) use ($request) {
-                $query->where('seamless_transactions.product_id', $request->product_id);
-            })
-            ->groupBy('products.name', 'game_types.name', 'users.user_name', 'users.id', 'game_types.id', 'products.id')
             ->get();
-        $products = Product::all();
 
-        return view('report.show', compact('report', 'userId', 'products'));
+        return view('report.index', compact('reports'));
     }
 
-    public function detail(Request $request)
+    public function show(Request $request ,int $code)
     {
-        $request->validate([
-            "product_id" => ["required"],
-            "user_id" => ["required"],
-            "game_type_id" => ["required"],
-        ]);
+        $reports = $this->makeJoinTable()->select(
+            'users.user_name',
+            'users.id as user_id',
+            'products.name as product_name',
+            'products.code as product_code',
+            DB::raw('SUM(reports.bet_amount) as total_bet_amount'),
+            DB::raw('SUM(reports.valid_bet_amount) as total_valid_bet_amount'),
+            DB::raw('SUM(reports.payout_amount) as total_payout_amount'))
+            ->groupBy('users.user_name', 'product_name', 'product_code')
+            ->where('reports.product_code', $code)
+            ->when(isset($request->player_name), function ($query) use ($request) {
+                $query->whereBetween('reports.member_name', $request->player_name);
+            })
+            ->when(isset($request->fromDate) && isset($request->toDate), function ($query) use ($request) {
+                $query->whereBetween('reports.settlement_date', [$request->fromDate, $request->toDate]);
+            })
+            ->get();
+        
+        return view('report.show', compact('reports'));
+    }
+
+    public function detail(Request $request, int $userId)
+    {
 
         $report = $this->makeJoinTable()
             ->select(
                 'products.name as product_name',
-                'game_types.name as game_type_name',
                 'users.user_name',
                 'users.id as user_id',
-                'seamless_transactions.bet_amount',
-                'seamless_transactions.valid_amount',
-                'seamless_transactions.transaction_amount',
-                'seamless_transactions.created_at'
+                'reports.valid_bet_amount',
+                'reports.bet_amount',
+                'reports.payout_amount',
+                'reports.settlement_date'
             )
             ->where('users.id', $request->user_id)
-            ->where('products.id', $request->product_id)
-            ->where('game_types.id', $request->game_type_id)
-            ->when(isset($request->fromDate) && isset($request->toDate), function ($query) use ($request) {
-                $query->whereBetween('seamless_transactions.created_at', [$request->fromDate, $request->toDate]);
+            ->when(isset($request->product_code), function ($query) use ($request) {
+                $query->where('reports.product_code', $request->product_code);
             })
+            ->when(isset($request->fromDate) && isset($request->toDate), function ($query) use ($request) {
+                $query->whereBetween('reports.settlement_date', [$request->fromDate, $request->toDate]);
+            })
+            ->orderby('reports.settlement_date','desc')
             ->get();
 
-        $product = Product::find($request->product_id);
-        $player = User::find($request->user_id);
-        $gameType =  GameType::find($request->game_type_id);
+        $player = User::find($userId);
 
-        return view('report.detail', compact('report', 'product', 'player', 'gameType'));
+        return view('report.detail', compact('report', 'player'));
+    }
+
+    public function view($user_name)
+    {
+        $reports = $this->makeJoinTable()->select(
+            'users.user_name',
+            'users.id as user_id',
+            'products.name as product_name',
+            'products.code as product_code',
+            DB::raw('SUM(reports.bet_amount) as total_bet_amount'),
+            DB::raw('SUM(reports.valid_bet_amount) as total_valid_bet_amount'),
+            DB::raw('SUM(reports.payout_amount) as total_payout_amount'))
+            ->groupBy('users.user_name', 'product_name', 'product_code')
+            ->where('reports.member_name', $user_name)
+            ->get();
+
+            return view('report.view', compact('reports'));
     }
 
     private function makeJoinTable()
     {
         $query = User::query()->roleLimited();
-        $query->join('seamless_transactions', 'users.id', '=', 'seamless_transactions.user_id')
-            ->join('products', 'seamless_transactions.product_id', '=', 'products.id')
-            ->join('game_types', 'seamless_transactions.game_type_id', '=', 'game_types.id')
-            ->where('seamless_transactions.status', '101');
+        $query->join('reports', 'reports.member_name', '=', 'users.user_name')
+            ->join('products', 'reports.product_code', '=', 'products.code')
+            ->where('reports.status', '101');
 
         return $query;
     }
