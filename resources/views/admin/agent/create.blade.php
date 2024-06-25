@@ -270,8 +270,7 @@
        var username= $('#tusername').text();
         var password= $('#tpassword').text();
         var tdeposit= $('#tdeposit').text();
-
-        var copy = "url : "+url+"\nusername : "+username+"\npw : "+password + "\Transfer Amount :" + tdeposit;
+        var copy = "url : "+url+"\nusername : "+username+"\npw : "+password + "n\Transfer Amount :" + tdeposit;
         copyToClipboard(copy)
   }
   function copyToClipboard(v) {
