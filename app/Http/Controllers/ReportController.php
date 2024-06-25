@@ -74,7 +74,6 @@ class ReportController extends Controller
             ->when(isset($request->fromDate) && isset($request->toDate), function ($query) use ($request) {
                 $query->whereBetween('reports.settlement_date', [$request->fromDate, $request->toDate]);
             })
-            ->orderby('reports.settlement_date','desc')
             ->get();
 
         $player = User::find($userId);
