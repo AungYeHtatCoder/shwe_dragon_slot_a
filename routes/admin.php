@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\PaymentController;
@@ -11,11 +12,11 @@ use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\BannerTextController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\Agent\AgentController;
-use App\Http\Controllers\Admin\GameTypeProductController;
+use App\Http\Controllers\Report\TestReportController;
 use App\Http\Controllers\Admin\GetBetDetailController;
-use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\Master\MasterController;
 use App\Http\Controllers\Admin\Player\PlayerController;
+use App\Http\Controllers\Admin\GameTypeProductController;
 use App\Http\Controllers\Admin\TransferLog\TransferLogController;
 use App\Http\Controllers\Admin\WithDraw\WithDrawRequestController;
 
@@ -98,12 +99,20 @@ Route::group([
     Route::get('transer-log', [TransferLogController::class, 'index'])->name('transferLog');
     Route::get('transferlog/{id}', [TransferLogController::class, 'transferLog'])->name('transferLogDetail');
 
+    // Route::group(['prefix' => 'report'], function () {
+    //     Route::get('index', [ReportController::class, 'index'])->name('report.index');
+    //     Route::get('view/{user_id}', [ReportController::class, 'view'])->name('report.view');
+    //     Route::get('show/{proudct_code}', [ReportController::class, 'show'])->name('report.show');
+    //     Route::get('detail/{user_id}/{product_code}', [ReportController::class, 'detail'])->name('report.detail');
+    // });
+
     Route::group(['prefix' => 'report'], function () {
-        Route::get('index', [ReportController::class, 'index'])->name('report.index');
-        Route::get('view/{user_id}', [ReportController::class, 'view'])->name('report.view');
-        Route::get('show/{proudct_code}', [ReportController::class, 'show'])->name('report.show');
-        Route::get('detail/{user_id}/{product_code}', [ReportController::class, 'detail'])->name('report.detail');
-    });
+    Route::get('index', [TestReportController::class, 'index'])->name('report.index');
+    Route::get('view/{user_name}', [TestReportController::class, 'view'])->name('report.view');
+    Route::get('show/{product_code}', [TestReportController::class, 'show'])->name('report.show');
+    Route::get('detail/{user_id}/{product_code}', [TestReportController::class, 'detail'])->name('report.detail');
+});
+
 
     // get bet deatil 
     Route::get('get-bet-detail', [GetBetDetailController::class, 'index'])->name('getBetDetail');
