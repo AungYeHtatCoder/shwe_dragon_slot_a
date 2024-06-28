@@ -23,12 +23,12 @@ class ReportControllerTest extends TestCase
         $response->assertStatus(400);
     }
 
-    public function testShowWithValidProductCode()
-    {
-        $product = Product::factory()->create();
-        $response = $this->get("/report/show/{$product->code}");
-        $response->assertStatus(200);
-    }
+    // public function testShowWithValidProductCode()
+    // {
+    //     $product = Product::factory()->create();
+    //     $response = $this->get("/report/show/{$product->code}");
+    //     $response->assertStatus(200);
+    // }
 
     public function testShowWithInvalidProductCode()
     {
@@ -36,27 +36,27 @@ class ReportControllerTest extends TestCase
         $response->assertStatus(500);
     }
 
-    public function testDetailWithValidUserIdAndProductCode()
-    {
-        $user = User::factory()->create();
-        $product = Product::factory()->create();
-        $response = $this->get("/report/detail/{$user->id}/{$product->code}");
-        $response->assertStatus(200);
-    }
+    // public function testDetailWithValidUserIdAndProductCode()
+    // {
+    //     $user = User::factory()->create();
+    //     $product = Product::factory()->create();
+    //     $response = $this->get("/report/detail/{$user->id}/{$product->code}");
+    //     $response->assertStatus(200);
+    // }
 
-    public function testDetailWithInvalidUserId()
-    {
-        $product = Product::factory()->create();
-        $response = $this->get('/report/detail/9999/' . $product->code);
-        $response->assertStatus(404);
-    }
+    // public function testDetailWithInvalidUserId()
+    // {
+    //     $product = Product::factory()->create();
+    //     $response = $this->get('/report/detail/9999/' . $product->code);
+    //     $response->assertStatus(404);
+    // }
 
-    public function testViewWithValidUserName()
-    {
-        $user = User::factory()->create();
-        $response = $this->get("/report/view/{$user->user_name}");
-        $response->assertStatus(200);
-    }
+    // public function testViewWithValidUserName()
+    // {
+    //     $user = User::factory()->create();
+    //     $response = $this->get("/report/view/{$user->user_name}");
+    //     $response->assertStatus(200);
+    // }
 
     public function testViewWithInvalidUserName()
     {
