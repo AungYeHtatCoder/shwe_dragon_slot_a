@@ -27,6 +27,13 @@
       </a>
     </li>
 
+    <li class="nav-item">
+      <a class="nav-link text-white " href="{{ url('admin/get-bet-detail')}}">
+        <span class="sidenav-mini-icon"> <i class="fa-solid fa-chart-column"></i> </span>
+        <span class="sidenav-normal  ms-2  ps-1"> getBetDetail </span>
+      </a>
+    </li>
+
     @can('agent_index')
     <li class="nav-item">
       <a class="nav-link text-white " href="{{ route('admin.agent.index')}}">

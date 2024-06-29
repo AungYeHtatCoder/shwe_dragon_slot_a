@@ -29,6 +29,7 @@ return new class extends Migration
             $table->datetime('created_on');
             $table->datetime('settlement_date');
             $table->datetime('modified_on');
+            //$table->unsignedBigInteger("seamless_transaction_id")->nullable();
             $table->timestamps();
         });
     }
