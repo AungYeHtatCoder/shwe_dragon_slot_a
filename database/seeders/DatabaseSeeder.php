@@ -21,9 +21,9 @@ class DatabaseSeeder extends Seeder
             RoleUserTableSeeder::class,
             BankTableSeeder::class,
             GameTypeTableSeeder::class,
-            //ProductTableSeeder::class,
-            GameTypeProductTableSeeder::class,
             ProductTableSeeder::class,
+            GameTypeProductTableSeeder::class,
+            //ProductTableSeeder::class,
         ]);
     }
 }
