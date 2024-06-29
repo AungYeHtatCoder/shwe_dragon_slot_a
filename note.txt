@@ -1,3 +1,10 @@
 // to remove laravel log
 php -r "file_put_contents('/var/www/html/shwe_dragon_slot_a/storage/logs/laravel.log', '');"
 // created dev branch for kzt
+
+// Route::group(['prefix' => 'report'], function () {
+    // Route::get('index', [TestReportController::class, 'index'])->name('report.index');
+    // Route::get('view/{user_name}', [TestReportController::class, 'view'])->name('report.view');
+    // Route::get('show/{product_code}', [TestReportController::class, 'show'])->name('report.show');
+    // Route::get('detail/{user_id}/{product_code}', [TestReportController::class, 'detail'])->name('report.detail');
+    // });

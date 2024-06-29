@@ -31,7 +31,7 @@ class GetBetDetailController extends Controller
 {
     $operatorCode = Config::get('game.api.operator_code');
     $apiUrl = Config::get('game.api.url') . "/Report/BetDetail?agentCode={$operatorCode}&WagerID={$wagerId}";
-    dd($apiUrl);
+    //dd($apiUrl);
     // Make the API request
     $response = Http::get($apiUrl);
     dd($response);
