@@ -34,7 +34,7 @@ class GetBetDetailController extends Controller
     //dd($apiUrl);
     // Make the API request
     $response = Http::get($apiUrl);
-    dd($response);
+    //dd($response);
     if ($response->successful()) {
         $betDetails = $response->json();
 
