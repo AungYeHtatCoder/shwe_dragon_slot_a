@@ -107,4 +107,37 @@ class ReportController extends Controller
 
         return $query;
     }
+
 }
+
+/*
+SELECT 
+    product_code, 
+    SUM(bet_amount) AS total_bet_amount,
+    SUM(valid_bet_amount) AS total_valid_bet_amount,
+    SUM(payout_amount) AS total_payout_amount
+FROM 
+    reports
+WHERE 
+    status = '101' 
+    AND settlement_date BETWEEN '2024-01-01' AND '2024-12-31'
+GROUP BY 
+    product_code;
+
+
+    ------------------- 
+    SELECT DISTINCT
+    u.user_name AS player_id,
+    p.name AS product_name,
+    r.valid_bet_amount AS total_valid_bet,
+    r.bet_amount AS total_bet,
+    r.payout_amount AS total_payout,
+    (r.bet_amount - r.payout_amount) AS win_lose
+FROM 
+    reports r
+JOIN 
+    (SELECT DISTINCT code, name FROM products) p ON r.product_code = p.code
+JOIN 
+    users u ON r.member_name = u.user_name;
+
+*/
