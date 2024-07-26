@@ -7,7 +7,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png">
     <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
     <title>
-        TigerMM Slot
+        MaxWin Slot
     </title>
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
     <!-- Nucleo Icons -->
@@ -70,6 +70,9 @@
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Result
                                             Time
                                         </th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            WagerID
+                                        </th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Result
                                             Product Type
                                         </th>
@@ -91,6 +94,9 @@
                                     @foreach ($report as $detail)
                                     <tr>
                                         <td class="text-sm font-weight-normal">{{$detail->settlement_date}}</td>
+                                        <td>
+                                        <a href="https://prodmd.9977997.com/Report/BetDetail?agentCode=E780&WagerID={{ $detail->wager_id }}" target="_blank" style="color: blueviolet; text-decoration: underline;">{{ $detail->wager_id }}</a>
+                                        </td>
                                         <td class="text-sm font-weight-normal">{{$detail->product_name}}</td>
                                         <td class="text-sm font-weight-normal">{{$detail->valid_bet_amount}}</td>
                                         <td class="text-sm font-weight-normal">{{$detail->bet_amount}}</td>
