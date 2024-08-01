@@ -65,7 +65,9 @@ class ReportController extends Controller
                 'reports.valid_bet_amount',
                 'reports.bet_amount',
                 'reports.payout_amount',
-                'reports.settlement_date'
+                'reports.settlement_date',
+                'reports.wager_id'
+
             )
             ->where('users.id', $request->user_id)
             ->when(isset($request->product_code), function ($query) use ($request) {
